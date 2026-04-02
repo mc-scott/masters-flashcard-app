@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard Study App</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 480px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+    p.subtitle {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    .topics {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 1rem;
+    }
+    .topic-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .topic-item:last-child { border-bottom: none; }
+    .topic-item input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 0.75rem;
+      cursor: pointer;
+      accent-color: #4a6cf7;
+    }
+    .topic-item label {
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .all-topics {
+      font-weight: 600;
+      color: #4a6cf7;
+    }
+    .divider {
+      border: none;
+      border-top: 2px solid #e8e8e8;
+      margin: 0.5rem 0;
+    }
+    .error-msg {
+      color: #c0392b;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      min-height: 1.2em;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 0.85rem;
+      background: #4a6cf7;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover { background: #3558e8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Flashcard Study App</h1>
+    <p class="subtitle">Choose topics to study, then start your session.</p>
+
+    <form id="topic-form" method="POST" action="/start" novalidate>
+      <div class="topics">
+        <div class="topic-item">
+          <input type="checkbox" id="all-topics" onchange="toggleAll(this)">
+          <label for="all-topics" class="all-topics">All Topics</label>
+        </div>
+        <hr class="divider">
+        {% for topic in topics %}
+        <div class="topic-item">
+          <input type="checkbox" name="topics" value="{{ topic }}" id="topic-{{ loop.index }}" class="topic-cb" onchange="syncAllTopics()">
+          <label for="topic-{{ loop.index }}">{{ topic }}</label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <p class="error-msg" id="error-msg" role="alert" aria-live="polite"></p>
+      <button type="submit" onclick="return validateTopics(event)">Start Studying</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleAll(allCb) {
+      document.querySelectorAll('.topic-cb').forEach(cb => cb.checked = allCb.checked);
+    }
+
+    function syncAllTopics() {
+      const cbs = document.querySelectorAll('.topic-cb');
+      document.getElementById('all-topics').checked = [...cbs].every(cb => cb.checked);
+    }
+
+    function validateTopics(event) {
+      const anyChecked = [...document.querySelectorAll('.topic-cb')].some(cb => cb.checked);
+      if (!anyChecked) {
+        event.preventDefault();
+        document.getElementById('error-msg').textContent = 'Please select at least one topic to study.';
+        return false;
+      }
+      document.getElementById('error-msg').textContent = '';
+      return true;
+    }
+  </script>
+</body>
+</html>

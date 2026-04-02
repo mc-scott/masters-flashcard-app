@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard Study App</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 480px;
+      width: 100%;
+      padding-top: 1rem;
+    }
+    /* --- 3D flip scene --- */
+    .card-scene {
+      width: 100%;
+      perspective: 800px;
+    }
+    .card-inner {
+      width: 100%;
+      min-height: 280px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+    .card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+    /* --- shared face styles --- */
+    .card-face {
+      position: absolute;
+      inset: 0;
+      min-height: 280px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    /* --- front face --- */
+    .card-front {
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-title {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a6cf7;
+      background: rgba(74, 108, 247, 0.08);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+    .card-prompt {
+      font-size: 1.1rem;
+      text-align: center;
+      color: #222;
+      line-height: 1.6;
+      margin: 0;
+    }
+    /* --- back face --- */
+    .card-back {
+      background: #e8f4fd;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+    .card-answer {
+      font-size: 1rem;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+    .card-answer p { margin: 0 0 0.75rem; }
+    .card-answer ul, .card-answer ol { padding-left: 1.4rem; margin: 0 0 0.75rem; }
+    .card-answer code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    .card-reference {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 1rem;
+      font-size: 0.72rem;
+      color: #6b7a99;
+      font-style: italic;
+    }
+    /* --- hint label --- */
+    .flip-hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #888;
+      margin-top: 0.6rem;
+    }
+    .topic-indicator {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #4a6cf7;
+      margin: 0.4rem 0 0.8rem;
+      font-weight: 600;
+    }
+    .next-btn {
+      background: #4a6cf7;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 0.25rem;
+    }
+    .next-btn:hover { background: #3558d6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card-scene">
+      <div class="card-inner" id="card-inner" onclick="flipCard()">
+        <!-- Front -->
+        <div class="card-face card-front">
+          <span class="card-title">{{ card.title }}</span>
+          <p class="card-prompt">{{ card.prompt }}</p>
+        </div>
+        <!-- Back -->
+        <div class="card-face card-back">
+          <div class="card-answer">{{ answer_html }}</div>
+          <span class="card-reference">{{ card.reference }}</span>
+        </div>
+      </div>
+    </div>
+    <p class="flip-hint">Tap the card to reveal the answer</p>
+    <p class="topic-indicator">Topic: {{ card.topic }}</p>
+    <form action="/next" method="post" style="text-align:center;">
+      <input type="hidden" name="card_id" value="{{ card.topic }}::{{ card.title }}">
+      <button type="submit" class="next-btn">Next Card</button>
+    </form>
+  </div>
+
+  <script>
+    function flipCard() {
+      document.getElementById('card-inner').classList.toggle('flipped');
+    }
+  </script>
+</body>
+</html>
