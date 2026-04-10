@@ -1,0 +1,2305 @@
+Data Science Toolbox:
+- topic: Data Science Toolbox
+  title: Reshaping a DataFrame with `.pivot()`
+  prompt: What does `.pivot()` do, and what arguments does it take?
+  answer: '`.pivot()` reshapes a long-format DataFrame into a wide-format table.
+
+
+    - `index` — the column whose unique values become the row index
+
+    - `columns` — the column whose unique values become the column headers
+
+    - `values` — the column to fill the cells with
+
+
+    ```python
+
+    pivot = life_expectancy.pivot(index=''Entity'', columns=''Year'', values=''Life expectancy'')
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Checking NaN presence per column with `.isnull().any()`
+  prompt: How do you check whether any values in each column of a DataFrame are NaN, and count how many columns have (or don't
+    have) NaNs?
+  answer: 'Chain `.isnull().any()` to get a boolean Series (one value per column), then `.value_counts()` to count `True`/`False`:
+
+
+    ```python
+
+    num_nans = pivot.isnull().any().value_counts()
+
+    ```
+
+
+    To check a single column:
+
+
+    ```python
+
+    nan_in_2019 = pivot[2019].isnull().any()
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Grouping and aggregating with `.groupby()`
+  prompt: How do you compute the mean of a column for each unique value of another column?
+  answer: 'Select the relevant columns, call `.groupby()` on the grouping column, then aggregate:
+
+
+    ```python
+
+    year_vs_life_exp = life_expectancy[[''Year'', ''Life expectancy'']].groupby(''Year'').mean()
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Converting wide format back to long with `.melt()`
+  prompt: How do you unpivot (melt) a wide-format DataFrame back into long format?
+  answer: 'Use `.reset_index()` to make the index a column, then `.melt()` with `id_vars` specifying which column(s) to keep
+    fixed:
+
+
+    ```python
+
+    melted_pivot = pivot.reset_index().melt(id_vars=''Entity'', value_name=''Life expectancy'')
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Merging two DataFrames with `.merge()`
+  prompt: How do you join two DataFrames on shared columns, keeping all rows from the left DataFrame?
+  answer: "Use `.merge()` with `how='left'` and specify the shared key column(s) in `on`:\n\n```python\ngni_per_capita = gni_per_capita.merge(\n\
+    \    right=hihd[['Entity', 'Year', 'Total population']],\n    how='left',\n    on=['Entity', 'Year']\n)\n```\n"
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Sampling every nth row with the slice step operator
+  prompt: How do you select every nth row from a DataFrame using Python slice syntax?
+  answer: 'Use the `::` (step) slice operator on a DataFrame — `df[::n]` returns every nth row:
+
+
+    ```python
+
+    df = df[::10]   # keeps row 0, 10, 20, 30, ...
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Scaling values relative to the minimum
+  prompt: How do you rescale a column so that the smallest value maps to a given base size and all others scale proportionally?
+  answer: 'Divide the column by its minimum, then multiply by the base size:
+
+
+    ```python
+
+    min_population = df[''Population''].min()
+
+    df[''Ratio''] = (df[''Population''] / min_population) * 100
+
+    ```
+
+
+    The row with the minimum population gets a ratio of 100; all others are proportionally larger.
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Binning a continuous column into quantile groups with `pd.qcut()`
+  prompt: How do you split a continuous column into equal-frequency bins with custom labels?
+  answer: 'Use `pd.qcut()` with `q` (number of bins) and `labels`:
+
+
+    ```python
+
+    df[''Popn. category''] = pd.qcut(df[''Population''], q=3, labels=[''Small'', ''Medium'', ''Large''])
+
+    ```
+
+
+    Each bin contains approximately the same number of rows.
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Creating a row MultiIndex with `.pivot().stack()`
+  prompt: How do you convert a column MultiIndex into a row MultiIndex?
+  answer: '`.pivot()` creates a column MultiIndex. Chaining `.stack()` moves the innermost column level into the row index:
+
+
+    ```python
+
+    df_multi_index = df_category.pivot(index=''Popn. category'', columns=''Entity'').stack()
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Selecting from a MultiIndex with `.loc`
+  prompt: How do you select rows belonging to a specific level of a row MultiIndex using `.loc`?
+  answer: 'Pass the outer index label as the first argument to `.loc`:
+
+
+    ```python
+
+    df_medium = df_multi_index.loc[''Medium'', :]
+
+    ```
+
+    '
+  reference: notebooks/assignments/human_development_index.ipynb
+- topic: Data Science Toolbox
+  title: Extracting date parts from a datetime column with the `.dt` accessor
+  prompt: How do you extract the year, month, day, and weekday name from a datetime column?
+  answer: 'After converting a column with `pd.to_datetime()`, use the `.dt` accessor:
+
+
+    ```python
+
+    df[''Year'']    = df[''Date''].dt.year
+
+    df[''Month'']   = df[''Date''].dt.month
+
+    df[''Day'']     = df[''Date''].dt.day
+
+    df[''Weekday''] = df[''Date''].dt.day_name()
+
+    ```
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Computing row-over-row percentage change with `.pct_change()`
+  prompt: How do you calculate the percentage change between each row and the previous row for a column?
+  answer: 'Use `.pct_change()` and multiply by 100 to express as a percentage:
+
+
+    ```python
+
+    df[''Change %''] = df[''Adj Close''].pct_change() * 100
+
+    ```
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Accessing the last value in a column with `.iloc[-1]`
+  prompt: How do you retrieve the value in the very last row of a column?
+  answer: 'Use negative integer indexing with `.iloc`:
+
+
+    ```python
+
+    last_close = df[''Adj Close''].iloc[-1]
+
+    ```
+
+
+    Negative indices count from the end, so `-1` is the last row, `-2` the second-to-last, and so on.
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Setting a column as the row index with `set_index()`
+  prompt: How do you make an existing column the row index of a DataFrame?
+  answer: 'Call `.set_index()` with the column name. Use `inplace=True` to modify the DataFrame in place:
+
+
+    ```python
+
+    df_2020.set_index(''Date'', inplace=True)
+
+    ```
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Finding the index of the maximum value with `.idxmax()`
+  prompt: How do you find the row label (index) where a column reaches its maximum value?
+  answer: 'Use `.idxmax()` on the column — it returns the index label, not the value itself:
+
+
+    ```python
+
+    year_high_timestamp = df_2020[''Adj Close''].idxmax()
+
+    ```
+
+
+    This only works meaningfully when the index is set to something descriptive (e.g. a date).
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Getting the top n rows by a column value
+  prompt: How do you retrieve the n rows with the highest value in a given column?
+  answer: 'Sort descending then take the first n rows with `.head()`:
+
+
+    ```python
+
+    df_high = df.copy()
+
+    df_high.sort_values(by=''Change %'', ascending=False, inplace=True)
+
+    df_top_10 = df_high.head(10)
+
+    ```
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: Deriving a calculated column from existing columns
+  prompt: How do you add a new column whose values are a formula combining existing columns?
+  answer: 'Assign the result of the arithmetic expression directly to a new column name:
+
+
+    ```python
+
+    df_var[''Variation %''] = ((df_var[''High''] - df_var[''Low'']) / df_var[''Close'']) * 100
+
+    df_var_value[''Traded Value''] = df_var_value[''Volume''] * df_var_value[''Adj Close'']
+
+    ```
+
+    '
+  reference: notebooks/assignments/stock.ipynb
+- topic: Data Science Toolbox
+  title: What is version control?
+  prompt: What is version control and why is it used in software development?
+  answer: 'Version control is a system that records changes to a file or set of files over time,
+
+    allowing you to recall and monitor every update to the codebase.
+
+
+    - Tracks who changed what and when, with explanatory messages
+
+    - Enables many people to collaborate without overwriting each other''s work
+
+    - Keeps the project directory clean while retaining the full history
+
+    - Allows switching between different versions of the code (branches)
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Centralised vs distributed version control
+  prompt: What is the difference between a centralised and a distributed version control system?
+  answer: "- **Centralised** (e.g. Subversion): one central server holds the full history;\n  clients only have a working\
+    \ copy.\n- **Distributed** (e.g. Git): every client has a complete copy of the repository,\n  including the full history.\
+    \ Changes are synchronised between copies.\n\nGit is the de facto industry-standard distributed VCS.\n"
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Git's four-stage workflow
+  prompt: What are the four stages that a file change moves through in Git?
+  answer: '1. **Working directory** — where you edit files; Git monitors changes here.
+
+    2. **Staging area** — changed files are `git add`-ed here to be included in the next commit.
+
+    3. **Git directory (`.git`)** — stores the committed history with messages; must not be deleted.
+
+    4. **Remote repository** — a server copy that teammates can push to and pull from.
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Why new files are not tracked by default
+  prompt: When you create a new file in a Git repository, is it tracked automatically? What must you do?
+  answer: 'No. Git ignores brand-new files until they are explicitly staged for the first time.
+
+    This lets you keep files you don''t want tracked (e.g. credentials, large data files)
+
+    out of version control.
+
+
+    Stage a new file with:
+
+    ```bash
+
+    git add filename.py
+
+    ```
+
+    After the first `git add`, Git tracks all future changes in that file.
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Staging changes with `git add`
+  prompt: What does `git add` do, and what does `git status` show after you run it?
+  answer: '`git add <file>` moves a file (or its changes) to the **staging area** so it will
+
+    be included in the next commit.
+
+
+    After staging, `git status` shows the file under **"Changes to be committed"**.
+
+
+    ```bash
+
+    git add hello.py
+
+    git status
+
+    ```
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Committing staged changes with `git commit`
+  prompt: How do you create a commit from your staged changes, and what does the commit message do?
+  answer: 'Use `git commit -m` followed by a short, descriptive message:
+
+
+    ```bash
+
+    git commit -m "Create hello.py file"
+
+    ```
+
+
+    - The commit permanently records the staged changes in the project history.
+
+    - The message explains *why* the change was made — vital for your future self and colleagues.
+
+    - After committing, `git status` will show "nothing to commit, working tree clean".
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Viewing commit history with `git log`
+  prompt: How do you view the history of commits in a Git repository?
+  answer: '`git log` lists commits in reverse chronological order, showing author, date, and message.
+
+
+    Add `-p` to see the line-by-line changes (patch) included in each commit:
+
+
+    ```bash
+
+    git log       # summary list
+
+    git log -p    # full diff for each commit
+
+    ```
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Pushing commits to a remote with `git push`
+  prompt: What does `git push` do, and what flag is needed the first time you push a branch?
+  answer: '`git push` sends new local commits to the remote repository.
+
+    It does **not** overwrite the remote; it applies each commit as a patch.
+
+
+    For the first push of a branch, use `--set-upstream origin <branch>` to tell
+
+    Git which remote branch to link to:
+
+
+    ```bash
+
+    git push --set-upstream origin main
+
+    ```
+
+
+    Subsequent pushes on the same branch only need `git push`.
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Creating a bare (remote) repository with `git init --bare`
+  prompt: How do you create a local bare repository to act as a remote?
+  answer: 'Use `git init --bare` with an `.git` suffix by convention:
+
+
+    ```bash
+
+    git init --bare --initial-branch=main cspark-demo.git
+
+    ```
+
+
+    A bare repository stores only the version history (no working directory).
+
+    It is the standard layout for a server-side remote.
+
+    '
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Cloning a repository with `git clone`
+  prompt: How do you clone a repository to create a local working copy?
+  answer: 'Use `git clone <URL>` to copy the remote repository (including its full history)
+
+    into a new local directory:
+
+
+    ```bash
+
+    git clone file://$(pwd)/cspark-demo.git/ local_repo
+
+    ```
+
+
+    The `file://` protocol works for a local path; replace with `https://` or `git@` for remote servers.
+
+    '
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Checking repository status with `git status`
+  prompt: What does `git status` tell you, and when should you use it?
+  answer: '`git status` shows:
+
+    - Untracked files (new files not yet staged)
+
+    - Modified files not yet staged
+
+    - Files staged and ready to commit
+
+    - Whether your branch is ahead of or behind the remote
+
+
+    Run it frequently to understand the state of your working directory before staging or committing.
+
+    '
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Showing unstaged changes with `git diff`
+  prompt: How do you view the line-by-line differences between two commits or branches?
+  answer: '`git diff` shows changes not yet staged. To compare two branches (a patch / diff):
+
+
+    ```bash
+
+    git diff main..function_update
+
+    ```
+
+
+    The output header `@@ -1 +1,3 @@` means: the original file had 1 line starting at line 1;
+
+    the new version has 3 lines starting at line 1.
+
+    '
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Creating a branch with `git checkout -b`
+  prompt: How do you create a new branch and switch to it in one step?
+  answer: 'Use `git checkout -b <branch-name>`:
+
+
+    ```bash
+
+    git checkout -b function_update
+
+    ```
+
+
+    After this, new commits are recorded on the new branch only.
+
+    List all local branches with `git branch`; switch back with `git checkout main`.
+
+    '
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Merging a branch into `main`
+  prompt: What is the typical workflow to merge a feature branch into `main`?
+  answer: "1. **Push** the feature branch to the remote:\n   ```bash\n   git push --set-upstream origin function_update\n\
+    \   ```\n2. Open a **merge request** (GitLab) or **pull request** (GitHub/Bitbucket)\n   in the web interface and assign\
+    \ reviewers.\n3. After approval, merge on the platform.\n4. **Pull** the merged `main` locally and delete the feature\
+    \ branch:\n   ```bash\n   git checkout main\n   git pull\n   git branch -D function_update\n   ```\n"
+  reference: notebooks/git/git_practical-solution.ipynb
+- topic: Data Science Toolbox
+  title: Key Git terminology
+  prompt: What do the terms repository, fork, branch, pull/merge request, and conflict mean in Git?
+  answer: '- **Repository** — the remote (online) version of a Git project.
+
+    - **Fork** — a personal copy of someone else''s repository; your commits don''t affect the original.
+
+    - **Branch** — a separate line of commit history within a repository.
+
+    - **Pull/Merge Request** — a formal request to merge one branch into another, enabling code review.
+
+    - **Conflict** — occurs when two commits change the same lines; must be resolved manually.
+
+    '
+  reference: notebooks/git/intro_to_git.ipynb
+- topic: Data Science Toolbox
+  title: Why use Python for data analysis?
+  prompt: What advantages does Python offer over spreadsheet tools like Excel for data analysis?
+  answer: 'Python provides key advantages for data analysis:
+
+
+    - **Handles larger data volumes** more robustly and repeatably than Excel
+
+    - **Repeated operations** are carried out more efficiently
+
+    - **Logic is transparent** — not hidden within a UI as in spreadsheets
+
+    - Rich ecosystem: packages for data processing, APIs, web scraping, ML, and visualisation
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Python Standard Library vs packages vs sub-modules
+  prompt: What is the difference between the Standard Library, a package, and a sub-module in Python?
+  answer: "- **Standard Library** — built-in modules shipped with Python (e.g. `json`, `datetime`, `math`):\n  ```python\n\
+    \  import json\n  ```\n- **Package (library)** — additional installable code (e.g. `pandas`, `sklearn`):\n  ```python\n\
+    \  import pandas as pd\n  ```\n- **Sub-module** — a specific module within a package, imported directly:\n  ```python\n\
+    \  from sklearn.metrics import consensus_score\n  ```\n"
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Package dependencies in Python
+  prompt: What are package dependencies, and why do they matter when installing packages?
+  answer: 'Packages often rely on other packages to function — these are called **dependencies**, and all must be installed
+    for the package to work.
+
+
+    For example, `pandas` depends on:
+
+    - `setuptools`
+
+    - `NumPy`
+
+    - `python-dateutil`
+
+    - `pytz`
+
+
+    The Anaconda Distribution pre-installs these common dependencies automatically.
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Purpose of Python virtual environments
+  prompt: What problem do Python environments solve, and what are the two key benefits?
+  answer: 'Environments allow **multiple combinations of packages and versions** to coexist on a single machine.
+
+
+    **Benefits:**
+
+    - **Reproducibility** — code runs the same way in future or on different machines
+
+    - **Isolation** — enables working on projects with conflicting dependencies simultaneously
+
+
+    With 250,000+ projects on PyPI and 2,000,000+ releases, dependency conflicts are common without environments.
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Key Conda commands
+  prompt: What are the essential Conda commands for managing environments and packages?
+  answer: '| Command | Purpose |
+
+    |---|---|
+
+    | `conda create --name mynewenv` | Create a new environment |
+
+    | `conda activate mynewenv` | Activate an environment |
+
+    | `conda install flask` | Install a package |
+
+    | `conda install flask=1.1.2` | Install a specific version |
+
+    | `conda list` | List installed packages and versions |
+
+    | `conda env export > environment.yml` | Export environment to a YAML file |
+
+    | `conda env create -f environment.yml` | Recreate environment from YAML |
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Conda vs virtualenv/pip — when to use each
+  prompt: What is the difference between conda and virtualenv/pip, and when should you use each?
+  answer: '- **conda** — handles both environment management *and* package installation
+
+    - **virtualenv** — handles environments only; typically paired with **pip** for packages
+
+
+    **General guidance:**
+
+    - Create a new environment with `conda` for each new project
+
+    - Use `conda` for package installations when available
+
+    - Use `pip` if there is no conda equivalent for the package
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Git stash — saving and restoring work in progress
+  prompt: How do you temporarily save uncommitted work in Git and later restore it?
+  answer: '**Stash** current staged and unstaged changes:
+
+    ```bash
+
+    git stash
+
+    ```
+
+    **List** all stashes:
+
+    ```bash
+
+    git stash list
+
+    ```
+
+    **Apply** a specific stash (keeps it in the list):
+
+    ```bash
+
+    git stash apply stash@{2}
+
+    ```
+
+    **Reapply** the most recent stash and remove it from the list:
+
+    ```bash
+
+    git stash pop
+
+    ```
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Git reset — soft, mixed, and hard
+  prompt: What are the three types of `git reset`, and what does each one affect?
+  answer: '| Type | Effect |
+
+    |---|---|
+
+    | `--soft` | Moves HEAD; keeps changes **staged** |
+
+    | `--mixed` (default) | Moves HEAD; **unstages** changes, keeps them in working directory |
+
+    | `--hard` | Moves HEAD; **discards all changes** — dangerous, can lose work |
+
+
+    **Examples:**
+
+    ```bash
+
+    git reset --soft HEAD~      # one commit back, changes staged
+
+    git reset --mixed HEAD~2    # two commits back, changes unstaged
+
+    git reset --hard HEAD~2     # two commits back, changes LOST
+
+    ```
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Git rebase — replaying a branch onto another
+  prompt: What is `git rebase` and how do you rebase a feature branch onto `master`?
+  answer: '`git rebase` replays the commits of one branch on top of another, producing a cleaner linear history.
+
+
+    ```bash
+
+    git checkout branch_to_rebase
+
+    git rebase master
+
+    ```
+
+
+    This moves the base of `branch_to_rebase` to the tip of `master`, replaying its commits on top.
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Checking out a file from another branch or commit
+  prompt: How do you restore a single file from another branch or a specific commit in Git?
+  answer: '**From another branch:**
+
+    ```bash
+
+    git checkout other_branch -- file_to_checkout.py
+
+    ```
+
+    **From a specific commit:**
+
+    ```bash
+
+    git checkout <COMMIT_HASH> file_to_checkout.py
+
+    ```
+
+    **Reset a file to HEAD state:**
+
+    ```bash
+
+    git checkout -- file_to_reset.py
+
+    ```
+
+    '
+  reference: module-1.md
+- topic: Data Science Toolbox
+  title: Aggregating a DataFrame column with `.mean()` and `.max()`
+  prompt: How do you calculate the mean and maximum of a pandas DataFrame column?
+  answer: 'Use the built-in aggregation methods on a column (Series):
+
+    ```python
+
+    mean_weight = df[''weight''].mean()
+
+    max_horsepower = df[''horsepower''].max()
+
+    ```
+
+    These return a single scalar value computed from all non-null values in the column.
+
+    '
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Counting rows that match a condition
+  prompt: How do you count the number of rows in a DataFrame that satisfy a condition?
+  answer: 'Use boolean indexing combined with `.shape[0]`:
+
+    ```python
+
+    heavy_cars = df[df[''weight''] >= 3500].shape[0]
+
+    ```
+
+    `.shape[0]` returns the row count of the filtered DataFrame.
+
+    '
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Dropping rows with missing values using `.dropna()`
+  prompt: How do you remove rows containing missing values from a pandas DataFrame?
+  answer: 'Use `.dropna()` on a copy of the DataFrame to avoid modifying the original:
+
+    ```python
+
+    df_horsepower = df.copy()
+
+    df_horsepower = df_horsepower.dropna()
+
+    ```
+
+    This removes any row containing at least one `NaN` value.
+
+    '
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Finding the mode of a column with `.mode()[0]`
+  prompt: How do you find the modal (most frequent) value of a pandas column?
+  answer: 'Use `.mode()` on the column. Since there may be multiple modes, `.mode()` returns an array — use `[0]` to get the
+    first value:
+
+    ```python
+
+    mode_hp = df_horsepower[''horsepower''].mode()[0]
+
+    ```
+
+    '
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Concatenating string columns with `.str.cat()`
+  prompt: How do you combine two DataFrame columns into a single string column in pandas?
+  answer: "Use `.str.cat()` on a string column, passing the second column and a separator:\n```python\ndf_name['name_year']\
+    \ = df_name['name'].str.cat(\n    df_name['model_year'].astype('str'), sep=' - 19'\n)\n```\nUse `.astype('str')` to convert\
+    \ non-string columns before concatenation.\n"
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Looking up a value by custom index using a function
+  prompt: How do you write a function that retrieves a column value for a given index entry after setting a custom DataFrame
+    index?
+  answer: "Set a meaningful column as the index, then filter by index equality and extract with `.values[0]`:\n```python\n\
+    df_car_index = df_name.set_index('name_year')\n\ndef acceleration(name_year):\n    return df_car_index[df_car_index.index\
+    \ == name_year]['acceleration'].values[0]\n\nacceleration('ford torino - 1970')\n```\n"
+  reference: notebooks/assignments/cars.ipynb
+- topic: Data Science Toolbox
+  title: Filtering out a specific row value using `!=`
+  prompt: How do you remove rows where a column equals a specific value when cleaning a DataFrame?
+  answer: 'Use boolean indexing with `!=` on the relevant column, working from a copy:
+
+    ```python
+
+    countries = df.copy()
+
+    countries = countries[countries[''location''] != ''World'']
+
+    ```
+
+    This removes any row where `location` equals `''World''`, leaving all other rows intact.
+
+    '
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Selecting and sorting columns with `.loc[]` and `.sort_values()`
+  prompt: How do you select a subset of columns from a DataFrame and sort by one of them in descending order?
+  answer: "Use `.loc[:, cols]` to select columns, then chain `.sort_values()`:\n```python\ncols = ['continent', 'location',\
+    \ 'total_deaths_per_million']\ncountries_dr = countries.loc[:, cols].sort_values(\n    by='total_deaths_per_million',\
+    \ ascending=False\n)\n```\nPass `ascending=False` to place the highest values at the top.\n"
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Summing a column for a filtered group and converting to int
+  prompt: How do you compute the sum of a column for a subset of rows and ensure the result is an integer?
+  answer: "Chain boolean indexing, column selection, `.sum()`, and `.astype(int)`:\n```python\nafrica_tests = (\n    countries[countries['continent']\
+    \ == 'Africa']['total_tests']\n    .sum()\n    .astype(int)\n)\n```\nAlternatively wrap the result in `int()`.\n"
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Counting missing values in a filtered column with `.isna().sum()`
+  prompt: How do you count the number of missing (`NaN`) values in a column for a subset of rows?
+  answer: "Filter the DataFrame first, then chain `.isna().sum()`:\n```python\nafrica_missing_test_data = (\n    countries[countries['continent']\
+    \ == 'Africa']['total_tests']\n    .isna()\n    .sum()\n)\n```\n`.isna()` returns a boolean Series; `.sum()` counts the\
+    \ `True` values.\n"
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Comparing a column value across rows using `.loc[]` and `.sum()`
+  prompt: How do you find how many rows have a value greater than a specific row's value in the same column?
+  answer: "Extract the reference value first, then compare the whole column against it:\n```python\nuk_total_tests = countries.loc[\n\
+    \    countries['location'] == 'United Kingdom', 'total_tests'\n].sum()\n\ncountries_more_tests = countries.loc[\n    countries['total_tests']\
+    \ > uk_total_tests\n].shape[0]\n```\n"
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Selecting specific columns and dropping rows with any NaN
+  prompt: How do you select a subset of columns from a DataFrame and keep only rows that have no missing values in those columns?
+  answer: 'Select the columns first, then call `.dropna()`:
+
+    ```python
+
+    beds_cols = ''hospital_beds_per_thousand total_deaths_per_million''.split()
+
+    beds_dr = countries.loc[:, beds_cols].dropna()
+
+    ```
+
+    `.dropna()` removes any row containing at least one `NaN` in the selected columns.
+
+    '
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Filtering by a column's own mean and aggregating
+  prompt: How do you find the average of one column for rows where another column is above (or below) its own mean?
+  answer: "Calculate the mean first, then use it as a filter threshold:\n```python\nmean_beds = beds_dr['hospital_beds_per_thousand'].mean()\n\
+    \ndr_high_bed_ratio = beds_dr[\n    beds_dr['hospital_beds_per_thousand'] > mean_beds\n]['total_deaths_per_million'].mean()\n\
+    \ndr_low_bed_ratio = beds_dr[\n    beds_dr['hospital_beds_per_thousand'] < mean_beds\n]['total_deaths_per_million'].mean()\n\
+    ```\n"
+  reference: notebooks/assignments/coronavirus.ipynb
+- topic: Data Science Toolbox
+  title: Dropping a column and filtering rows in one chain
+  prompt: How do you remove specific rows and a specific column from a DataFrame in a single expression?
+  answer: 'Chain boolean indexing and `.drop()` together:
+
+    ```python
+
+    clean_df = df.copy()
+
+    clean_df = clean_df[clean_df[''Ticker''] != ''RDSA''].drop([''Strong Buy''], axis=1)
+
+    ```
+
+    `axis=1` tells `.drop()` to remove a column rather than a row.
+
+    '
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: Converting a string column with commas to float
+  prompt: How do you convert a string column containing numeric values with commas (e.g. `"1,234.5"`) to floats in pandas?
+  answer: "Remove the commas first using `.str.replace()`, then cast with `.astype()`:\n```python\nprice_df['Mid-price (p)']\
+    \ = (\n    price_df['Mid-price (p)']\n    .str.replace(\",\", \"\")\n    .astype('float')\n)\n```\nDirect conversion with\
+    \ `float()` or `.astype('float')` fails when commas are present.\n"
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: Applying a custom transformation function with `.apply()`
+  prompt: How do you apply a custom function to every value in a pandas column?
+  answer: "Define the function, then call `.apply()` on the column:\n```python\ndef format_change(string):\n    rmv_pct =\
+    \ string.replace(\"%\", \"\") if \"%\" in string else string\n    rmv_pct_f = float(rmv_pct)\n    return rmv_pct_f * 100\
+    \ if rmv_pct_f > 0 else rmv_pct_f\n\nchange_df['Change (%)'] = change_df['Change'].apply(format_change)\n```\n`.apply()`\
+    \ calls the function once per element and stores the returned value.\n"
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: Computing a portfolio holding cost and value from a tuple
+  prompt: How do you extract values from a tuple and combine them with DataFrame lookups to build a summary dictionary?
+  answer: "Unpack the tuple by index position and use `.values[0]` to retrieve the matching DataFrame value:\n```python\n\
+    holding = ('BP.', 500, 1535.21)\n\nholding_cost = (holding[1] * holding[2]) / 100\nholding_value = (\n    holding[1]\n\
+    \    * change_df[change_df['Ticker'] == 'BP.']['Mid-price (p)'].values[0]\n) / 100\nchange_in_value = ((holding_value\
+    \ - holding_cost) / holding_cost) * 100\n\nholding_dict = {\n    'holding_cost': holding_cost,\n    'holding_value': holding_value,\n\
+    \    'change_in_value': change_in_value,\n}\n```\nPrices are in pence, so divide by 100 to convert to pounds.\n"
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: Adding a boolean column based on comparison to the column mean
+  prompt: How do you add a column that flags whether each row's value beats the column average?
+  answer: 'Calculate the mean, then compare elementwise:
+
+    ```python
+
+    avg_change = comparison_df[''Change (%)''].mean()
+
+    comparison_df[''Beat Market''] = comparison_df[''Change (%)''] > avg_change
+
+    ```
+
+    The comparison returns a boolean Series (`True`/`False`) which is stored directly as a column.
+
+    '
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: Deduplicating a list built inside a loop with `set()`
+  prompt: How do you ensure a list populated inside a loop contains no duplicate entries?
+  answer: "Append items freely inside the loop, then wrap the final list in `set()` and convert back to a list:\n```python\n\
+    companies_list = []\nfor company, price in watchlist:\n    if ...:\n        companies_list.append(company)\n    if ...:\n\
+    \        companies_list.append(company)\n\ncompanies_list = list(set(companies_list))\n```\nA company satisfying both\
+    \ conditions would otherwise appear twice; `set()` removes the duplicate.\n"
+  reference: notebooks/assignments/ftse.ipynb
+- topic: Data Science Toolbox
+  title: What is a NumPy array?
+  prompt: What are the key properties that distinguish a NumPy array from a Python list?
+  answer: 'A NumPy **ndarray** (n-dimensional array) differs from a Python list in three key ways:
+
+
+    - **Homogeneous** — every element must be the same data type
+
+    - **Indexable** — each element has a numeric index corresponding to its location in memory
+
+    - **Mutable** — values can be modified in place (use `.setflags(write=False)` to make immutable)
+
+
+    NumPy makes mathematical operations on arrays **fast** and **memory-efficient**, and underpins libraries such as pandas.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: NumPy array shape, size, and ndim
+  prompt: What do the `.shape`, `.size`, and `.ndim` attributes of a NumPy array represent?
+  answer: '| Attribute | Meaning |
+
+    |---|---|
+
+    | `.shape` | Tuple of element counts along each dimension, e.g. `(2, 3)` |
+
+    | `.size` | Total number of elements (product of all shape values) |
+
+    | `.ndim` | Number of dimensions (axes) |
+
+
+    ```python
+
+    b = np.array([[0, 1, 2], [3, 4, 5]])
+
+    b.shape  # (2, 3)
+
+    b.size   # 6
+
+    b.ndim   # 2
+
+    ```
+
+
+    In NumPy, a vector of 3 elements has `ndim=1` and `shape=(3,)` — not `ndim=3`.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Reshaping a NumPy array
+  prompt: How do you change the shape of a NumPy array without changing its data?
+  answer: 'Use `.reshape()`, providing the new dimensions as arguments. The total number of elements must stay the same:
+
+    ```python
+
+    b = np.array([[1, 2, 3], [4, 5, 6]])  # shape (2, 3)
+
+    b.reshape(6)      # shape (6,)  — 1D flat
+
+    b.reshape(3, 2)   # shape (3, 2)
+
+    ```
+
+    Elements are re-arranged in row-major (C) order by default.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Indexing a multi-dimensional NumPy array
+  prompt: How do you access individual elements and full rows/columns of a 2D NumPy array?
+  answer: 'Use comma-separated indices `array[row, col]`. Use `:` to select an entire dimension:
+
+    ```python
+
+    b = np.array([[1, 2, 3], [4, 5, 6]])
+
+
+    b[0, 0]   # 1  — element at row 0, col 0
+
+    b[0, 2]   # 3  — element at row 0, col 2
+
+    b[0, :]   # array([1, 2, 3])  — entire row 0 (same as b[0])
+
+    b[:, 0]   # array([1, 4])     — entire column 0
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Boolean (mask) indexing in NumPy
+  prompt: How do you select elements from a NumPy array that satisfy a condition?
+  answer: 'Apply a boolean comparison to the array to create a mask, then use the mask to index:
+
+    ```python
+
+    a = np.array([0, 1, 2, 3, 4, 5])
+
+    mask = a > 3          # array([False, False, False, False, True, True])
+
+    a[a > 3]              # array([4, 5])
+
+    ```
+
+    The mask is a boolean array; NumPy returns only the elements where the mask is `True`.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Slicing a NumPy array
+  prompt: How do you extract a contiguous sub-array (slice) from a NumPy array, including with negative indices?
+  answer: 'Use `start:stop` (upper bound exclusive) and, optionally, a step:
+
+    ```python
+
+    a = np.array([0, 1, 2, 3, 4, 5])
+
+
+    a[1:4]    # array([1, 2, 3])
+
+    a[:3]     # array([0, 1, 2])   — from beginning
+
+    a[3:]     # array([3, 4, 5])   — to end
+
+    a[-3:]    # array([3, 4, 5])   — last 3 elements
+
+    a[:-3]    # array([0, 1, 2])   — up to (not including) -3
+
+    a[-1]     # 5                  — last element
+
+    a[::2]    # array([0, 2, 4])   — every other element
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Applying NumPy functions over specific axes
+  prompt: How do you apply a NumPy aggregation function (e.g. sum) along a specific axis of a 2D array?
+  answer: 'Pass `axis=` to specify which dimension to reduce:
+
+    ```python
+
+    b = np.array([[1, 2, 3], [4, 5, 6]])
+
+
+    np.sum(b)         # 21  — sum of all elements
+
+    np.sum(b, axis=0) # array([5, 7, 9])   — sum each column (reduce rows)
+
+    np.sum(b, axis=1) # array([6, 15])     — sum each row (reduce columns)
+
+    ```
+
+    Axis 0 = rows, axis 1 = columns.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: NumPy broadcasting rules
+  prompt: What rules determine whether two NumPy arrays can be broadcast together, and what shape results?
+  answer: 'NumPy aligns shapes from the **trailing** dimension and checks each pair:
+
+
+    - Pair is broadcastable if sizes are **equal**, or **one of them is 1** (the size-1 dimension is stretched).
+
+    - Pairs that are neither equal nor include a 1 **cannot** be broadcast — this raises a `ValueError`.
+
+
+    **Examples:**
+
+    ```python
+
+    a.shape = (2, 3)
+
+    b.shape = (   3)  # trailing dims match → result (2, 3)
+
+
+    a.shape = (2, 3)
+
+    b.shape = (2, 4)  # 3 ≠ 4, neither is 1 → ValueError
+
+    ```
+
+    A scalar (shape `()`) can always be broadcast with any array.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Deterministic array generation in NumPy
+  prompt: What NumPy functions create arrays with predictable (non-random) values?
+  answer: '| Function | Output |
+
+    |---|---|
+
+    | `np.linspace(lo, hi, N)` | N evenly spaced floats from `lo` to `hi` |
+
+    | `np.arange(upper)` | Integers from 0 up to (not including) `upper` |
+
+    | `np.ones(shape)` | Array of 1s with the given shape |
+
+    | `np.zeros(shape)` | Array of 0s with the given shape |
+
+    | `np.eye(N)` | $N \times N$ identity matrix |
+
+
+    ```python
+
+    np.linspace(1, 5, 10)  # 10 points between 1 and 5
+
+    np.arange(15)           # [0, 1, ..., 14]
+
+    np.eye(3)               # 3×3 identity
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Stacking NumPy arrays with `np.stack`, `np.vstack`, and `np.hstack`
+  prompt: How do you combine multiple NumPy arrays along a new or existing axis?
+  answer: '- **`np.stack((a, b))`** — joins along a **new** axis (default `axis=0`, creating a new leading dimension)
+
+    - **`np.vstack([a, b])`** — stacks **vertically** (row-wise, along axis 0)
+
+    - **`np.hstack([a, b])`** — stacks **horizontally** (column-wise, along axis 1)
+
+
+    ```python
+
+    d = np.array([1, 5, 3])
+
+    e = np.array([4, 4, 2])
+
+
+    np.stack((d, e))          # shape (2, 3)  — two rows
+
+    np.stack((d, e), axis=1)  # shape (3, 2)  — two columns
+
+    np.vstack([d, e])         # shape (2, 3)
+
+    np.hstack([d, e])         # shape (6,)
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: Useful NumPy array methods
+  prompt: What array methods can be called directly on a NumPy ndarray (without the `np.` prefix)?
+  answer: 'Common methods callable directly on an array instance:
+
+
+    | Method | Description |
+
+    |---|---|
+
+    | `a.mean()` | Mean of all elements (or along an axis) |
+
+    | `a.T` | Transpose of the array |
+
+    | `a.argmax()` | Index of the maximum element |
+
+    | `a.reshape(shape)` | Return array with new shape |
+
+    | `a.setflags(write=False)` | Make the array immutable |
+
+
+    These are equivalent to `np.mean(a)`, `np.transpose(a)`, etc.
+
+    '
+  reference: notebooks/numpy/numpy-lesson.ipynb
+- topic: Data Science Toolbox
+  title: NumPy infers array dtype from input
+  prompt: How does NumPy decide the data type (`dtype`) of an array created from a Python list?
+  answer: 'NumPy infers the **most general type** that is compatible with all elements:
+
+
+    ```python
+
+    np.array([True, False]).dtype        # bool
+
+    np.array([1, 2, 5]).dtype            # int64
+
+    np.array([1, 2, 5, 3.0]).dtype       # float64  (one float promotes all)
+
+    np.array([1, 2, "a"]).dtype          # <U21     (string/object when mixed)
+
+    ```
+
+    You can also specify dtype explicitly: `np.array([1, 2], dtype=float)`.
+
+    '
+  reference: notebooks/numpy/numpy-practical1-solution.ipynb
+- topic: Data Science Toolbox
+  title: Vector vs row matrix vs column matrix in NumPy
+  prompt: How does a 1D NumPy vector differ from a 2D row or column matrix, and how do you convert between them?
+  answer: '| | Shape |
+
+    |---|---|
+
+    | Vector | `(n,)` |
+
+    | Row matrix | `(1, n)` |
+
+    | Column matrix | `(n, 1)` |
+
+
+    Broadcasting between a vector and a row/column matrix produces a **2D result** due to shape differences. Use `.reshape()`
+    or `.squeeze()` to convert:
+
+
+    ```python
+
+    vec = np.array([1, 2, 3])           # (3,)
+
+    row = np.array([[1, 2, 3]])          # (1, 3)
+
+    col = np.array([[1], [2], [3]])      # (3, 1)
+
+
+    col.reshape((3,))   # → (3,) vector
+
+    row.squeeze()       # → (3,) vector
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-practical1-solution.ipynb
+- topic: Data Science Toolbox
+  title: Fancy (list) indexing in NumPy
+  prompt: How do you select multiple non-contiguous elements from a NumPy array by specifying their indices explicitly?
+  answer: 'Pass a **list of indices** inside the square brackets — NumPy returns an array of the corresponding elements:
+
+    ```python
+
+    a = np.array([0, 1, 2, 3, 4, 5])
+
+    indices = [0, 1, 4]
+
+    a[indices]   # array([0, 1, 4])
+
+    ```
+
+    This is called **fancy indexing** and works across multiple dimensions too.
+
+    '
+  reference: notebooks/numpy/numpy-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Slicing with a step in NumPy
+  prompt: How do you select every nth element from a NumPy array using slice notation?
+  answer: 'Use the `start:stop:step` slice syntax. Omitting `start` or `stop` defaults to the array boundaries:
+
+    ```python
+
+    a = np.array([1, 2, 3, 4, 5, 6])
+
+
+    a[2:6:3]   # every 3rd element in range 2–5 → array([3, 6])
+
+    a[::2]     # every 2nd element from start   → array([1, 3, 5])
+
+    ```
+
+    For a 2D array, apply the step in the correct axis:
+
+    ```python
+
+    b = np.array([[1, 2, 3, 4, 5], [5, 4, 3, 2, 1]])
+
+    b[:, ::2]  # every other column → shape (2, 3)
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Modifying array elements in place
+  prompt: How do you update elements of a NumPy array using indexing, slicing, and broadcasting?
+  answer: 'Assign directly to the indexed location — the array is modified in place:
+
+    ```python
+
+    a = np.array([1, 2, 3])
+
+
+    a[0] = 5             # indexing  → [5, 2, 3]
+
+    a[0:3] = [5, 5, 5]  # slicing   → [5, 5, 5]
+
+    a[0:2] = 2           # broadcast → [2, 2, 5]
+
+    a[:, :] = 1          # all elements set to 1
+
+    ```
+
+    Broadcasting rules apply: a scalar is stretched to fill all indexed positions.
+
+    '
+  reference: notebooks/numpy/numpy-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Computing the mean over a specific axis with `np.random.randn`
+  prompt: How do you generate a 2D array of random numbers and compute the mean across one axis?
+  answer: 'Use `np.random.randn(rows, cols)` to generate random values from a standard normal distribution, then pass `axis=`
+    to `.mean()`:
+
+    ```python
+
+    points = np.random.randn(2, 500)   # shape (2, 500)
+
+
+    # Mean over the column axis (axis=0): one mean per row → shape (500,)
+
+    points.mean(axis=0)
+
+
+    # Mean over the row axis (axis=1): one mean per column → shape (2,)
+
+    points.mean(axis=1)
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-practical3-solution.ipynb
+- topic: Data Science Toolbox
+  title: Generating linearly spaced arrays with `np.linspace` vs `np.arange`
+  prompt: What is the difference between `np.linspace` and `np.arange` for generating sequences of numbers?
+  answer: '| | `np.linspace(start, stop, N)` | `np.arange(start, stop)` |
+
+    |---|---|---|
+
+    | Controls | **number of points** | **step size** (default 1) |
+
+    | Endpoint | included | excluded |
+
+    | Output dtype | `float64` | matches input (often `int`) |
+
+
+    ```python
+
+    np.linspace(1, 10, 10)  # [1., 2., 3., ..., 10.] — 10 floats
+
+    np.arange(1, 11)        # [1, 2, 3, ..., 10]     — 10 ints
+
+
+    all(np.linspace(1, 10, 10) == np.arange(1, 11))  # True
+
+    ```
+
+    '
+  reference: notebooks/numpy/numpy-practical3-solution.ipynb
+- topic: Data Science Toolbox
+  title: Applying element-wise mathematical functions in NumPy
+  prompt: How do you apply mathematical functions like sine and exponential to every element of a NumPy array?
+  answer: 'Use NumPy''s vectorised equivalents of standard maths functions — they operate element-wise without loops:
+
+    ```python
+
+    x = np.linspace(-1, 3, 100)
+
+    y = np.sin(np.exp(-(x**2)))
+
+    ```
+
+    Key functions include `np.sin`, `np.cos`, `np.exp`, `np.log`, `np.sqrt`. These return an array of the same shape as the
+    input.
+
+    '
+  reference: notebooks/numpy/numpy-practical3-solution.ipynb
+- topic: Data Science Toolbox
+  title: The three types of data processing in pandas
+  prompt: What are the three categories of data processing operations typically performed on a DataFrame?
+  answer: '- **Aggregation**: summarising data, e.g. computing totals, averages, or counts
+
+    - **Transformation**: converting or reshaping data, e.g. changing types, binning, encoding
+
+    - **Cleaning**: handling missing values, removing duplicates, fixing inconsistencies
+
+    '
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Concatenating DataFrames vertically with `pd.concat()`
+  prompt: How do you stack multiple DataFrames on top of each other using pandas?
+  answer: '```python
+
+    combined = pd.concat([df1, df2])              # keeps original index
+
+    combined = pd.concat([df1, df2], ignore_index=True)  # resets index
+
+    ```
+
+    `pd.concat()` joins DataFrames along an axis (default `axis=0`, vertical). Use `ignore_index=True` to avoid duplicate
+    index labels.
+
+    '
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: The four pandas join types
+  prompt: What does each join type return when merging two DataFrames?
+  answer: '| Join | Rows returned |
+
+    |---|---|
+
+    | LEFT | All rows from left; matching rows from right |
+
+    | RIGHT | All rows from right; matching rows from left |
+
+    | INNER | Only rows with matching keys in **both** DataFrames |
+
+    | FULL OUTER | All rows from both DataFrames; `NaN` where no match |
+
+
+    Unmatched rows in the non-primary DataFrame are filled with `NaN`.
+
+    '
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Merging DataFrames on differently-named columns with `.merge()`
+  prompt: How do you merge two DataFrames when the key columns have different names in each DataFrame?
+  answer: "```python\ndf_merged = df_left.merge(\n    df_right,\n    how='left',\n    left_on='drug_name',\n    right_on='product_name',\n\
+    \    indicator=True\n)\n```\nUse `left_on=` and `right_on=` for differently-named key columns. `indicator=True` adds a\
+    \ `_merge` column showing whether each row matched in both, left only, or right only.\n"
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Merging DataFrames using their index as the join key
+  prompt: How do you perform a merge where one or both DataFrames use their index instead of a named column?
+  answer: '```python
+
+    # Set a column as index when reading CSV
+
+    df = pd.read_csv(''data.csv'', index_col=''id'')
+
+
+    # Merge using index from both DataFrames
+
+    df_merged = df_left.merge(df_right, left_index=True, right_index=True)
+
+
+    # Mix index from right with column from left
+
+    df_merged = df_left.merge(df_right, left_on=''id'', right_index=True)
+
+    ```
+
+    `left_index=True` or `right_index=True` tells `.merge()` to use the DataFrame''s index as the join key instead of a named
+    column.
+
+    '
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Replacing NaN and sentinel zero values in a DataFrame
+  prompt: How do you fill NaN values in a column, and how do you replace zeros that actually represent missing data?
+  answer: '```python
+
+    # Fill NaN with a specific value
+
+    df[''col''].fillna(0, inplace=True)
+
+
+    # Replace zeros with NaN (when 0 means "missing")
+
+    df[''col''] = df[''col''].replace(0, np.nan)
+
+    ```
+
+    `.fillna()` replaces `NaN` with a given value. `.replace(old, new)` replaces specific values — useful when a placeholder
+    like `0` actually indicates missing data.
+
+    '
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Using `.groupby()` with `.agg()` for multiple named aggregations
+  prompt: How do you use `.groupby()` and `.agg()` together to compute multiple statistics and control the result column names?
+  answer: "```python\nmanu_agg = df.groupby(\"Manufacturer Name\").agg(\n    entries=(\"Manufacturer Name\", \"size\"),\n\
+    \    patient_estimates=(\"Estimated Number of Patients\", \"count\"),\n)\n```\nEach argument to `.agg()` is a named tuple\
+    \ `result_column=('source_column', 'function')`. Use `\"size\"` to count all rows (including `NaN`); use `\"count\"` to\
+    \ count only non-`NaN` rows.\n"
+  reference: notebooks/pandas/data-processing-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Differences between `pivot()` and `pivot_table()`
+  prompt: When should you use `pivot()` versus `pivot_table()`?
+  answer: '| Feature | `pivot()` | `pivot_table()` |
+
+    |---|---|---|
+
+    | Data types | Numerical and categorical | Numerical only |
+
+    | Duplicate rows | Fails (requires unique index/column combos) | Handles duplicates via `aggfunc` |
+
+    | Aggregation | Not supported | Supported (e.g. `aggfunc=''sum''`) |
+
+
+    Use `pivot()` for simple reshaping with unique row/column combinations. Use `pivot_table()` when duplicate rows exist
+    or aggregation is needed.
+
+    '
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Converting wide-format data to long-format with `melt()`
+  prompt: How do you reverse a pivot and convert a DataFrame from wide to long format?
+  answer: "```python\nlong_df = pd.melt(\n    df,\n    id_vars='Country',\n    var_name='Metric',\n    value_name='Measurement'\n\
+    )\n```\n`melt()` \"unpivots\" a DataFrame: `id_vars` columns are kept as-is, and the remaining columns are stacked into\
+    \ rows. Column names become values in `var_name`; original cell values go into `value_name`.\n"
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Creating a column MultiIndex in pandas
+  prompt: How do you create a DataFrame with a hierarchical column index?
+  answer: "```python\n# From tuples\ncolumns = pd.MultiIndex.from_tuples(\n    [('profit', 'online'), ('profit', 'in-store'),\
+    \ ('revenue', 'online')]\n)\n\n# From arrays\ncolumns = pd.MultiIndex.from_arrays(\n    [['profit', 'profit', 'revenue'],\
+    \ ['online', 'in-store', 'online']]\n)\n\ndf = pd.DataFrame([...], columns=columns)\n```\nAccess values by chaining: `df['profit']['online']`,\
+    \ or with `loc`: `df.loc[:, ('profit', 'online')]`.\n"
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Creating and accessing a row MultiIndex with `.loc[]`
+  prompt: How do you create a DataFrame with a hierarchical row index and access subsets of it?
+  answer: "```python\nindex = pd.MultiIndex.from_tuples(\n    [('GB', 'London'), ('GB', 'Cambridge'), ('US', 'New York')]\n\
+    )\ndf = pd.DataFrame([...], index=index)\n\n# Access all rows for top-level label 'GB'\ndf.loc[\"GB\", :]\n\n# Access\
+    \ specific country + city\ndf.loc[(\"GB\", \"London\"), :]\n```\nThe row MultiIndex is passed as the `index` parameter.\
+    \ Use `.loc[label, :]` for the top level, or `.loc[(level0, level1), :]` to navigate deeper.\n"
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Transposing MultiIndex hierarchies with `stack()` and `unstack()`
+  prompt: What do `stack()` and `unstack()` do in the context of a MultiIndex DataFrame?
+  answer: '```python
+
+    # stack: inner column index level → inner row index level
+
+    df_stacked = df.stack(future_stack=True)
+
+
+    # unstack: inner row index level → inner column index level
+
+    df_unstacked = df_stacked.unstack()
+
+    ```
+
+    `stack()` pivots the innermost column level to become an innermost row level. `unstack()` reverses this. The hierarchy
+    is preserved but transposed — conceptually similar to `melt()`/`pivot()` but for MultiIndex DataFrames.
+
+    '
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Tabulating values across two columns with `pd.crosstab()`
+  prompt: How do you use `pd.crosstab()` to summarise values across two categorical columns?
+  answer: "```python\npd.crosstab(\n    df['Country'],\n    columns=df['Type'],\n    values=df['Profit'],\n    aggfunc='sum'\n\
+    )\n```\nWithout `values`/`aggfunc`, `crosstab()` counts occurrences (frequency table). With them it aggregates like `pivot_table()`.\
+    \ Best for simple analyses; `pivot_table()` is more flexible for complex queries.\n"
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Binning numerical data with `cut()` and encoding categoricals with `factorize()`
+  prompt: How do you convert numerical data into discrete categories, and how do you encode a categorical column as integers?
+  answer: '```python
+
+    # cut: bin values into N equal-width intervals
+
+    a = np.linspace(0, 9, 10)
+
+    binned = pd.cut(a, bins=2)
+
+    # returns Categorical of intervals, e.g. (-0.009, 4.5] and (4.5, 9.0]
+
+
+    # factorize: map each unique value to an integer code
+
+    codes, uniques = pd.factorize(pd.Series([''GB'', ''GB'', ''US'', ''FR'', ''GB'']))
+
+    # codes:   [0, 0, 1, 2, 0]
+
+    # uniques: Index([''GB'', ''US'', ''FR''])
+
+    uniques[codes[0]]  # → ''GB''
+
+    ```
+
+    `cut()` replaces values with their bin interval. `factorize()` assigns integer codes — useful for compressing repeated
+    strings or downstream categorical analysis.
+
+    '
+  reference: notebooks/pandas/further-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Summarising data with `pd.pivot_table()` and `aggfunc='sum'`
+  prompt: How do you use `pivot_table()` to sum multiple value columns grouped by a row index?
+  answer: "```python\nsummary = pd.pivot_table(\n    df,\n    values=['Sales', 'Revenue', 'Cost'],\n    index='Region',\n\
+    \    aggfunc='sum'\n)\n```\n`values` lists the columns to aggregate; `index` sets the grouping column (becomes the row\
+    \ index). `aggfunc` controls the aggregation — defaults to `'mean'` if omitted.\n"
+  reference: notebooks/pandas/further-pandas-practical1-solution.ipynb
+- topic: Data Science Toolbox
+  title: Filtering a melted DataFrame using string methods
+  prompt: After using `melt()`, how do you clean whitespace and filter rows based on partial string matches in the variable
+    column?
+  answer: '```python
+
+    long = pd.melt(df, id_vars=''Country'', var_name=''Metric'', value_name=''Measurement'')
+
+
+    # Clean whitespace, then filter by partial match
+
+    long[''Metric''] = long[''Metric''].str.strip()
+
+    filtered = long[long[''Metric''].str.contains(''Population'')].copy()
+
+    filtered = filtered.set_index(''Metric'').drop(''Country'', axis=1)
+
+    ```
+
+    Use `.str.strip()` to remove leading/trailing whitespace. `.str.contains()` filters rows by substring match. Call `.copy()`
+    on the filtered result to avoid `SettingWithCopyWarning`.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical1-solution.ipynb
+- topic: Data Science Toolbox
+  title: Avoiding `SettingWithCopyWarning` with `.copy()`
+  prompt: When is it necessary to call `.copy()` after filtering a DataFrame, and what problem does it prevent?
+  answer: 'Without `.copy()`, a filtered DataFrame may be a **view** of the original rather than an independent object. Modifying
+    a view can silently modify the original and triggers `SettingWithCopyWarning`:
+
+    ```python
+
+    # Risky — may be a view
+
+    filtered = df[df[''col''] > 0]
+
+    filtered[''new_col''] = 1  # may affect df too
+
+
+    # Safe — guaranteed independent copy
+
+    filtered = df[df[''col''] > 0].copy()
+
+    filtered[''new_col''] = 1
+
+    ```
+
+    Always call `.copy()` when you plan to modify a filtered subset of a DataFrame.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical1-solution.ipynb
+- topic: Data Science Toolbox
+  title: Creating a MultiIndex for all combinations with `from_product()`
+  prompt: How do you create a MultiIndex that covers every combination of two lists?
+  answer: "```python\nindex = pd.MultiIndex.from_product(\n    [['2020', '2021'], ['Q1', 'Q2', 'Q3', 'Q4']],\n    names=['year',\
+    \ 'quarter']\n)\n```\n`from_product()` generates the Cartesian product of the input lists — every combination of `year\
+    \ × quarter` (8 entries here). `names=` labels each level of the hierarchy.\n"
+  reference: notebooks/pandas/further-pandas-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Grouping by multiple columns and reshaping the result with `unstack()`
+  prompt: How do you group a DataFrame by two columns to get a MultiIndex result, then move one index level to columns?
+  answer: '```python
+
+    gb = df.groupby([''Region'', ''Net inward migration''])[[''Birthrate'', ''Deathrate'']].mean()
+
+    # gb has a row MultiIndex: (Region, Net inward migration)
+
+
+    wide = gb.unstack()
+
+    # Moves ''Net inward migration'' from rows → columns, creating a column MultiIndex
+
+    ```
+
+    `.groupby()` on a list of columns produces a MultiIndex on the rows. `.unstack()` pivots the inner row index level to
+    become an inner column index level.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Removing a level from a column MultiIndex with `droplevel()`
+  prompt: How do you remove an unwanted level from a column MultiIndex after unstacking?
+  answer: '```python
+
+    # After unstack(), columns become MultiIndex:
+
+    # (''Birthrate'', True), (''Birthrate'', False), (''Deathrate'', True), ...
+
+
+    df.columns = df.columns.droplevel(1)
+
+    # → Index([''Birthrate'', ''Birthrate'', ''Deathrate'', ''Deathrate''])
+
+    ```
+
+    `droplevel(level)` removes the specified level (by position or name) from the column MultiIndex. Assign back to `df.columns`
+    to apply the change.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: Sorting a DataFrame by a MultiIndex column using a tuple key
+  prompt: How do you sort a DataFrame by a column that has a MultiIndex (tuple) header?
+  answer: '```python
+
+    df.sort_values(by=(''Birthrate'', False), ascending=False)
+
+    ```
+
+    When columns are a MultiIndex, pass a **tuple** to `by=` in `sort_values()`. The tuple must exactly match the level values
+    of the target column — e.g. `(''Birthrate'', False)` selects the column at level-0 `''Birthrate''` and level-1 `False`.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical2-solution.ipynb
+- topic: Data Science Toolbox
+  title: '`pd.cut()` vs `pd.qcut()` — equal-width vs equal-frequency binning'
+  prompt: What is the key difference between `pd.cut()` and `pd.qcut()`, and when should you use each?
+  answer: "| Function | Bins are... | Use when... |\n|---|---|---|\n| `pd.cut()` | **equal width** (same value range per bin)\
+    \ | you care about the scale of values |\n| `pd.qcut()` | **equal frequency** (same number of rows per bin) | you want\
+    \ balanced groups |\n\n```python\n# Equal-width bins — 3 value ranges\ndf['Income group (amount)'] = pd.cut(\n    df['GDP\
+    \ ($ per capita)'], bins=3, labels=['Low', 'Medium', 'High']\n)\n\n# Equal-frequency bins — 3 groups with ~same number\
+    \ of countries\ndf['Income group (number)'] = pd.qcut(\n    df['GDP ($ per capita)'], 3, labels=['Low', 'Medium', 'High']\n\
+    )\n```\n"
+  reference: notebooks/pandas/further-pandas-practical3-solution.ipynb
+- topic: Data Science Toolbox
+  title: Counting rows per group combination with `.groupby().size()` and `.unstack()`
+  prompt: How do you count the number of rows for each combination of two categorical columns and display the result as a
+    matrix?
+  answer: 'Use `.groupby()` with a list of columns, then call `.size()` to count rows. Chain `.unstack()` to pivot the inner
+    index level into columns:
+
+
+    ```python
+
+    reg_inc = df.groupby([''Region'', ''Income group (number)'']).size()
+
+    # Returns a Series with a MultiIndex: (Region, Income group)
+
+
+    reg_inc.unstack()
+
+    # Moves ''Income group'' from rows → columns — easy-to-read matrix view
+
+    ```
+
+
+    `.size()` counts **all** rows (including those with `NaN`). Use `.count()` to exclude `NaN`.
+
+    '
+  reference: notebooks/pandas/further-pandas-practical3-solution.ipynb
+- topic: Data Science Toolbox
+  title: Quick DataFrame exploration with `.head()`, `.tail()`, and `.sample()`
+  prompt: What pandas methods give you a quick first look at the rows in a DataFrame?
+  answer: '| Method | Returns |
+
+    |---|---|
+
+    | `df.head(n)` | First **n** rows (default 5) |
+
+    | `df.tail(n)` | Last **n** rows (default 5) |
+
+    | `df.sample(n)` | **n** random rows |
+
+
+    ```python
+
+    df.head()     # first 5 rows
+
+    df.tail(3)    # last 3 rows
+
+    df.sample(3)  # 3 random rows
+
+    ```
+
+
+    These are the standard first steps of **Exploratory Data Analysis (EDA)**.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Inspecting DataFrame structure with `.info()`
+  prompt: What does `df.info()` show, and what is each part useful for?
+  answer: '`.info()` prints a compact summary of a DataFrame:
+
+
+    - **RangeIndex** — number of rows
+
+    - **Non-Null Count** — how many values are present (not `NaN`) in each column
+
+    - **Dtype** — the pandas type of each column (`object`, `int64`, `float64`, `bool`, `datetime64`, …)
+
+
+    ```python
+
+    df.info()
+
+    df.dtypes   # just the data type for each column
+
+    ```
+
+
+    Use it to quickly spot **missing values** and confirm columns have the correct type.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Summarising numerical columns with `.describe()`
+  prompt: What statistics does `df.describe()` return for each numerical column?
+  answer: '`.describe()` returns **8 descriptive statistics** per numeric column:
+
+
+    | Statistic | Meaning |
+
+    |---|---|
+
+    | `count` | Non-null value count |
+
+    | `mean` | Average |
+
+    | `std` | Standard deviation |
+
+    | `min` | Minimum |
+
+    | `25%` / `50%` / `75%` | Quartiles |
+
+    | `max` | Maximum |
+
+
+    ```python
+
+    df.describe()
+
+    ```
+
+
+    Use it to assess the **range, distribution, and skew** of numeric columns.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Getting DataFrame dimensions with `.shape`
+  prompt: How do you find out how many rows and columns a pandas DataFrame has?
+  answer: 'The `.shape` **attribute** (no parentheses) returns a `tuple` of `(rows, columns)`:
+
+
+    ```python
+
+    df.shape          # e.g. (7043, 21)
+
+    rows = df.shape[0]   # 7043
+
+    cols = df.shape[1]   # 21
+
+    ```
+
+
+    `.shape[0]` is equivalent to `len(df)` for the row count, but `.shape` also provides the column count in a single call.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Position-based indexing with `.iloc[]`
+  prompt: How do you select rows and columns from a DataFrame by their integer position?
+  answer: '`.iloc[rows, columns]` uses **zero-based integer positions**. Upper bounds are **exclusive** (like Python lists):
+
+
+    ```python
+
+    df.iloc[0:3, 0:5]        # rows 0–2, columns 0–4
+
+    df.iloc[0:3, [0, 1, 9]]  # rows 0–2, specific columns by position
+
+    df.iloc[0:3, :]          # rows 0–2, all columns
+
+    df.iloc[0]               # single row → returns a Series
+
+    df.iloc[:, 0]            # single column → returns a Series
+
+    ```
+
+
+    If the row/column position is out of range, an **empty DataFrame** (not an error) is returned.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Label-based indexing with `.loc[]`
+  prompt: How does `.loc[]` differ from `.iloc[]`, and why is it considered more robust?
+  answer: '`.loc[rows, columns]` selects by **row labels and column names** — not integer positions:
+
+
+    ```python
+
+    df.loc[0:3, [''customerid'', ''tenure'', ''churn'']]
+
+    df.loc[:, ''customerid'']   # all rows, one column
+
+    ```
+
+
+    **Key difference vs `.iloc[]`:**
+
+    - `.iloc[0:3]` returns rows at positions 0, 1, 2 (stop is **exclusive**)
+
+    - `.loc[0:3]` returns rows with labels 0, 1, 2, 3 (stop is **inclusive**)
+
+
+    `.loc[]` is **more robust**: re-ordering or removing rows won''t silently return the wrong data.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Selecting columns with bracket notation vs dot notation
+  prompt: What are the two ways to select a column from a pandas DataFrame, and when does each work?
+  answer: '```python
+
+    df[''tenure'']                  # bracket notation — always works
+
+    df.tenure                     # dot notation — shorter, but limited
+
+
+    df[[''customerid'', ''tenure'']]  # multiple columns → returns a DataFrame
+
+    ```
+
+
+    **Dot notation limitations:**
+
+    - Fails if the column name contains **spaces** or **special characters**
+
+    - Cannot be used to **create new columns**
+
+
+    Use bracket notation whenever in doubt.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Filtering DataFrame rows with a boolean mask
+  prompt: How do you select rows from a DataFrame that match a condition?
+  answer: 'Create a boolean Series (the **mask**), then pass it inside square brackets to filter the DataFrame:
+
+
+    ```python
+
+    phone_mask = df[''phoneservice''] == ''Yes''
+
+    phones = df[phone_mask]
+
+
+    # Inline version
+
+    phones = df[df[''phoneservice''] == ''Yes'']
+
+    ```
+
+
+    The mask is a Series of `True`/`False` — one per row. Only rows where the mask is `True` are returned.
+
+
+    For string-based filters, use `.str` accessor methods:
+
+    ```python
+
+    df[df[''paymentmethod''].str.contains(''Electronic'')]
+
+    ```
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Combining filter conditions with `&` and `|`
+  prompt: How do you filter a DataFrame using multiple conditions joined with AND or OR?
+  answer: 'Wrap **each condition in parentheses**, then combine with `&` (AND) or `|` (OR):
+
+
+    ```python
+
+    # AND — both conditions must be True
+
+    pt_mask = (df[''phoneservice''] == ''Yes'') & (df[''tenure''] >= 24)
+
+
+    # OR — either condition can be True
+
+    pi_mask = (df[''phoneservice''] == ''Yes'') | (df[''internetservice''] == ''Fiber optic'')
+
+
+    df[pt_mask]
+
+    ```
+
+
+    Do **not** use Python''s `and`/`or` keywords — they do not work element-wise on Series. Always use `&` and `|`, and always
+    parenthesise each condition.
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Updating a single DataFrame cell with `.loc[]`
+  prompt: How do you overwrite the value in a specific row and column of a DataFrame?
+  answer: 'Use `.loc[row_label, column_name] = new_value` to target a single cell, or pass a list of columns to update several
+    at once:
+
+
+    ```python
+
+    df.loc[2233, ["Weekly hours open", "Weekly hours staffed"]] = 57
+
+    ```
+
+
+    Always work on a **copy** of the DataFrame to avoid accidentally modifying the original:
+
+    ```python
+
+    new_df = df.copy()
+
+    new_df.loc[0, ''paperlessbilling''] = ''No''
+
+    ```
+
+    '
+  reference: notebooks/pandas/intro-to-pandas-workbook-solution.ipynb
+- topic: Data Science Toolbox
+  title: Calculating the percentage of rows meeting a condition with `len()`
+  prompt: How do you compute what percentage of rows in a DataFrame satisfy a given filter?
+  answer: "Divide the count of filtered rows by the total row count, then multiply by 100:\n\n```python\npct_zero_hours =\
+    \ (\n    len(df_open[df_open['Weekly hours open'] == 0]) / len(df_open) * 100\n)\n```\n\n`len(df)` returns the number\
+    \ of rows. The overall pattern is:\n`len(filtered_df) / len(df) * 100`\n"
+  reference: notebooks/pandas/intro-to-pandas-workbook-solution.ipynb
+- topic: Data Science Toolbox
+  title: Creating a compound ID column by concatenating strings with `.astype(str)`
+  prompt: How do you build a new column whose values combine a string column and an integer column?
+  answer: "Convert the integer column to `str` first using `.astype(str)`, then concatenate with `+`:\n\n```python\noutlets_detail['new_id']\
+    \ = (\n    outlets_detail['Region'] + '_' + outlets_detail['location_id'].astype(str)\n)\n# e.g. 'Europe_1', 'Americas_3'\n\
+    ```\n\nPandas cannot directly concatenate `str` and `int` Series with `+` — `.astype(str)` converts the integer column\
+    \ to strings first.\n"
+  reference: notebooks/pandas/processing-pandas-workbook-solution.ipynb
+- topic: Data Science Toolbox
+  title: Classifying rows into categories with a lookup function and `.apply()`
+  prompt: How do you create a new categorical column based on membership in predefined lists?
+  answer: "Define a function that checks membership in each list and returns the category label, then apply it to a column:\n\
+    \n```python\nEUROPE   = ['UK', 'Italy', 'France', 'Germany', 'Ireland']\nAMERICAS = ['Argentina', 'Brazil', 'USA']\n\n\
+    def region(country):\n    if country in EUROPE:\n        return 'Europe'\n    elif country in AMERICAS:\n        return\
+    \ 'Americas'\n    else:\n        return 'Other'\n\noutlets_detail['Region'] = outlets_detail['Country'].apply(region)\n\
+    ```\n\n`.apply()` calls the function once per cell and stores the returned label as the new column value.\n"
+  reference: notebooks/pandas/processing-pandas-workbook-solution.ipynb
+- topic: Data Science Toolbox
+  title: Python Boolean operators — `and`, `or`, `not`
+  prompt: What do the Boolean operators `and`, `or`, and `not` do when combining conditions?
+  answer: '- **`and`** — both operands must be `True` to produce `True`
+
+    - **`or`** — at least one operand must be `True` to produce `True`
+
+    - **`not`** — negates the result; `not True` is `False`
+
+
+    ```python
+
+    age = 25; weight = 90
+
+
+    age > 10 and weight > 80    # True AND True  → True
+
+    age > 10 and weight > 100   # True AND False → False
+
+    age > 10 or weight > 100    # True OR False  → True
+
+    not age > 10                # not True       → False
+
+    ```
+
+    '
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Comparison operators in Python
+  prompt: What comparison operators can be used with any Python data type to produce a Boolean result?
+  answer: '| Operator | Description |
+
+    |---|---|
+
+    | `==` | Equal |
+
+    | `!=` | Not equal |
+
+    | `>` | Greater than |
+
+    | `>=` | Greater than or equal to |
+
+    | `<` | Less than |
+
+    | `<=` | Less than or equal to |
+
+
+    ```python
+
+    26 == 26.0    # True  — int equals equivalent float
+
+    ''42'' == 42    # False — str never equals int/float
+
+    ''python'' == ''Python''  # False — string comparison is case-sensitive
+
+    ```
+
+    '
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Truthy and falsy values in Python
+  prompt: What categories of values evaluate to `False` when passed to `bool()`?
+  answer: 'Python considers three categories of values **falsy** (evaluate to `False`):
+
+
+    1. Numeric values equal to **zero** — `bool(0)` → `False`; `bool(1)` → `True`
+
+    2. **Empty** sequences and data structures — `bool('''')` → `False`; `bool(''python'')` → `True`
+
+    3. `None` and `False` itself
+
+
+    ```python
+
+    bool(0)       # False
+
+    bool(1)       # True
+
+    bool('''')      # False
+
+    bool(''hi'')    # True
+
+    ```
+
+
+    Everything else is considered **truthy**.
+
+    '
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: '`elif` for multiple conditional branches'
+  prompt: How does an `elif` chain work, and what is the rule for which branch executes?
+  answer: "Python evaluates each condition in turn and executes the **first** block that is `True`. All subsequent branches\
+    \ are skipped, even if they would also be `True`.\n\n```python\nage = 77\n\nif age < 0 or age > 150:\n    print('Invalid\
+    \ age entered')\nelif age >= 65:\n    category = 'Pensioner'\nelif age >= 18:\n    category = 'Adult'\nelse:\n    category\
+    \ = 'Child'\n```\n\n- `elif` and `else` are **optional** and can appear any number of times.\n- Any code outside the conditional\
+    \ block runs as normal regardless of which branch executed.\n"
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Basic `for` loop pattern in Python
+  prompt: What is the general pattern of a `for` loop, and what does the loop variable represent?
+  answer: "A `for` loop executes code **for each element** in a sequence:\n\n```python\nnames = ['Dave', 'Sara', 'Mo']\n\n\
+    for name in names:\n    print(name)\n```\n\n- The variable between `for` and `in` (here `name`) represents the **current\
+    \ element** on each iteration.\n- Any valid Python identifier can be used as the loop variable name.\n- Each pass through\
+    \ the loop body is one **iteration**.\n"
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Iterating over a list of tuples in a `for` loop
+  prompt: How do you access individual fields from each tuple when looping over a list of tuples?
+  answer: "Access tuple elements by **index position** inside the loop body:\n\n```python\nprofiles = [('John', 46), ('Paul',\
+    \ 21), ('Jasmine', 26)]\nages = []\n\nfor entry in profiles:\n    ages.append(entry[1])   # entry[1] is the age (second\
+    \ element)\n\nprint(f'Average age is {sum(ages) / len(ages)}')\n```\n\nThis pattern applies to any list of fixed-length\
+    \ tuples (e.g. from `zip()`).\n"
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Nesting a conditional inside a `for` loop
+  prompt: How do you selectively modify a variable inside a `for` loop using a conditional?
+  answer: "Declare variables before the loop, then update them conditionally inside:\n\n```python\nbill = 0\nfreebies = 0\n\
+    prices = [4.75, 14, 0, 18.50, 0]\n\nfor item_price in prices:\n    if item_price == 0:\n        freebies += 1\n    bill\
+    \ += item_price\n\nprint(f'Total is £{bill}, including {freebies} free items!')\n```\n\n- Variables modified inside the\
+    \ loop remain accessible **after** it finishes.\n- Conditional blocks inside loops use the same indentation rules.\n"
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: '`while` loop — conditional repetition'
+  prompt: What is the general pattern of a `while` loop, and how does it differ from a `for` loop?
+  answer: "A `while` loop repeats its body **as long as a condition remains `True`**:\n\n```python\nweight = 80\ntarget =\
+    \ 72\nmonthly_change = -3\nmonth = 0\n\nwhile weight > target:\n    month += 1\n    weight += monthly_change\n    print(f'Month\
+    \ {month}: {weight}')\n\nprint(f'It will take {month} months to reach {target}kg.')\n```\n\n- A `for` loop iterates over\
+    \ a **known sequence**; a `while` loop iterates until a **condition fails**.\n- `while` loops are common in **continuous\
+    \ processes** (e.g. shutting off a machine on alert).\n- Always ensure the condition will eventually become `False` —\
+    \ a loop that never stops is an **infinite loop**.\n"
+  reference: python-programming-interactive.ipynb
+- topic: Data Science Toolbox
+  title: Pairing two parallel lists with `zip()`
+  prompt: How do you combine two parallel lists into a list of tuples using `zip()`?
+  answer: 'Pass both lists to `zip()`, then wrap in `list()` to materialise the result:
+
+
+    ```python
+
+    names = [''John'', ''Mandy'', ''Siri'']
+
+    ages  = [17, 22, 14]
+
+
+    details = list(zip(names, ages))
+
+    # [(''John'', 17), (''Mandy'', 22), (''Siri'', 14)]
+
+    ```
+
+
+    Each tuple pairs one element from each list at the same position. The result has as many tuples as the **shorter** of
+    the two lists.
+
+    '
+  reference: conditionals-loops-workbook.ipynb
+- topic: Data Science Toolbox
+  title: Using `f-strings` to embed calculated values in strings
+  prompt: How do you compute a value inside an f-string and embed it in the output message?
+  answer: "Place any Python expression inside the curly braces `{}` of an f-string:\n\n```python\nmy_age = 10\nmin_age = 18\n\
+    \nif my_age < min_age:\n    diff = min_age - my_age\n    print(f'You are not allowed in.\\nCome back in {diff} years.')\n\
+    ```\n\nYou can also compute inline without a variable:\n```python\nprint(f'Come back in {min_age - my_age} years.')\n\
+    ```\n\nUse `\\n` inside the string to insert a newline character.\n"
+  reference: conditionals-loops-workbook.ipynb
+- topic: Data Science Toolbox
+  title: Building a filtered list inside a `for` loop with `.append()`
+  prompt: How do you separate items from a list into two lists using a `for` loop and `.append()`?
+  answer: "Initialise both lists before the loop, then append inside the conditional:\n\n```python\nrefused = []\ninside \
+    \ = []\nmin_age = 18\n\nfor person in details:          # details is a list of (name, age) tuples\n    if person[1] <\
+    \ min_age:\n        refused.append(person[0])\n    else:\n        inside.append(person[0])\n\nprint(inside)\nprint(refused)\n\
+    ```\n\nDeclare the lists **outside** the loop so they persist and accumulate across all iterations.\n"
+  reference: conditionals-loops-workbook.ipynb
+- topic: Data Science Toolbox
+  title: Computing a percentage with `len()` and `round()`
+  prompt: How do you calculate the percentage of items in one list relative to another and round to one decimal place?
+  answer: 'Use `len()` to get list counts, divide, multiply by 100, then wrap in `round()`:
+
+
+    ```python
+
+    inside_prop = len(inside) / len(details) * 100
+
+    print(f''{round(inside_prop, 1)}% of people are inside'')
+
+    ```
+
+
+    - `len(list)` returns the number of elements.
+
+    - `round(value, ndigits)` rounds to the given number of decimal places.
+
+    '
+  reference: conditionals-loops-workbook.ipynb
+- topic: Data Science Toolbox
+  title: Enforcing a capacity limit with a `reserves` list inside a `for` loop
+  prompt: How do you split eligible items into an `inside` list (up to a capacity) and a `reserves` list using a `for` loop?
+  answer: "Check both the eligibility condition and the current size of `inside` before appending:\n\n```python\ncapacity\
+    \ = 5\nrefused  = []\ninside   = []\nreserves = []\n\nfor person in details:\n    if person[1] >= min_age:\n        if\
+    \ len(inside) < capacity:\n            inside.append(person[0])\n        else:\n            reserves.append(person[0])\n\
+    \    else:\n        refused.append(person[0])\n```\n\nThe **outer** condition tests eligibility; the **inner** condition\
+    \ tests remaining space. This pattern shows how nested `if` statements are used inside loops.\n"
+  reference: conditionals-loops-workbook.ipynb

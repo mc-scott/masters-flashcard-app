@@ -1,3 +1,4 @@
+import glob
 import os
 import random
 import sys
@@ -23,24 +24,36 @@ app.config["SESSION_TIMEOUT_HOURS"] = SESSION_TIMEOUT_HOURS
 # ---------------------------------------------------------------------------
 # Load card data
 # ---------------------------------------------------------------------------
-CARDS_YAML_PATH = os.path.join(os.path.dirname(__file__), "cards.yaml")
+CARDS_DIR = os.path.join(os.path.dirname(__file__), "cards")
 
 
-def load_cards(path: str) -> dict:
-    """Load and validate cards.yaml. Exits with a clear error on failure."""
-    if not os.path.exists(path):
-        sys.exit(f"ERROR: cards.yaml not found at {path}")
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-    except yaml.YAMLError as exc:
-        sys.exit(f"ERROR: cards.yaml contains invalid YAML:\n{exc}")
-    if not isinstance(data, dict) or not data:
-        sys.exit("ERROR: cards.yaml must be a non-empty mapping of topic keys to card lists.")
-    return data
+def load_cards(cards_dir: str) -> dict:
+    """Load and merge all *.yaml files from cards_dir into a single topic dict."""
+    if not os.path.isdir(cards_dir):
+        sys.exit(f"ERROR: cards directory not found at {cards_dir}")
+    paths = sorted(glob.glob(os.path.join(cards_dir, "*.yaml")))
+    if not paths:
+        sys.exit(f"ERROR: no .yaml files found in {cards_dir}")
+    merged: dict = {}
+    for path in paths:
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+        except yaml.YAMLError as exc:
+            sys.exit(f"ERROR: {path} contains invalid YAML:\n{exc}")
+        if not isinstance(data, dict):
+            sys.exit(f"ERROR: {path} must be a mapping of topic keys to card lists.")
+        for topic, cards in data.items():
+            if topic in merged:
+                merged[topic].extend(cards)
+            else:
+                merged[topic] = list(cards)
+    if not merged:
+        sys.exit("ERROR: no cards loaded from cards directory.")
+    return merged
 
 
-CARDS: dict = load_cards(CARDS_YAML_PATH)
+CARDS: dict = load_cards(CARDS_DIR)
 
 # ---------------------------------------------------------------------------
 # Session weighting helpers
@@ -155,7 +168,7 @@ def card():
             return redirect(url_for("index"))
         session["current_card_id"] = card_id(current)
 
-    answer_html = Markup(md.markdown(current["answer"]))
+    answer_html = Markup(md.markdown(current["answer"], extensions=["fenced_code", "tables"]))
     return render_template("card.html", card=current, answer_html=answer_html)
 
 
