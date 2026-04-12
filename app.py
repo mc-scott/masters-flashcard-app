@@ -67,12 +67,8 @@ def card_id(card: dict) -> str:
 
 
 def _default_weights() -> dict:
-    """Return a weights dict with every card set to 1.0."""
-    return {
-        card_id(card): 1.0
-        for cards in CARDS.values()
-        for card in cards
-    }
+    """Return an empty weights dict (missing keys default to 1.0 at lookup time)."""
+    return {}
 
 
 def _check_and_refresh_session() -> None:
