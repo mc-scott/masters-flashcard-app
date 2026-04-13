@@ -1,0 +1,424 @@
+Product Management for AI:
+  - topic: Product Management for AI
+    title: Four hardware trends behind data science growth
+    prompt: What four hardware/infrastructure trends have contributed to the advancement of data science?
+    answer: |
+      1. **Cost of storage** has decreased
+      2. **Cost of CPU and processing** has decreased
+      3. **Bandwidth** has increased, making exchanging data much easier
+      4. **Network** has grown (more interconnected nodes)
+
+      These trends also contributed to the rise and accessibility of big data.
+    reference: 03-product-management-for-ai/1-big-data.md
+
+  - topic: Product Management for AI
+    title: The 5 V's of big data
+    prompt: What are the 5 V's used to characterise big data?
+    answer: |
+      1. **Volume** — the size of the data
+      2. **Velocity** — how much data is produced (speed of generation)
+      3. **Variety** — the range of data types (structured, unstructured, etc.)
+      4. **Veracity** — trust and reliability of the data
+      5. **Value** — what business value can be derived from the data
+    reference: 03-product-management-for-ai/1-big-data.md
+
+  - topic: Product Management for AI
+    title: The four analytical capabilities of data science
+    prompt: What are the four analytical capabilities of data science and what question does each answer?
+    answer: |
+      1. **Descriptive** — *What happened / is happening?* Summarises historical data.
+      2. **Diagnostic** — *Why did it happen?* Combines data to determine causes.
+      3. **Predictive** — *What will happen?* Uses patterns to forecast future outcomes.
+      4. **Prescriptive** — *What should I do?* Recommends actions based on predictions.
+
+      Example of prescriptive: a recommender system, or targeting a marketing campaign at a customer segment predicted to purchase.
+    reference: 03-product-management-for-ai/2-four-analytical-capabilities.md
+
+  - topic: Product Management for AI
+    title: Three disciplines that underpin data science
+    prompt: What three disciplines are combined to achieve the four analytical capabilities of data science?
+    answer: |
+      1. **Domain / business knowledge** — understanding the problem context
+      2. **Computer science** — tools, engineering, and programming
+      3. **Maths / statistics** — modelling, inference, and analysis
+    reference: 03-product-management-for-ai/2-four-analytical-capabilities.md
+
+  - topic: Product Management for AI
+    title: The four Agile Manifesto values
+    prompt: What are the four core value statements in the Agile Manifesto?
+    answer: |
+      1. **Individuals and Interactions** over Processes and Tools
+      2. **Working Software** over Comprehensive Documentation
+      3. **Customer Collaboration** over Contract Negotiation
+      4. **Responding to Change** over Following a Plan
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Three core Agile roles
+    prompt: What are the three key roles in an Agile/Scrum team and what does each do?
+    answer: |
+      - **Product Owner / Manager** — drives success, manages the backlog, key decision-maker
+      - **Development Team** — multi-skilled group (BA, Designer, Developer, Tester)
+      - **Scrum Master** — facilitates the team, removes impediments
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: T-shaped professionals in Agile
+    prompt: What is a T-shaped professional and why are they valued in Agile teams?
+    answer: |
+      A **T-shaped professional** has:
+      
+      - **Broad skills** across multiple disciplines (the horizontal bar of the T)
+      - **Deep expertise** in one specific area (the vertical bar)
+
+      They are valued because they encourage **collaboration and flexibility** within self-organising teams.
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Seven Lean wastes in software development
+    prompt: What are the seven wastes identified by Lean thinking as applied to software development?
+    answer: |
+      1. Partially done work
+      2. Extra processes
+      3. Extra features
+      4. Task switching
+      5. Waiting
+      6. Motion
+      7. Defects
+
+      Eliminating these wastes is a key goal of Lean-influenced Agile practices.
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Iteration vs increment in Agile
+    prompt: What is the difference between an Agile iteration (sprint) and an increment?
+    answer: |
+      - **Iteration (Sprint)** — a time-boxed period for design, build, and test; the output may not add standalone value.
+      - **Increment** — a deployment of combined sprint outputs that delivers **real value** to users.
+
+      The golden rule: only release an increment if it adds value.
+      Multiple iterations can feed into one increment.
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: User story format and epics
+    prompt: What is the standard format for a user story, and how do epics relate to user stories?
+    answer: |
+      **User story format:**
+      > "As a [role], I want [goal] so that [benefit]."
+
+      **Epics** are large stories that group multiple smaller user stories together. They are:
+      - Used for high-level planning and tracking
+      - Decomposed into individual stories before development
+
+      Decomposition can be **top-down** (start with epics) or **bottom-up** (group stories into epics).
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Scrum's three pillars of empiricism
+    prompt: What are the three pillars of empiricism in Scrum?
+    answer: |
+      1. **Transparency** — visibility of progress and work for all stakeholders
+      2. **Inspection** — regularly validate work and gather feedback
+      3. **Adaptation** — continuously improve and adjust to deliver value
+
+      These pillars ensure Agile decisions are evidence-based rather than assumption-driven.
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Agile feedback loop steps
+    prompt: What are the four steps of an Agile feedback loop?
+    answer: |
+      1. **Obtain** feedback
+      2. **Analyse** feedback
+      3. **Act** on feedback
+      4. **Follow up**
+
+      Short feedback loops are encouraged — fast failure is acceptable. Long delays are problematic because perceptions of "right" can shift over time.
+    reference: 03-product-management-for-ai/10-agile-project-management.md
+
+  - topic: Product Management for AI
+    title: Seven principles of software testing
+    prompt: What are the seven principles of software testing?
+    answer: |
+      1. Testing shows the **presence** of defects, not their absence.
+      2. **Exhaustive testing** is impossible.
+      3. **Test early** — defects found late are more expensive to fix.
+      4. **Defects cluster** — most issues come from a small number of areas.
+      5. **Pesticide paradox** — change tests periodically or they lose effectiveness.
+      6. Testing is **context-dependent**.
+      7. **Absence of errors ≠ system perfection** — a bug-free system may still fail to meet user needs.
+    reference: 03-product-management-for-ai/11-testing.md
+
+  - topic: Product Management for AI
+    title: Types of software testing
+    prompt: What is the difference between static and dynamic testing, and what does component testing verify?
+    answer: |
+      - **Component testing** — verifies that individual modules work correctly before integration.
+      - **Static testing** — inspects code *without executing it* (manual or automated review).
+      - **Dynamic testing** — *executes* code to validate that it produces expected outcomes.
+    reference: 03-product-management-for-ai/11-testing.md
+
+  - topic: Product Management for AI
+    title: TDD vs BDD
+    prompt: What is the difference between Test-Driven Development (TDD) and Behaviour-Driven Development (BDD)?
+    answer: |
+      - **TDD (Test-Driven Development)** — write tests *before* writing code; drives faster, better-designed development.
+      - **BDD (Behaviour-Driven Development)** — collaborative approach where tests are based on *behaviour scenarios*; focuses on acceptance criteria and involves business stakeholders.
+    reference: 03-product-management-for-ai/11-testing.md
+
+  - topic: Product Management for AI
+    title: Testing in Agile vs Waterfall
+    prompt: How does the role of testing differ between Waterfall, V-Model, and Agile approaches?
+    answer: |
+      - **Waterfall** — testing is a distinct stage *after* development, managed through planned cycles.
+      - **V-Model** — test planning starts *early*, alongside development stages; static reviews emphasised.
+      - **Agile** — testing occurs *continuously* during sprints and increments; frequent regression tests ensure new features don't break existing ones.
+    reference: 03-product-management-for-ai/11-testing.md
+
+  - topic: Product Management for AI
+    title: Building a data-driven organisation
+    prompt: What are the four key elements needed to become a data-driven organisation?
+    answer: |
+      1. **Data asset** — the raw data the organisation collects (e.g. user queries, clicks)
+      2. **Unified data infrastructure** — a shared platform to collect and act on data
+      3. **Data culture** — everyone in the organisation thinks about what data they have and how value can be derived from it
+      4. **Data strategy** — a deep, long-term plan covering:
+         - Define the business outcome
+         - Define available data
+         - Define the required technology stack
+         - Map requirements to implementation
+    reference: 03-product-management-for-ai/3-data-driven-organisation.md
+
+  - topic: Product Management for AI
+    title: Data team organisational models
+    prompt: What two organisational models are commonly used to structure data science talent?
+    answer: |
+      - **Centralised team** — a single data science team whose members are *matrixed* into other departments needing data science solutions. Suits early maturity.
+      - **Dispersed model** — each department has its own embedded data science team. Adopted as data capability matures.
+    reference: 03-product-management-for-ai/3-data-driven-organisation.md
+
+  - topic: Product Management for AI
+    title: Product Manager vs Project Manager
+    prompt: What is the key distinction between the roles of a Product Manager and a Project Manager?
+    answer: |
+      **Product Management** is a **strategic** role:
+
+      - Defines the *"why"*
+      - Researches customers and market, identifies needs and opportunities
+      - Sets vision, goals, roadmap and success metrics
+      - Works cross-functionally across engineering, design, sales and marketing
+
+      **Project Management** is a **tactical** role:
+
+      - Defines the *"how"*
+      - Plans, budgets and schedules projects to deliver the product vision
+      - Manages risks, resources and day-to-day issues
+    reference: 03-product-management-for-ai/4-intro-to-product-management.md
+
+  - topic: Product Management for AI
+    title: The Product Manager's central position
+    prompt: What three areas does a product manager sit at the intersection of?
+    answer: |
+      > "The product manager sits in the middle of the **technology**, the **customer**, and the **business**."
+
+      Their responsibility is to ensure the company builds the right thing, at the right time, in the right way.
+    reference: 03-product-management-for-ai/4-intro-to-product-management.md
+
+  - topic: Product Management for AI
+    title: Product lifecycle stages
+    prompt: What are the four stages of a product's lifecycle?
+    answer: |
+      1. **Introduction**
+      2. **Growth**
+      3. **Maturity**
+      4. **Decline**
+
+      The product manager is responsible for managing the product through all four stages.
+    reference: 03-product-management-for-ai/4-intro-to-product-management.md
+
+  - topic: Product Management for AI
+    title: Dave McClure's Pirate Metrics (AARRR)
+    prompt: What are the five stages of Dave McClure's Pirate Metrics framework and what does each measure?
+    answer: |
+      **AARRR** framework (coined 2007):
+
+      1. **Acquisition** — How do you generate new users? Where are your customers and how do you reach them?
+      2. **Activation** — Do users find value and want more? (conversions, demos, trials)
+      3. **Retention** — Do users continue using the product? The foundation of a sustainable business.
+      4. **Revenue** — How do you make money? Proves product viability.
+      5. **Referral** — Do engaged users recommend the product? The cheapest path to new customers.
+    reference: 03-product-management-for-ai/5-user-journey-mapping.md
+
+  - topic: Product Management for AI
+    title: The retention "leaky bucket" analogy
+    prompt: What does the "leaky bucket" analogy describe in the context of product retention?
+    answer: |
+      The product is like a **bucket**. Until you figure out how to retain customers, the bucket leaks.
+
+      Opening the tap (Acquisition and Activation) is wasted effort if the holes (poor retention) let customers go. You must **fix retention first** before scaling acquisition and activation.
+    reference: 03-product-management-for-ai/5-user-journey-mapping.md
+
+  - topic: Product Management for AI
+    title: Customer journey stages
+    prompt: What are the four typical stages of a customer journey?
+    answer: |
+      1. **Awareness** — the customer becomes aware of the product
+      2. **Consideration** — the customer evaluates whether to use it
+      3. **Purchase / Decision** — the customer commits
+      4. **Advocacy** — the customer recommends it to others
+    reference: 03-product-management-for-ai/5-user-journey-mapping.md
+
+  - topic: Product Management for AI
+    title: What is an MVP?
+    prompt: What is the purpose of a Minimum Viable Product and what should it contain?
+    answer: |
+      An **MVP** contains enough features to:
+
+      - Attract target customers
+      - Test and validate the business model and product idea
+      - Collect maximum information with minimum development investment
+
+      The MVP is built by stripping the user journey down to only what brings value and differentiates from competitors. Non-technical tasks may be done manually to keep costs low.
+
+      **Example:** Airbnb launched with just a website showing photos and property details — everything else was handled manually.
+    reference: 03-product-management-for-ai/6-mvp.md
+
+  - topic: Product Management for AI
+    title: The AI Product Manager as analytics translator
+    prompt: What is the defining role of an AI Product Manager within an organisation?
+    answer: |
+      An AI Product Manager acts as an **analytics translator** — bridging the technical expertise of data engineers and data scientists with the operational expertise of business stakeholders (marketing, supply chain, risk, etc.).
+
+      They require:
+      - **Domain knowledge**
+      - **Technical literacy**
+      - **Project management skills**
+      - **Entrepreneurial mindset**
+    reference: 03-product-management-for-ai/7-product-management-in-ai.md
+
+  - topic: Product Management for AI
+    title: Deterministic vs probabilistic thinking in AI PM
+    prompt: What is the key mindset shift required when moving from traditional to AI product management?
+    answer: |
+      Traditional product management uses **deterministic** thinking — a defined input produces a defined output.
+
+      AI product management requires **probabilistic** thinking — outcomes are uncertain and based on likelihoods, not certainties.
+
+      This shift also means validating whether AI is actually necessary and preparing for **high investment and long-term commitment**.
+    reference: 03-product-management-for-ai/7-product-management-in-ai.md
+
+  - topic: Product Management for AI
+    title: AI prototyping techniques
+    prompt: What are three prototyping techniques specific to AI product development?
+    answer: |
+      - **Wizard of Oz** — a human performs the AI's role behind the scenes; the user believes it is automated.
+      - **Concierge experiment** — human involvement is acknowledged; used to validate the value of a proposed AI interaction.
+      - **AI personality design** — designing how the AI communicates and behaves with users.
+    reference: 03-product-management-for-ai/7-product-management-in-ai.md
+
+  - topic: Product Management for AI
+    title: The Machine Learning Canvas
+    prompt: What is the Machine Learning Canvas and what does it cover?
+    answer: |
+      A framework that aligns **business goals** with **ML system design**. It covers:
+
+      - **Value proposition** — What problem is solved, why, and for whom
+      - **Data strategy** — data sources, collection methods, and labelling
+      - **Features, model building, prediction tasks**, and decision-making logic
+    reference: 03-product-management-for-ai/7-product-management-in-ai.md
+
+  - topic: Product Management for AI
+    title: Design thinking stages
+    prompt: What are the six stages of the design thinking process?
+    answer: |
+      1. **Empathize** — understand user needs and context
+      2. **Define** — frame the problem or opportunity clearly
+      3. **Ideate** — explore solutions using divergent and convergent thinking
+      4. **Prototype** — visualise and create possible solutions
+      5. **Evaluate** — gather feedback and refine designs
+      6. **Create** — develop the final solution
+    reference: 03-product-management-for-ai/8-design-thinking.md
+
+  - topic: Product Management for AI
+    title: Divergent vs convergent thinking
+    prompt: What is the difference between divergent and convergent thinking in design?
+    answer: |
+      - **Divergent thinking** — generates many creative ideas and possibilities; encourages imagination and broad exploration.
+      - **Convergent thinking** — narrows down options to address the core problem.
+
+      Both approaches are used together in the **Ideate** stage of design thinking to strengthen innovation.
+    reference: 03-product-management-for-ai/8-design-thinking.md
+
+  - topic: Product Management for AI
+    title: Group ideation techniques in design thinking
+    prompt: What are five collaborative idea generation techniques used in design thinking workshops?
+    answer: |
+      1. **Idea Storming** — group brainstorming captured on boards or flipcharts
+      2. **Sticky Notes** — quick, inclusive idea sharing
+      3. **Brainwriting** — pass ideas around small groups for collaborative building
+      4. **Breakout Groups** — encourage confidence and deeper discussion
+      5. **Round Robins** — ensure everyone contributes (though can cause discomfort)
+    reference: 03-product-management-for-ai/8-design-thinking.md
+
+  - topic: Product Management for AI
+    title: Waterfall vs Agile SDLC delivery
+    prompt: What are the two basic types of software delivery lifecycle (SDLC) and how do they differ?
+    answer: |
+      - **Linear (e.g. Waterfall, V-Model)** — sequential stages with a full release at the end; planned in advance with milestones and a "big bang" deployment.
+      - **Incremental (e.g. Agile)** — iterative development and delivery; value is deployed in stages across multiple sprints.
+    reference: 03-product-management-for-ai/9-project-management.md
+
+  - topic: Product Management for AI
+    title: The VUCA environment
+    prompt: What does VUCA stand for and why does it challenge linear delivery models?
+    answer: |
+      **VUCA** describes conditions that make traditional planning difficult:
+
+      - **Volatility** — rapid, unpredictable change
+      - **Uncertainty** — lack of predictability
+      - **Complexity** — multiple interacting inputs and outputs
+      - **Ambiguity** — different interpretations of the same situation
+
+      Waterfall and V-Model are poorly suited to VUCA environments because they cannot adapt quickly enough.
+    reference: 03-product-management-for-ai/9-project-management.md
+
+  - topic: Product Management for AI
+    title: Project approach vs product approach
+    prompt: What is the key difference between a project-led and a product-led approach to delivery?
+    answer: |
+      **Project approach:**
+      - Temporary structure with a clear start, end, scope, and timeline
+      - Easier budgeting and resource control
+      - Hard to keep pace with rapid change; lacks product focus
+
+      **Product approach:**
+      - Continuous delivery of value through customer-centric products
+      - Measures success via metrics (adoption, retention, waste)
+      - Embraces experimentation, learning from failure, and fluid strategy
+    reference: 03-product-management-for-ai/9-project-management.md
+
+  - topic: Product Management for AI
+    title: Servant leadership in Agile
+    prompt: What is servant leadership and what traits define a servant leader?
+    answer: |
+      In **servant leadership**, the leader's goal is to **serve the team**, not control it.
+
+      Key traits:
+
+      - **People-first** mindset
+      - Skilled communicator
+      - Compassionate collaborator
+      - Facilitates team **autonomy and self-organisation**
+    reference: 03-product-management-for-ai/9-project-management.md
+
+  - topic: Product Management for AI
+    title: Three factors for team motivation in Agile
+    prompt: What three critical factors drive motivation in high-performing Agile teams?
+    answer: |
+      1. **Autonomy** — freedom to direct their own work
+      2. **Mastery** — encouragement to learn; mistakes are tolerated
+      3. **Purpose** — team outcomes have a higher meaning beyond the task
+
+      These are supported by **psychological safety** — comfort to give feedback, raise concerns, offer ideas, and admit mistakes without fear.
+    reference: 03-product-management-for-ai/9-project-management.md
