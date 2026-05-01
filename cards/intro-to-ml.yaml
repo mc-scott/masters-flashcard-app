@@ -1,8 +1,9 @@
 Intro to ML:
-- topic: Intro to ML
+- topic: Linear Regression
   title: The data-generating function
   prompt: What assumption does ML make about the relationship between inputs and outputs?
-  answer: 'ML assumes there is an unknown function $f$ that maps an input vector $\boldsymbol{x}$ to a scalar output $y$:
+  answer: 'ML assumes there is an unknown function $f$ that maps an input vector $\boldsymbol{x}$
+    to a scalar output $y$:
 
 
     $$y = f(\boldsymbol{x})$$
@@ -15,7 +16,7 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Univariate linear regression equation
   prompt: How is the data-generating function approximated in univariate linear regression?
   answer: 'It is approximated as a straight line:
@@ -26,15 +27,17 @@ Intro to ML:
 
     where:
 
-    - $w$ (the **weight**) is the slope — how much $y$ changes per unit change in $x$
+    - $w$ (the **weight**) is the slope — how much $y$ changes per unit change in
+    $x$
 
     - $b$ (the **bias**) is the y-intercept
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Loss Functions
   title: Loss functions — SAE, SSE, and MSE
-  prompt: What are the SAE, SSE, and MSE loss functions, and which is most commonly used?
+  prompt: What are the SAE, SSE, and MSE loss functions, and which is most commonly
+    used?
   answer: 'All three measure prediction error:
 
 
@@ -49,13 +52,15 @@ Intro to ML:
     | MSE | $\frac{1}{N}\sum_{i=1}^{N}(y_i - \hat{y}_i)^2$ |
 
 
-    **MSE** is most commonly used because it is normalised by $N$, making it comparable across different dataset sizes.
+    **MSE** is most commonly used because it is normalised by $N$, making it comparable
+    across different dataset sizes.
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Optimal parameters with argmin
-  prompt: How is finding the optimal weight $w^*$ expressed as an optimisation problem in linear regression?
+  prompt: How is finding the optimal weight $w^*$ expressed as an optimisation problem
+    in linear regression?
   answer: 'Using argmin notation:
 
 
@@ -72,25 +77,28 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Gradient descent — overview
   prompt: What is gradient descent and how does it find optimal model parameters?
-  answer: '**Gradient descent** is an iterative optimisation algorithm that minimises a loss function by repeatedly updating
-    parameter values.
+  answer: '**Gradient descent** is an iterative optimisation algorithm that minimises
+    a loss function by repeatedly updating parameter values.
 
 
-    - The **gradient** (derivative) of the loss indicates which direction to adjust parameters.
+    - The **gradient** (derivative) of the loss indicates which direction to adjust
+    parameters.
 
     - The algorithm adjusts $w$ and $b$ iteratively until the loss is minimised.
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Gradient descent — four key components
   prompt: What four things must be defined to run gradient descent?
-  answer: '1. **Gradient function** — derivative of the loss w.r.t. each parameter; tells you which direction to move.
+  answer: '1. **Gradient function** — derivative of the loss w.r.t. each parameter;
+    tells you which direction to move.
 
-    2. **Step size** (learning rate) — how far to move in the gradient direction each iteration.
+    2. **Step size** (learning rate) — how far to move in the gradient direction each
+    iteration.
 
     3. **Initial values** — starting values for $w$ and $b$ (typically 0).
 
@@ -98,17 +106,20 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Interpolation vs extrapolation
-  prompt: What is the difference between interpolation and extrapolation when testing a model?
-  answer: "- **Interpolation** — testing predictions *inside* the range of training data.\n- **Extrapolation** — testing predictions\
-    \ *outside* the range of training data.\n\nBoth can be evaluated with MSE:\n```python\ndef mse(y, y_pred):\n    return\
-    \ np.mean((y - y_pred) ** 2)\n```\n"
+  prompt: What is the difference between interpolation and extrapolation when testing
+    a model?
+  answer: "- **Interpolation** — testing predictions *inside* the range of training\
+    \ data.\n- **Extrapolation** — testing predictions *outside* the range of training\
+    \ data.\n\nBoth can be evaluated with MSE:\n```python\ndef mse(y, y_pred):\n \
+    \   return np.mean((y - y_pred) ** 2)\n```\n"
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Coefficient of determination — $R^2$
   prompt: What does $R^2$ measure and how is it interpreted?
-  answer: '$R^2$ measures how much of the total variation in $y$ is explained by the model:
+  answer: '$R^2$ measures how much of the total variation in $y$ is explained by the
+    model:
 
 
     $$R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}$$
@@ -123,53 +134,60 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Multivariate linear regression — vectorised form
   prompt: How is multivariate linear regression written in vectorised form?
-  answer: 'With $J$ features and the bias absorbed into $\beta_0$ (by setting $x_0 = 1$):
+  answer: 'With $J$ features and the bias absorbed into $\beta_0$ (by setting $x_0
+    = 1$):
 
 
     $$\hat{y} = \beta^T x$$
 
 
-    where $x = [x_0, x_1, \ldots, x_J]^\top$ and $\beta = [\beta_0, \beta_1, \ldots, \beta_J]^\top$.
+    where $x = [x_0, x_1, \ldots, x_J]^\top$ and $\beta = [\beta_0, \beta_1, \ldots,
+    \beta_J]^\top$.
 
 
     Each feature has its own weight $\beta_j$; $\beta_0$ is the intercept term.
 
     '
   reference: 1-linear-regression.md
-- topic: Intro to ML
+- topic: Data Processing
   title: One-hot encoding for nominal data
-  prompt: Why is one-hot encoding used for nominal categorical data instead of integer labels?
-  answer: 'Assigning integer labels (1, 2, 3…) to nominal categories **inadvertently introduces an ordering** that does not
-    exist in the data.
+  prompt: Why is one-hot encoding used for nominal categorical data instead of integer
+    labels?
+  answer: 'Assigning integer labels (1, 2, 3…) to nominal categories **inadvertently
+    introduces an ordering** that does not exist in the data.
 
 
-    **One-hot encoding** converts each category into its own binary column, preserving the lack of order while making the
-    data numeric for ML models.
+    **One-hot encoding** converts each category into its own binary column, preserving
+    the lack of order while making the data numeric for ML models.
 
     '
   reference: 2-data-processing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Feature scaling — StandardScaler, MinMaxScaler, RobustScaler
-  prompt: What are the three common feature scalers in scikit-learn and their key differences?
+  prompt: What are the three common feature scalers in scikit-learn and their key
+    differences?
   answer: '| Scaler | Method | Notes |
 
     |---|---|---|
 
-    | `StandardScaler()` | Scales around the mean; output roughly -1 to 1 | Standard choice |
+    | `StandardScaler()` | Scales around the mean; output roughly -1 to 1 | Standard
+    choice |
 
-    | `MinMaxScaler()` | Scales between min and max | **Susceptible to outliers** |
+    | `MinMaxScaler()` | Scales between min and max | **Susceptible to outliers**
+    |
 
     | `RobustScaler()` | Uses IQR (Q1–Q3) | **More robust to outliers** |
 
     '
   reference: 2-data-processing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Outlier detection with z-score
   prompt: How can the z-score be used to detect and remove outliers?
-  answer: 'The z-score measures how many standard deviations a data point is from the mean.
+  answer: 'The z-score measures how many standard deviations a data point is from
+    the mean.
 
 
     A common rule: **remove data points more than 3 standard deviations from the mean**.
@@ -179,66 +197,76 @@ Intro to ML:
 
     '
   reference: 2-data-processing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Look-ahead bias
   prompt: What is look-ahead bias and why must it be avoided in ML pipelines?
-  answer: '**Look-ahead bias** occurs when a model uses data that was not available at the time of the prediction in practice.
+  answer: '**Look-ahead bias** occurs when a model uses data that was not available
+    at the time of the prediction in practice.
 
 
-    Example: fitting a scaler on the entire dataset (including the test set) before splitting leaks future information into
-    training.
+    Example: fitting a scaler on the entire dataset (including the test set) before
+    splitting leaks future information into training.
 
 
-    Avoid it by fitting pre-processing steps on **training data only**, then applying them to test data.
+    Avoid it by fitting pre-processing steps on **training data only**, then applying
+    them to test data.
 
     '
   reference: 2-data-processing.md
-- topic: Intro to ML
+- topic: Model Evaluation
   title: Bias-variance trade-off
   prompt: What is the bias-variance trade-off in machine learning?
   answer: '| Error | Cause | Remedy |
 
     |---|---|---|
 
-    | **Bias** | Underfitting — model too simple | Use a more complex model (add features/polynomial terms) |
+    | **Bias** | Underfitting — model too simple | Use a more complex model (add features/polynomial
+    terms) |
 
-    | **Variance** | Overfitting — model too complex | Reduce complexity or apply regularisation |
+    | **Variance** | Overfitting — model too complex | Reduce complexity or apply
+    regularisation |
 
 
     The goal is to find a balance that minimises overall **out-of-sample error**.
 
     '
   reference: 3-supervised-learning-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Statistical modelling vs machine learning — primary focus
-  prompt: How do statistical modelling and machine learning differ in their primary goal?
-  answer: '- **Statistical modelling** focuses on understanding model parameters and relationships between variables.
+  prompt: How do statistical modelling and machine learning differ in their primary
+    goal?
+  answer: '- **Statistical modelling** focuses on understanding model parameters and
+    relationships between variables.
 
-    - **Machine learning** focuses on minimising **out-of-sample error** — how well the model predicts on new, unseen data.
+    - **Machine learning** focuses on minimising **out-of-sample error** — how well
+    the model predicts on new, unseen data.
 
 
     Train/test split is used in ML to evaluate out-of-sample performance.
 
     '
   reference: 3-supervised-learning-linear-regression.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Purpose of regularisation
   prompt: What problem does regularisation solve, and how does it work?
-  answer: 'Regularisation reduces **high variance (overfitting)** by adding a penalty term to the cost function that limits
-    the magnitude of the regression coefficients.
+  answer: 'Regularisation reduces **high variance (overfitting)** by adding a penalty
+    term to the cost function that limits the magnitude of the regression coefficients.
 
 
-    This prevents the model from fitting training data too perfectly, improving generalisation on unseen data.
+    This prevents the model from fitting training data too perfectly, improving generalisation
+    on unseen data.
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Loss Functions
   title: Ridge regression — L2 cost function
-  prompt: What is the Ridge regression cost function and what does the penalty term do?
+  prompt: What is the Ridge regression cost function and what does the penalty term
+    do?
   answer: '$$\text{Cost} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}\beta_j^2$$
 
 
-    The **L2 penalty** adds the sum of *squared* coefficients, shrinking all towards zero (but not exactly zero).
+    The **L2 penalty** adds the sum of *squared* coefficients, shrinking all towards
+    zero (but not exactly zero).
 
 
     In scikit-learn:
@@ -251,32 +279,34 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Regularisation
   title: The lambda (alpha) hyperparameter in regularisation
   prompt: What role does lambda (alpha) play in Ridge and Lasso regression?
   answer: '
-  
+
     $\lambda$ (called `alpha` in scikit-learn) controls the **strength of the regularisation**:
 
 
-    - **Higher $\lambda$** → stronger penalty → smaller coefficients → less complex model → lower overfitting risk
+    - **Higher $\lambda$** → stronger penalty → smaller coefficients → less complex
+    model → lower overfitting risk
 
-    - **Lower $\lambda$** → weaker penalty → larger coefficients → more complex model → higher overfitting risk
+    - **Lower $\lambda$** → weaker penalty → larger coefficients → more complex model
+    → higher overfitting risk
 
 
     Typically chosen via **cross-validation**.
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Loss Functions
   title: Lasso regression — L1 cost function
   prompt: What is the Lasso regression cost function and how does it differ from Ridge?
   answer: '
-  
+
     $$\text{Cost} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}|\beta_j|$$
 
-    The **L1 penalty** uses absolute values of coefficients. Unlike Ridge, Lasso can shrink coefficients **exactly to zero**,
-    producing a sparse model.
+    The **L1 penalty** uses absolute values of coefficients. Unlike Ridge, Lasso can
+    shrink coefficients **exactly to zero**, producing a sparse model.
 
 
     In scikit-learn:
@@ -289,11 +319,11 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Lasso regression for feature selection
   prompt: How can Lasso regression be used for feature selection?
-  answer: 'Because Lasso (L1) can set coefficients **exactly to zero**, features with a zero coefficient contribute nothing
-    and can be removed.
+  answer: 'Because Lasso (L1) can set coefficients **exactly to zero**, features with
+    a zero coefficient contribute nothing and can be removed.
 
 
     Workflow:
@@ -309,9 +339,10 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Implementing Ridge and Lasso in scikit-learn
-  prompt: How do you instantiate Ridge and Lasso in scikit-learn, and what solver constraint applies?
+  prompt: How do you instantiate Ridge and Lasso in scikit-learn, and what solver
+    constraint applies?
   answer: '```python
 
     from sklearn.linear_model import Ridge, Lasso
@@ -324,14 +355,16 @@ Intro to ML:
     ```
 
 
-    **Important:** Ridge and Lasso cannot use Ordinary Least Squares (OLS) — they must use **gradient descent**.
+    **Important:** Ridge and Lasso cannot use Ordinary Least Squares (OLS) — they
+    must use **gradient descent**.
 
     '
   reference: 4-regularisation.md
-- topic: Intro to ML
+- topic: Assumptions
   title: LR error term (residual)
   prompt: What does the error term ε represent in a linear regression model?
-  answer: 'The error term $\varepsilon$ captures everything **not explained** by the model:
+  answer: 'The error term $\varepsilon$ captures everything **not explained** by the
+    model:
 
 
     $$y = \hat{y} + \varepsilon \quad \Rightarrow \quad y = wx + b + \varepsilon$$
@@ -339,64 +372,74 @@ Intro to ML:
 
     - $\hat{y}$ is the model prediction.
 
-    - $\varepsilon$ is drawn from a distribution and represents **random noise** in the data generation process.
+    - $\varepsilon$ is drawn from a distribution and represents **random noise** in
+    the data generation process.
 
 
-    If the model is the *true model*, $\varepsilon$ should be **pure random noise** with **zero mean** and **constant variance**.
+    If the model is the *true model*, $\varepsilon$ should be **pure random noise**
+    with **zero mean** and **constant variance**.
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Six assumptions of linear regression
   prompt: What are the six key assumptions of linear regression?
   answer: '1. **Linearity** — each feature $x_d$ has a linear relationship with $y$.
 
-    2. **Homoscedasticity** — the variance of $\varepsilon$ is constant over the feature space.
+    2. **Homoscedasticity** — the variance of $\varepsilon$ is constant over the feature
+    space.
 
     3. **Independence** — observations are independent; error terms are uncorrelated.
 
     4. **Normality** — error terms are normally distributed.
 
-    5. **Lack of multicollinearity** — input features are not correlated with each other.
+    5. **Lack of multicollinearity** — input features are not correlated with each
+    other.
 
     6. **No outliers** — extreme values are removed or handled by a robust cost function.
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: Linearity assumption — testing and addressing
-  prompt: How do you test the linearity assumption in linear regression, and how can you address violations?
-  answer: '**Testing:** Plot each input feature against the target (scatter plots). For multiple features, use `sns.PairGrid()`.
+  prompt: How do you test the linearity assumption in linear regression, and how can
+    you address violations?
+  answer: '**Testing:** Plot each input feature against the target (scatter plots).
+    For multiple features, use `sns.PairGrid()`.
 
 
     **Addressing non-linear relationships:**
 
-    1. **Feature engineering** — add non-linear transformations of features as additional inputs.
+    1. **Feature engineering** — add non-linear transformations of features as additional
+    inputs.
 
-    2. **Non-linear models** — use models that inherently capture non-linear patterns (e.g. decision trees, neural networks).
+    2. **Non-linear models** — use models that inherently capture non-linear patterns
+    (e.g. decision trees, neural networks).
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: Homoscedasticity vs heteroscedasticity
-  prompt: What is homoscedasticity, and how is heteroscedasticity addressed in linear regression?
-  answer: '**Homoscedasticity** means the error term $\varepsilon$ has *constant variance* across all values of $\mathbf{x}$.
+  prompt: What is homoscedasticity, and how is heteroscedasticity addressed in linear
+    regression?
+  answer: '**Homoscedasticity** means the error term $\varepsilon$ has *constant variance*
+    across all values of $\mathbf{x}$.
 
 
-    **Heteroscedasticity** means the variance of $\varepsilon$ is correlated with the model predictions — i.e. the model has
-    not captured the full relationship.
+    **Heteroscedasticity** means the variance of $\varepsilon$ is correlated with
+    the model predictions — i.e. the model has not captured the full relationship.
 
 
     **Addressing heteroscedasticity:**
 
     - Apply a **log-transformation** to the target variable $y$.
 
-    - This is particularly useful when $y$ is strictly positive and errors are proportional to the prediction size (e.g. house
-    prices).
+    - This is particularly useful when $y$ is strictly positive and errors are proportional
+    to the prediction size (e.g. house prices).
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: i.i.d. error terms
   prompt: What does i.i.d. mean in the context of linear regression error terms?
   answer: '**i.i.d.** stands for **Independent and Identically Distributed**.
@@ -404,28 +447,33 @@ Intro to ML:
 
     - **Identically distributed** — error terms have constant variance (homoscedasticity).
 
-    - **Independent** — each error term is drawn independently; error terms are not correlated with each other.
+    - **Independent** — each error term is drawn independently; error terms are not
+    correlated with each other.
 
 
-    Some data violates independence, e.g. **time-series data** where observations are correlated across time.
+    Some data violates independence, e.g. **time-series data** where observations
+    are correlated across time.
 
 
     **Addressing correlated data:**
 
-    - Use models that explicitly capture correlations (e.g. autoregressive / time-series models).
+    - Use models that explicitly capture correlations (e.g. autoregressive / time-series
+    models).
 
     - Transform the data so each row can be considered independent.
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: Normality assumption and the Shapiro-Wilk test
-  prompt: What is the normality assumption in linear regression, and how can it be tested?
-  answer: 'When fitting parameters with OLS, linear regression assumes error terms are **normally distributed**.
+  prompt: What is the normality assumption in linear regression, and how can it be
+    tested?
+  answer: 'When fitting parameters with OLS, linear regression assumes error terms
+    are **normally distributed**.
 
 
-    In **machine learning** (purely predictive), this assumption is less critical because we care about out-of-sample performance,
-    not hypothesis testing on parameters.
+    In **machine learning** (purely predictive), this assumption is less critical
+    because we care about out-of-sample performance, not hypothesis testing on parameters.
 
 
     **Testing with the Shapiro-Wilk test:**
@@ -442,14 +490,16 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: Multicollinearity — detection and remedies
-  prompt: What is multicollinearity in linear regression, why does it matter, and how is it addressed?
-  answer: '**Multicollinearity** occurs when input features are highly correlated with each other.
+  prompt: What is multicollinearity in linear regression, why does it matter, and
+    how is it addressed?
+  answer: '**Multicollinearity** occurs when input features are highly correlated
+    with each other.
 
 
-    **Why it matters:** Model weights get "split" across correlated features, giving a false indication of importance and
-    making interpretation unreliable.
+    **Why it matters:** Model weights get "split" across correlated features, giving
+    a false indication of importance and making interpretation unreliable.
 
 
     **Detection:** Inspect pairwise correlation with a heatmap:
@@ -475,18 +525,19 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Outliers in linear regression
   prompt: How do outliers affect linear regression, and how can they be handled?
-  answer: '**Outliers** are extreme values that strongly distort the fitted model when using OLS.
+  answer: '**Outliers** are extreme values that strongly distort the fitted model
+    when using OLS.
 
 
     **Remedies:**
 
     1. **Remove outliers** from the dataset.
 
-    2. **Use a robust cost function** — e.g. the *Huber Regressor*, which minimises a modified squared loss that is less sensitive
-    to outliers:
+    2. **Use a robust cost function** — e.g. the *Huber Regressor*, which minimises
+    a modified squared loss that is less sensitive to outliers:
 
     ```python
 
@@ -498,9 +549,10 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Assumptions
   title: Diagnosing assumption violations with residual plots
-  prompt: How can residual plots be used to detect violations of linear regression assumptions?
+  prompt: How can residual plots be used to detect violations of linear regression
+    assumptions?
   answer: 'Plot **residuals ($y - \hat{y}$) against model predictions ($\hat{y}$)**:
 
 
@@ -515,14 +567,16 @@ Intro to ML:
     - **Heavy tail residuals** → non-normal errors (check with Shapiro-Wilk).
 
 
-    This approach generalises to any number of input features (unlike scatter plots against $x$).
+    This approach generalises to any number of input features (unlike scatter plots
+    against $x$).
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Intro to ML
+- topic: Feature Engineering
   title: Why feature engineering for linear models
   prompt: Why is feature engineering needed for linear models, and what can it achieve?
-  answer: 'Linear models are **linear in parameters** — they can only automatically capture:
+  answer: 'Linear models are **linear in parameters** — they can only automatically
+    capture:
 
     - **Linear** relationships between a single feature and the output.
 
@@ -531,29 +585,33 @@ Intro to ML:
 
     **Feature engineering** manually creates new features to:
 
-    - Capture **non-linear** relationships (e.g. $\sqrt{x}$, $x^2$, binary threshold columns).
+    - Capture **non-linear** relationships (e.g. $\sqrt{x}$, $x^2$, binary threshold
+    columns).
 
     - Capture **interactions** between features (e.g. squarefeet × neighbourhood).
 
 
-    This gives the model a "head start", especially when domain knowledge suggests specific transformations.
+    This gives the model a "head start", especially when domain knowledge suggests
+    specific transformations.
 
     '
   reference: 6-feature-engineering.md
-- topic: Intro to ML
+- topic: Feature Engineering
   title: Feature engineering vs data augmentation
   prompt: What is the difference between feature engineering and data augmentation?
-  answer: '- **Feature engineering** — adds new **columns** (features) derived from existing ones.
+  answer: '- **Feature engineering** — adds new **columns** (features) derived from
+    existing ones.
 
-    - **Data augmentation** — adds new **rows** (training examples) by adding noise or variations to existing data, making
-    models more robust.
+    - **Data augmentation** — adds new **rows** (training examples) by adding noise
+    or variations to existing data, making models more robust.
 
     '
   reference: 6-feature-engineering.md
-- topic: Intro to ML
+- topic: Feature Engineering
   title: Binning continuous features
   prompt: What is binning in feature engineering, and how is it implemented in scikit-learn?
-  answer: '**Binning** converts a continuous feature into one or more discrete (categorical) features.
+  answer: '**Binning** converts a continuous feature into one or more discrete (categorical)
+    features.
 
 
     Example: age → young / middle-aged / elderly.
@@ -568,41 +626,48 @@ Intro to ML:
     - `kmeans` — bins contain nearest neighbours from k-means clustering.
 
 
-    A binary threshold column (e.g. temperature > 22°C → 0 or 1) is a simple form of binning.
+    A binary threshold column (e.g. temperature > 22°C → 0 or 1) is a simple form
+    of binning.
 
     '
   reference: 6-feature-engineering.md
-- topic: Intro to ML
+- topic: Feature Engineering
   title: Sinusoidal feature transformations
   prompt: How are sinusoidal (sin/cos) features used in feature engineering?
-  answer: "Adding $\\cos(2^{-i} x)$ and $\\sin(2^{-i} x)$ columns to the dataset lets a **linear model** capture **periodic\
-    \ patterns** in the data.\n\n```python\ndef sinusoids(x, start=0, num=4):\n    out = np.ones((1, len(x)))\n    for i in\
-    \ range(start, start + num + 1):\n        out = np.concatenate((out, np.stack((np.cos(2**(-i) * x), np.cos(2**(-i) * x)))))\n\
-    \    return out.T\n```\n\nUse case: yearly data with seasonal highs/lows (e.g. higher sales in summer).\n\nThe model input\
-    \ shape grows from $(n,)$ to $(n, d)$ where $d$ is the number of sinusoidal features added.\n"
+  answer: "Adding $\\cos(2^{-i} x)$ and $\\sin(2^{-i} x)$ columns to the dataset lets\
+    \ a **linear model** capture **periodic patterns** in the data.\n\n```python\n\
+    def sinusoids(x, start=0, num=4):\n    out = np.ones((1, len(x)))\n    for i in\
+    \ range(start, start + num + 1):\n        out = np.concatenate((out, np.stack((np.cos(2**(-i)\
+    \ * x), np.cos(2**(-i) * x)))))\n    return out.T\n```\n\nUse case: yearly data\
+    \ with seasonal highs/lows (e.g. higher sales in summer).\n\nThe model input shape\
+    \ grows from $(n,)$ to $(n, d)$ where $d$ is the number of sinusoidal features\
+    \ added.\n"
   reference: 6-feature-engineering.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Bump (bounded) functions as features
   prompt: What are bump functions in feature engineering, and when are they useful?
-  answer: '**Bump functions** (e.g. squared-exponential $e^{-x^2/4}$) are **active in a small region** of the input space
-    and vanish elsewhere.
+  answer: '**Bump functions** (e.g. squared-exponential $e^{-x^2/4}$) are **active
+    in a small region** of the input space and vanish elsewhere.
 
 
-    Attaching bumps centred at different positions lets a linear model put emphasis on **specific regions** of the input space.
+    Attaching bumps centred at different positions lets a linear model put emphasis
+    on **specific regions** of the input space.
 
 
-    Analogous to splitting the problem into localised chunks and learning a separate coefficient for each — more continuous
-    than simple binning.
+    Analogous to splitting the problem into localised chunks and learning a separate
+    coefficient for each — more continuous than simple binning.
 
 
     **Warning:** Can over-fit if bumps extend beyond the observed data range.
 
     '
   reference: 6-feature-engineering.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: Unsupervised learning vs supervised learning
-  prompt: How does unsupervised learning differ from supervised learning in terms of what it tries to discover?
-  answer: '- **Supervised learning** — predicts a specific target variable $y$ from features $\mathbf{x}$.
+  prompt: How does unsupervised learning differ from supervised learning in terms
+    of what it tries to discover?
+  answer: '- **Supervised learning** — predicts a specific target variable $y$ from
+    features $\mathbf{x}$.
 
     - **Unsupervised learning** — has **no target**; all variables are treated symmetrically.
 
@@ -610,32 +675,36 @@ Intro to ML:
     Unsupervised learning asks: *"how do all variables vary with all other variables?"*
 
 
-    It aims to discover the **underlying structure** of the data, including latent factors and correlations.
+    It aims to discover the **underlying structure** of the data, including latent
+    factors and correlations.
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: Latent factors
   prompt: What is a latent factor, and how can it be inferred from data?
-  answer: 'A **latent factor** is an **unobserved** variable that contributes to generating the data (e.g. "language aptitude").
+  answer: 'A **latent factor** is an **unobserved** variable that contributes to generating
+    the data (e.g. "language aptitude").
 
 
     It cannot be measured directly, but can be **inferred** by:
 
-    1. Finding the direction (a line in feature space) that best summarises the variation in the data.
+    1. Finding the direction (a line in feature space) that best summarises the variation
+    in the data.
 
     2. **Projecting** each data point **perpendicularly** onto that line.
 
 
-    The projections capture a summary of the variation, analogous to how observed variables were generated from the latent
-    factor.
+    The projections capture a summary of the variation, analogous to how observed
+    variables were generated from the latent factor.
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: Principal directions in PCA
   prompt: What are principal directions, and what properties do they have?
-  answer: '**Principal directions** are the ordered directions of **greatest variation** in the data:
+  answer: '**Principal directions** are the ordered directions of **greatest variation**
+    in the data:
 
 
     - The **1st** principal direction captures the most variance.
@@ -646,11 +715,12 @@ Intro to ML:
 
     - They form an alternative set of axes ("basis") for the data.
 
-    - Taking the top $k$ directions captures the most important structure; the remaining $d - k$ can be discarded.
+    - Taking the top $k$ directions captures the most important structure; the remaining
+    $d - k$ can be discarded.
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: PCA outputs — principal directions and component scores
   prompt: What are the two key outputs of PCA, and how are they accessed in scikit-learn?
   answer: 'PCA produces two outputs for a dataset with $n$ samples and $d$ features:
@@ -660,9 +730,11 @@ Intro to ML:
 
     |---|---|---|
 
-    | **Principal directions** $W$ | $d \times d$ | Rows are ordered directions of greatest variation |
+    | **Principal directions** $W$ | $d \times d$ | Rows are ordered directions of
+    greatest variation |
 
-    | **Component scores** $A$ | $n \times d$ | Projections of each sample onto each principal direction |
+    | **Component scores** $A$ | $n \times d$ | Projections of each sample onto each
+    principal direction |
 
 
     ```python
@@ -687,19 +759,21 @@ Intro to ML:
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: Explained variance in PCA
   prompt: What is explained variance in PCA, and how is it computed in scikit-learn?
-  answer: '**Explained variance** measures what proportion of the total variance is captured by $k$ principal components:
+  answer: '**Explained variance** measures what proportion of the total variance is
+    captured by $k$ principal components:
 
 
-    $$\text{Explained variance} = \frac{\text{Variance of projections onto } k \text{ directions}}{\text{Total variance}}
-    \in [0, 1]$$
+    $$\text{Explained variance} = \frac{\text{Variance of projections onto } k \text{
+    directions}}{\text{Total variance}} \in [0, 1]$$
 
 
     - Close to **1** → the $k$ directions capture most of the data''s variation.
 
-    - Close to **$k/d$** → variables are approximately independent; each direction contributes equally.
+    - Close to **$k/d$** → variables are approximately independent; each direction
+    contributes equally.
 
 
     ```python
@@ -710,10 +784,12 @@ Intro to ML:
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Feature standardisation (z-score normalisation)
-  prompt: What is feature standardisation, why is it needed, and how is it applied in scikit-learn?
-  answer: '**Standardisation** rescales each feature to have **zero mean** and **unit variance**:
+  prompt: What is feature standardisation, why is it needed, and how is it applied
+    in scikit-learn?
+  answer: '**Standardisation** rescales each feature to have **zero mean** and **unit
+    variance**:
 
 
     $$\tilde{x}_i = \frac{x_i - \mu_i}{\sigma_i}$$
@@ -721,9 +797,11 @@ Intro to ML:
 
     **Why it matters:**
 
-    - Models using distance metrics (k-means, KNN) are sensitive to scale differences between features.
+    - Models using distance metrics (k-means, KNN) are sensitive to scale differences
+    between features.
 
-    - Makes hyperparameters (learning rates, regularisation strength) more stable across features.
+    - Makes hyperparameters (learning rates, regularisation strength) more stable
+    across features.
 
 
     ```python
@@ -743,9 +821,10 @@ Intro to ML:
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Min-max normalisation
-  prompt: How does min-max normalisation differ from standardisation, and when is it preferred?
+  prompt: How does min-max normalisation differ from standardisation, and when is
+    it preferred?
   answer: '**Min-max normalisation** rescales values to a fixed range (e.g. $[0, 1]$):
 
 
@@ -756,10 +835,12 @@ Intro to ML:
 
     - Makes fewer assumptions about the data distribution.
 
-    - More sensitive to **outliers** (which squeeze the rest of the data into a narrow range).
+    - More sensitive to **outliers** (which squeeze the rest of the data into a narrow
+    range).
 
 
-    **Use case:** When the model expects inputs in a specific range (e.g. image pixel values → $[0, 1]$).
+    **Use case:** When the model expects inputs in a specific range (e.g. image pixel
+    values → $[0, 1]$).
 
 
     ```python
@@ -774,10 +855,11 @@ Intro to ML:
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: One-hot encoding challenges
   prompt: What are the challenges of one-hot encoding, and how can they be mitigated?
-  answer: '**One-hot encoding** converts a categorical variable into binary columns (one per category).
+  answer: '**One-hot encoding** converts a categorical variable into binary columns
+    (one per category).
 
 
     **Challenges:**
@@ -793,374 +875,589 @@ Intro to ML:
 
     - **Group** semantically similar categories together.
 
-    - Apply **dimensionality reduction** or **embedding** techniques to compress the representation.
+    - Apply **dimensionality reduction** or **embedding** techniques to compress the
+    representation.
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Intro to ML
+- topic: Data Processing
   title: Z-score and outlier detection
   prompt: How is the z-score used to detect outliers in a dataset?
-  answer: 'The **z-score** measures how many standard deviations a value is from the sample mean.
+  answer: 'The **z-score** measures how many standard deviations a value is from the
+    sample mean.
 
 
     A common cut-off for outlier detection is:
 
 
-    $$|z| > 3 \quad \Rightarrow \quad \text{value is more than 3 standard deviations from the mean}$$
+    $$|z| > 3 \quad \Rightarrow \quad \text{value is more than 3 standard deviations
+    from the mean}$$
 
 
-    Values exceeding this threshold are flagged as potential outliers and may be removed or handled separately.
+    Values exceeding this threshold are flagged as potential outliers and may be removed
+    or handled separately.
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: OLS — closed-form solution for optimal parameters
-  prompt: What is the Ordinary Least Squares (OLS) closed-form solution for the optimal regression parameters?
-  answer: |
-    OLS finds optimal parameters $\beta^*$ analytically by minimising the SSE:
+  prompt: What is the Ordinary Least Squares (OLS) closed-form solution for the optimal
+    regression parameters?
+  answer: 'OLS finds optimal parameters $\beta^*$ analytically by minimising the SSE:
+
 
     $$\beta^* = (X^\top X)^{-1} X^\top y$$
 
+
     Steps:
+
     1. Express SSE in matrix form: $\operatorname{SSE} = (Y - X\beta)^\top (Y - X\beta)$
+
     2. Differentiate w.r.t. $\beta$ and set gradient to zero.
+
     3. Solve for $\beta$ (requires $X^\top X$ to be invertible).
 
+
     ```python
+
     X = np.hstack((np.ones(X.shape), X))   # add bias column of ones
+
     beta = np.linalg.inv(X.T @ X) @ (X.T @ y)
+
     Y_pred = X @ beta
+
     ```
+
+    '
   reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Matrix notation for linear regression predictions
   prompt: How is the prediction $\hat{Y}$ expressed in matrix form for linear regression?
-  answer: |
-    With $N$ observations and the bias included as a column of ones in $X$:
+  answer: 'With $N$ observations and the bias included as a column of ones in $X$:
+
 
     $$\hat{Y} = X\beta$$
 
+
     where:
-    - $X$ has shape $(N, J+1)$ — first column is all 1s (for $\beta_0$), remaining columns are features.
+
+    - $X$ has shape $(N, J+1)$ — first column is all 1s (for $\beta_0$), remaining
+    columns are features.
+
     - $\beta$ has shape $(J+1, 1)$ — one weight per feature plus the bias.
+
     - $\hat{Y}$ has shape $(N, 1)$ — one prediction per observation.
 
+
     The `@` operator in NumPy performs matrix multiplication.
+
+    '
   reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Intro to ML
+- topic: Loss Functions
   title: OLS SSE in matrix notation
-  prompt: How is the Sum of Squared Errors (SSE) expressed in matrix notation, and why is that form useful?
-  answer: |
-    The SSE can be rewritten using the identity $\sum_i v_i^2 = v^\top v$ for a vector $v$:
+  prompt: How is the Sum of Squared Errors (SSE) expressed in matrix notation, and
+    why is that form useful?
+  answer: 'The SSE can be rewritten using the identity $\sum_i v_i^2 = v^\top v$ for
+    a vector $v$:
 
-    $$\operatorname{SSE} = \sum_{i=1}^{N}(y_i - \hat{y}_i)^2 = (Y - X\beta)^\top (Y - X\beta)$$
 
-    This compact form makes it straightforward to differentiate with respect to $\beta$ using matrix calculus,
+    $$\operatorname{SSE} = \sum_{i=1}^{N}(y_i - \hat{y}_i)^2 = (Y - X\beta)^\top (Y
+    - X\beta)$$
+
+
+    This compact form makes it straightforward to differentiate with respect to $\beta$
+    using matrix calculus,
+
     yielding the closed-form OLS solution.
-  reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Intro to ML
-  title: OLS gradient derivation
-  prompt: What is the gradient of the SSE with respect to $\beta$, and what matrix derivative rule is used?
-  answer: |
-    Using the rule $\nabla_\beta A^\top A = 2(\nabla_\beta A)^\top A$:
 
-    $$\nabla_\beta \operatorname{SSE} = -2X^\top(y - X\beta) = 2X^\top X\beta - 2X^\top y$$
+    '
+  reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
+- topic: Linear Regression
+  title: OLS gradient derivation
+  prompt: What is the gradient of the SSE with respect to $\beta$, and what matrix
+    derivative rule is used?
+  answer: 'Using the rule $\nabla_\beta A^\top A = 2(\nabla_\beta A)^\top A$:
+
+
+    $$\nabla_\beta \operatorname{SSE} = -2X^\top(y - X\beta) = 2X^\top X\beta - 2X^\top
+    y$$
+
 
     Setting the gradient to zero and solving:
 
+
     $$\beta^* = (X^\top X)^{-1} X^\top y$$
 
-    **Note:** This assumes $(X^\top X)$ is invertible. If not, regularisation or a generalised inverse is needed.
+
+    **Note:** This assumes $(X^\top X)$ is invertible. If not, regularisation or a
+    generalised inverse is needed.
+
+    '
   reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Intro to ML
+- topic: Dimensionality Reduction
   title: Supervised vs unsupervised learning
   prompt: What distinguishes supervised learning from unsupervised learning?
-  answer: |
-    **Supervised Learning (SL)** — predicts a *target* from one or more *features*. Each data point has
+  answer: '**Supervised Learning (SL)** — predicts a *target* from one or more *features*.
+    Each data point has
+
     features and an associated label/target.
+
     - Continuous target → **regression**
+
     - Discrete target → **classification**
+
     - Requires **labelled** data.
 
-    **Unsupervised Learning (USL)** — finds *patterns* in *unlabelled* data. There is no target variable;
-    the algorithm discovers new representations (e.g. clusters, reduced dimensions) without human labels.
+
+    **Unsupervised Learning (USL)** — finds *patterns* in *unlabelled* data. There
+    is no target variable;
+
+    the algorithm discovers new representations (e.g. clusters, reduced dimensions)
+    without human labels.
+
+    '
   reference: notebooks/Introduction_to_Scikit_Learn.md
-- topic: Intro to ML
+- topic: Model Evaluation
   title: scikit-learn key modules
   prompt: What are the main scikit-learn modules and what does each cover?
-  answer: |
-    | Module | Purpose |
+  answer: '| Module | Purpose |
+
     |---|---|
+
     | `sklearn.datasets` | Load reference datasets and generate synthetic data |
+
     | `sklearn.preprocessing` | Scaling, normalisation, encoding |
+
     | `sklearn.linear_model` | Linear/logistic regression, Ridge, Lasso |
+
     | `sklearn.tree` | Decision-tree-based models |
+
     | `sklearn.cluster` | Unsupervised clustering algorithms |
+
     | `sklearn.decomposition` | Dimensionality reduction (e.g. PCA) |
+
     | `sklearn.metrics` | Performance scores (accuracy, R², MSE, etc.) |
-    | `sklearn.model_selection` | Train/test split, cross-validation, hyperparameter search |
+
+    | `sklearn.model_selection` | Train/test split, cross-validation, hyperparameter
+    search |
+
+    '
   reference: notebooks/Introduction_to_Scikit_Learn.md
-- topic: Intro to ML
+- topic: Model Evaluation
   title: Train-test split — purpose and typical ratio
   prompt: What is a train-test split, why is it used, and what ratio is typical?
-  answer: |
-    A **train-test split** divides the dataset into two subsets:
-    - **Training set** — used to fit (train) the model.
-    - **Test set** — used to evaluate the model on **unseen data** (out-of-sample validation).
+  answer: 'A **train-test split** divides the dataset into two subsets:
 
-    It avoids **overfitting** — a model that memorises training data but fails on new data.
+    - **Training set** — used to fit (train) the model.
+
+    - **Test set** — used to evaluate the model on **unseen data** (out-of-sample
+    validation).
+
+
+    It avoids **overfitting** — a model that memorises training data but fails on
+    new data.
+
 
     Typical split: **80% train / 20% test** (or 90/10 for smaller datasets).
 
+
     ```python
+
     from sklearn.model_selection import train_test_split
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
     ```
+
+    '
   reference: notebooks/supervised-learning-with-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Fitting and scoring a linear regression model in sklearn
   prompt: How do you fit a linear regression model and evaluate it with $R^2$ in scikit-learn?
-  answer: |
-    ```python
+  answer: '```python
+
     from sklearn.linear_model import LinearRegression
+
 
     model = LinearRegression().fit(X_train.reshape(-1, 1), y_train)
 
+
     # R² score on training set
+
     model.score(X_train.reshape(-1, 1), y_train)
 
+
     # R² score on test set
+
     model.score(X_test.reshape(-1, 1), y_test)
 
+
     # Predictions
+
     y_pred = model.predict(X_test.reshape(-1, 1))
+
     ```
 
+
     A noticeably **lower test $R^2$** than train $R^2$ suggests **overfitting**.
+
+    '
   reference: notebooks/supervised-learning-with-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: ML vs statistical modelling — vocabulary mapping
-  prompt: What are the equivalent terms between statistical modelling and machine learning?
-  answer: |
-    | Statistical modelling | Machine learning |
+  prompt: What are the equivalent terms between statistical modelling and machine
+    learning?
+  answer: '| Statistical modelling | Machine learning |
+
     |---|---|
+
     | Explanatory variable | Input feature |
+
     | Dependent variable / response | Target / label |
+
     | Estimate a model | Fit a model |
+
     | Parameters | Weights |
+
     | Forecasting | Prediction |
+
     | Logistic function | Softmax |
 
-    The two fields have developed independently, leading to overlapping concepts with different names.
+
+    The two fields have developed independently, leading to overlapping concepts with
+    different names.
+
+    '
   reference: notebooks/supervised-learning-with-linear-regression.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Ridge regression — L2 regularisation in sklearn
-  prompt: How do you apply Ridge regression in scikit-learn, and what does the alpha parameter control?
-  answer: |
-    Ridge adds an **L2 penalty** on coefficient magnitudes to reduce overfitting:
+  prompt: How do you apply Ridge regression in scikit-learn, and what does the alpha
+    parameter control?
+  answer: 'Ridge adds an **L2 penalty** on coefficient magnitudes to reduce overfitting:
+
 
     $$\text{Cost} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}\beta_j^2$$
 
+
     ```python
+
     from sklearn.linear_model import Ridge
+
     ridge = Ridge(alpha=0.5)
+
     ridge.fit(X_train, y_train)
+
     print(ridge.coef_)
+
     ```
 
-    - **Higher alpha** → stronger regularisation → smaller coefficients → simpler model.
+
+    - **Higher alpha** → stronger regularisation → smaller coefficients → simpler
+    model.
+
     - Ridge shrinks coefficients towards zero but **not exactly zero**.
+
+    '
   reference: notebooks/supervised-learning-with-linear-regression.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Lasso regression — L1 regularisation and sparsity
-  prompt: How does Lasso regression differ from Ridge, and why is it useful for feature selection?
-  answer: |
-    Lasso adds an **L1 penalty** (absolute values) to the cost function:
+  prompt: How does Lasso regression differ from Ridge, and why is it useful for feature
+    selection?
+  answer: 'Lasso adds an **L1 penalty** (absolute values) to the cost function:
+
 
     $$\text{Cost} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}|\beta_j|$$
 
+
     ```python
+
     from sklearn.linear_model import Lasso
+
     lasso = Lasso(alpha=0.5)
+
     lasso.fit(X_train, y_train)
+
     print(lasso.coef_)   # some coefficients will be exactly 0
+
     ```
 
-    Unlike Ridge, Lasso can set coefficients **exactly to zero** → **sparse model** → automatic feature selection.
+
+    Unlike Ridge, Lasso can set coefficients **exactly to zero** → **sparse model**
+    → automatic feature selection.
+
 
     Use Lasso when only a **subset of features** is expected to matter.
+
+    '
   reference: notebooks/supervised-learning-with-linear-regression.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: What is linear algebra?
   prompt: What is linear algebra, and why is it useful for data analysis?
-  answer: |
-    Linear algebra is the study of techniques for **manipulating and characterizing vectors**.
+  answer: 'Linear algebra is the study of techniques for **manipulating and characterizing
+    vectors**.
+
 
     An $M$-dimensional vector is a collection of $M$ real numbers:
 
+
     $$\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_M \end{bmatrix} \in \mathbb{R}^M$$
 
+
     **Why it is useful for data:**
-    - A dataset with $N$ samples and $M$ features is simply a collection of $N$ $M$-dimensional vectors.
-    - Analysing data reduces to **manipulating and characterising** those vectors — exactly what linear algebra provides tools for.
-    - E.g. heights and weights of athletes → each athlete is a 2D vector; images → each image "flattened" is a high-dimensional vector.
+
+    - A dataset with $N$ samples and $M$ features is simply a collection of $N$ $M$-dimensional
+    vectors.
+
+    - Analysing data reduces to **manipulating and characterising** those vectors
+    — exactly what linear algebra provides tools for.
+
+    - E.g. heights and weights of athletes → each athlete is a 2D vector; images →
+    each image "flattened" is a high-dimensional vector.
+
+    '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Regularisation
   title: Vector norms — L1, L2, and L∞
   prompt: What are the L1, L2, and L∞ vector norms, and what do they measure?
-  answer: |
-    All three norms quantify "how big" a vector is, but by different criteria.
+  answer: 'All three norms quantify "how big" a vector is, but by different criteria.
+
 
     | Norm | Formula | Intuition |
-    |------|---------|-----------|
-    | $L^2$ | $\lVert\mathbf{v}\rVert_2 = \sqrt{v_1^2 + v_2^2 + \ldots + v_M^2}$ | Euclidean distance from origin (Pythagoras) |
-    | $L^1$ | $\lVert\mathbf{v}\rVert_1 = \|v_1\| + \|v_2\| + \ldots + \|v_M\|$ | "Manhattan" — number of unit blocks to travel |
-    | $L^\infty$ | $\lVert\mathbf{v}\rVert_\infty = \max\{\|v_1\|, \|v_2\|, \ldots, \|v_M\|\}$ | Largest absolute element |
 
-    In ML, $L^1$ and $L^2$ norms (or combinations) are used in **regularisation** to prevent model parameters becoming too large.
+    |------|---------|-----------|
+
+    | $L^2$ | $\lVert\mathbf{v}\rVert_2 = \sqrt{v_1^2 + v_2^2 + \ldots + v_M^2}$ |
+    Euclidean distance from origin (Pythagoras) |
+
+    | $L^1$ | $\lVert\mathbf{v}\rVert_1 = \|v_1\| + \|v_2\| + \ldots + \|v_M\|$ |
+    "Manhattan" — number of unit blocks to travel |
+
+    | $L^\infty$ | $\lVert\mathbf{v}\rVert_\infty = \max\{\|v_1\|, \|v_2\|, \ldots,
+    \|v_M\|\}$ | Largest absolute element |
+
+
+    In ML, $L^1$ and $L^2$ norms (or combinations) are used in **regularisation**
+    to prevent model parameters becoming too large.
+
+    '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Computing vector norms in NumPy
   prompt: How do you compute the L1, L2, and L∞ norms of a vector in NumPy?
-  answer: |
-    Use `np.linalg.norm(v, ord=...)`:
+  answer: 'Use `np.linalg.norm(v, ord=...)`:
+
 
     ```python
+
     import numpy as np
+
 
     v = np.random.randn(2)
 
+
     norm_L1  = np.linalg.norm(v, ord=1)       # L1 norm
+
     norm_L2  = np.linalg.norm(v, ord=2)       # L2 norm (default)
+
     norm_Linf = np.linalg.norm(v, ord=np.inf) # L∞ norm
+
     ```
 
-    The `ord` argument selects the norm; omitting it defaults to the **L2 (Euclidean) norm**.
+
+    The `ord` argument selects the norm; omitting it defaults to the **L2 (Euclidean)
+    norm**.
+
+    '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Cosine similarity
   prompt: What is cosine similarity, and how is it computed in NumPy?
-  answer: |
-    Cosine similarity measures the **angle** between two vectors, regardless of their magnitude.
+  answer: 'Cosine similarity measures the **angle** between two vectors, regardless
+    of their magnitude.
 
-    $$\text{cosine similarity} = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert\mathbf{u}\rVert_2 \lVert\mathbf{v}\rVert_2}$$
+
+    $$\text{cosine similarity} = \frac{\mathbf{u} \cdot \mathbf{v}}{\lVert\mathbf{u}\rVert_2
+    \lVert\mathbf{v}\rVert_2}$$
+
 
     - Value of **1** → vectors point in the same direction (angle = 0°)
+
     - Value of **0** → vectors are orthogonal (angle = 90°)
+
     - Value of **−1** → vectors point in opposite directions
 
+
     ```python
+
     dotprod = np.dot(u, v)
+
     cossim  = np.dot(u, v) / (np.linalg.norm(u, ord=2) * np.linalg.norm(v, ord=2))
+
     ```
+
+    '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Scalar multiplication and vector addition
-  prompt: What are scalar multiplication and vector addition, and how do they combine into a linear combination?
-  answer: |
-    The two elementary vector operations are:
-
-    - **Scalar multiplication** — scales the length of a vector; a negative scalar also flips direction:
-      $$\mathbf{u} = a\mathbf{v}$$
-    - **Vector addition** — combines two vectors by placing one at the tip of the other:
-      $$\mathbf{u} = \mathbf{v} + \mathbf{w}$$
-
-    Together they form a **linear combination**:
-    $$\mathbf{u} = a\mathbf{v} + b\mathbf{w}$$
+  prompt: What are scalar multiplication and vector addition, and how do they combine
+    into a linear combination?
+  answer: "The two elementary vector operations are:\n\n- **Scalar multiplication**\
+    \ — scales the length of a vector; a negative scalar also flips direction:\n \
+    \ $$\\mathbf{u} = a\\mathbf{v}$$\n- **Vector addition** — combines two vectors\
+    \ by placing one at the tip of the other:\n  $$\\mathbf{u} = \\mathbf{v} + \\\
+    mathbf{w}$$\n\nTogether they form a **linear combination**:\n$$\\mathbf{u} = a\\\
+    mathbf{v} + b\\mathbf{w}$$\n"
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Linear Regression
   title: Linear independence
   prompt: What does it mean for a set of vectors to be linearly independent?
-  answer: |
-    A set of vectors is **linearly independent** if **none** of them can be produced as a linear combination of the others.
+  answer: 'A set of vectors is **linearly independent** if **none** of them can be
+    produced as a linear combination of the others.
 
-    Equivalently: the only solution to $a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \ldots + a_n\mathbf{v}_n = \mathbf{0}$ is $a_1 = a_2 = \ldots = a_n = 0$.
 
-    If at least one vector *can* be written as a combination of the rest, the set is **linearly dependent**.
+    Equivalently: the only solution to $a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \ldots
+    + a_n\mathbf{v}_n = \mathbf{0}$ is $a_1 = a_2 = \ldots = a_n = 0$.
+
+
+    If at least one vector *can* be written as a combination of the rest, the set
+    is **linearly dependent**.
+
+    '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Creating vectors and matrices in NumPy
   prompt: How do you create random vectors and matrices in NumPy?
-  answer: |
-    Use `np.random.randn` to draw from a standard normal distribution:
+  answer: 'Use `np.random.randn` to draw from a standard normal distribution:
+
 
     ```python
+
     import numpy as np
+
 
     m, n = 3, 4
+
     u = np.random.randn(n)    # random n-dimensional vector
+
     v = np.random.randn(n)    # another random n-dimensional vector
+
     A = np.random.randn(m, n) # random m × n matrix
+
     B = np.random.randn(n, n) # random n × n matrix
+
     ```
+
+    '
   reference: notebooks/supporting-math/linear-algebra-essentials.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Matrix transpose in NumPy
   prompt: How do you compute the transpose of a matrix in NumPy?
-  answer: |
-    Use the `.T` attribute:
+  answer: 'Use the `.T` attribute:
+
 
     ```python
+
     At = A.T          # matrix transpose
+
     print(A.shape)    # e.g. (3, 4)
+
     print(At.shape)   # e.g. (4, 3)
+
     ```
 
-    Transposing swaps rows and columns: an $m \times n$ matrix becomes an $n \times m$ matrix.
+
+    Transposing swaps rows and columns: an $m \times n$ matrix becomes an $n \times
+    m$ matrix.
+
+    '
   reference: notebooks/supporting-math/linear-algebra-essentials.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Dot product and matrix multiplication in NumPy
-  prompt: What are the three ways to compute dot products and matrix multiplication in NumPy?
-  answer: |
-    All three syntaxes are equivalent:
+  prompt: What are the three ways to compute dot products and matrix multiplication
+    in NumPy?
+  answer: 'All three syntaxes are equivalent:
+
 
     ```python
+
     # Using np.dot
+
     np.dot(u, v)   # dot product (vectors)
+
     np.dot(A, v)   # matrix-vector multiplication
+
     np.dot(A, B)   # matrix-matrix multiplication
 
+
     # Using the .dot method
+
     u.dot(v)
+
     A.dot(v)
+
     A.dot(B)
 
+
     # Using the @ operator (recommended)
+
     u @ v
+
     A @ v
+
     A @ B
+
     ```
+
 
     The **`@` operator** is the most readable and is the modern NumPy/Python convention.
+
+    '
   reference: notebooks/supporting-math/linear-algebra-essentials.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Matrix inverse and identity matrix in NumPy
   prompt: How do you compute a matrix inverse and create an identity matrix in NumPy?
-  answer: |
-    ```python
+  answer: '```python
+
     import numpy as np
 
+
     n = 4
+
     B    = np.random.randn(n, n)
+
     Binv = np.linalg.inv(B)   # matrix inverse — only defined for square matrices!
 
+
     I = np.eye(n)             # n × n identity matrix
+
     ```
 
-    The inverse satisfies $B \cdot B^{-1} = I$. Not all square matrices are invertible (singular matrices have no inverse).
+
+    The inverse satisfies $B \cdot B^{-1} = I$. Not all square matrices are invertible
+    (singular matrices have no inverse).
+
+    '
   reference: notebooks/supporting-math/linear-algebra-essentials.md
-- topic: Intro to ML
+- topic: Linear Algebra
   title: Eigenvectors and eigenvalues in NumPy
   prompt: How do you compute the eigenvectors and eigenvalues of a matrix in NumPy?
-  answer: |
-    Use `np.linalg.eig` (only defined for **square** matrices):
+  answer: 'Use `np.linalg.eig` (only defined for **square** matrices):
+
 
     ```python
+
     eigvals, eigvecs = np.linalg.eig(B)
 
+
     print(eigvals.shape)  # (n,)  — vector of n eigenvalues
+
     print(eigvecs.shape)  # (n, n) — columns are the corresponding eigenvectors
+
     ```
 
-    An eigenvector $\mathbf{v}$ of matrix $B$ satisfies $B\mathbf{v} = \lambda\mathbf{v}$, where $\lambda$ is the corresponding **eigenvalue**.
+
+    An eigenvector $\mathbf{v}$ of matrix $B$ satisfies $B\mathbf{v} = \lambda\mathbf{v}$,
+    where $\lambda$ is the corresponding **eigenvalue**.
+
+    '
   reference: notebooks/supporting-math/linear-algebra-essentials.md

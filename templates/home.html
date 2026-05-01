@@ -15,7 +15,7 @@
       justify-content: center;
     }
     .container {
-      max-width: 480px;
+      max-width: 580px;
       width: 100%;
     }
     h1 {
@@ -46,10 +46,12 @@
       margin-right: 0.75rem;
       cursor: pointer;
       accent-color: #4a6cf7;
+      flex-shrink: 0;
     }
     .topic-item label {
       cursor: pointer;
       font-size: 1rem;
+      flex: 1;
     }
     .all-topics {
       font-weight: 600;
@@ -83,43 +85,57 @@
 <body>
   <div class="container">
     <h1>Flashcard Study App</h1>
-    <p class="subtitle">Choose topics to study, then start your session.</p>
+    <p class="subtitle">Choose modules to study, then start your session.</p>
 
     <form id="topic-form" method="POST" action="/start" novalidate>
       <div class="topics">
         <div class="topic-item">
-          <input type="checkbox" id="all-topics" onchange="toggleAll(this)">
-          <label for="all-topics" class="all-topics">All Topics</label>
+          <input type="checkbox" id="all-topics" onchange="toggleAll()">
+          <label for="all-topics" class="all-topics">All Modules</label>
         </div>
         <hr class="divider">
-        {% for topic in topics %}
+        {% for module in modules.keys() %}
         <div class="topic-item">
-          <input type="checkbox" name="topics" value="{{ topic }}" id="topic-{{ loop.index }}" class="topic-cb" onchange="syncAllTopics()">
-          <label for="topic-{{ loop.index }}">{{ topic }}</label>
+          <input type="checkbox" name="modules" value="{{ module }}" 
+                 id="module-{{ loop.index }}" class="module-cb" onchange="syncAll()">
+          <label for="module-{{ loop.index }}">{{ module }}</label>
         </div>
         {% endfor %}
       </div>
 
       <p class="error-msg" id="error-msg" role="alert" aria-live="polite"></p>
-      <button type="submit" onclick="return validateTopics(event)">Start Studying</button>
+      <button type="submit" onclick="return validateSelection(event)">Start Studying</button>
     </form>
   </div>
 
   <script>
-    function toggleAll(allCb) {
-      document.querySelectorAll('.topic-cb').forEach(cb => cb.checked = allCb.checked);
+    function toggleAll() {
+      const allCb = document.getElementById('all-topics');
+      document.querySelectorAll('.module-cb').forEach(cb => cb.checked = allCb.checked);
     }
 
-    function syncAllTopics() {
-      const cbs = document.querySelectorAll('.topic-cb');
-      document.getElementById('all-topics').checked = [...cbs].every(cb => cb.checked);
+    function syncAll() {
+      const moduleCbs = [...document.querySelectorAll('.module-cb')];
+      const allCb = document.getElementById('all-topics');
+      const checkedCount = moduleCbs.filter(cb => cb.checked).length;
+
+      if (checkedCount === 0) {
+        allCb.checked = false;
+        allCb.indeterminate = false;
+      } else if (checkedCount === moduleCbs.length) {
+        allCb.checked = true;
+        allCb.indeterminate = false;
+      } else {
+        allCb.checked = false;
+        allCb.indeterminate = true;
+      }
     }
 
-    function validateTopics(event) {
-      const anyChecked = [...document.querySelectorAll('.topic-cb')].some(cb => cb.checked);
+    function validateSelection(event) {
+      const anyChecked = [...document.querySelectorAll('.module-cb')].some(cb => cb.checked);
       if (!anyChecked) {
         event.preventDefault();
-        document.getElementById('error-msg').textContent = 'Please select at least one topic to study.';
+        document.getElementById('error-msg').textContent = 'Please select at least one module to study.';
         return false;
       }
       document.getElementById('error-msg').textContent = '';

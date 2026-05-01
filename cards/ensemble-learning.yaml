@@ -1,0 +1,2258 @@
+Ensemble Learning:
+- topic: Fundamentals
+  title: Core principle behind ensemble methods
+  prompt: What is the fundamental idea behind ensemble learning?
+  answer: 'Taking the **''wisdom of the crowd''** from a selection of weak models
+    will produce a stronger model than fine-tuning a single strong model.
+
+
+    The resulting **meta-model** created from an ensemble of low-accuracy models will
+    be of higher accuracy than any individual model.
+
+
+    Low-accuracy models are usually learned by **weak learners** - learning algorithms
+    that cannot learn complex models, and thus are typically fast to implement.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Fundamentals
+  title: Three components of an ensemble system
+  prompt: What are the three essential components of an ensemble model?
+  answer: '1. **A base model** - typically the same model type used multiple times
+
+    2. **A meta-algorithm** - to estimate *diverse* instances of the base model
+
+    3. **A combination method** - to combine guesses of base models and make predictions
+
+
+    Diversity is ensured by training each model on different subsets of data. The
+    meta-algorithm makes a final prediction (e.g., average for regression, majority
+    vote for classification).
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Bagging
+  title: Bootstrap sampling method
+  prompt: How does bootstrap sampling work in bagging?
+  answer: 'Bootstrap sampling creates random subsets through **sampling with replacement**:
+
+
+    1. Start with an empty set $S_b$
+
+    2. Pick an example at random from the training set
+
+    3. Put an exact copy into $S_b$ while keeping the original in the training set
+
+    4. Repeat until $|S_b| = N$ (same size as original)
+
+
+    Result: Some examples appear multiple times, others not at all.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Bagging
+  title: Bagging definition and process
+  prompt: What is bagging and how does it work?
+  answer: "**Bagging** (Bootstrap Aggregating) creates diverse models by training\
+    \ each base model on a different random subset of training data.\n\n**Process**:\n\
+    \n1. Create $B$ bootstrap samples $S_b$ (sampling with replacement)\n2. Train\
+    \ a base model $f_b$ on each sample $S_b$\n3. Aggregate predictions:\n   - **Classification**:\
+    \ majority voting\n   - **Regression**: average or median\n"
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Bagging
+  title: Bagging benefits
+  prompt: What are the main benefits of bagging?
+  answer: '- **Reduces variance**: Averaging predictions smooths out overfitting from
+    individual models
+
+    - **Improves stability**: Small changes in training data have less impact on final
+    predictions
+
+    - **Works well with high-variance models**: Particularly effective with decision
+    trees prone to overfitting
+
+    - **Easily parallelised**: All models are independent and can be trained simultaneously
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Bagging
+  title: Bias-variance tradeoff in bagging
+  prompt: How does bagging achieve an optimal bias-variance tradeoff?
+  answer: 'Bagging builds models with **low bias** but **high variance**, then averages
+    them:
+
+
+    - **High variance** = models overfit differently to different data subsets
+
+    - **Averaging reduces variance**: The ''wisdom of the crowd'' smooths out overfitting
+
+    - **Low bias maintained**: Different models learn different patterns across the
+    dataset due to bootstrap sampling
+
+
+    Result: Low variance (less overfitting) + low bias (captures patterns) = optimal
+    tradeoff.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Boosting
+  title: Boosting mechanism
+  prompt: How does boosting differ from bagging in its training approach?
+  answer: 'Boosting trains weak models **iteratively** rather than simultaneously:
+
+
+    1. Train a model on the data
+
+    2. Identify training items the model got wrong
+
+    3. Give these incorrect items **increased importance** (higher weights)
+
+    4. Train the next model focusing on these difficult examples
+
+    5. Repeat, building on previous models'' errors
+
+
+    Two approaches:
+
+    - **Weight-based**: Increase weights of incorrect instances (e.g., AdaBoost)
+
+    - **Residual-based**: Sequentially predict residuals (e.g., XGBoost)
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Bagging
+  title: Bagging vs Boosting
+  prompt: What is the key difference between bagging and boosting in terms of bias
+    and variance?
+  answer: '**Bagging** controls **variance**:
+
+
+    - Uses deep trees (high variance, low bias)
+
+    - Trains models simultaneously on different subsets
+
+    - Reduces overfitting through averaging
+
+
+    **Boosting** controls **bias**:
+
+
+    - Uses shallow trees (high bias, low variance)
+
+    - Trains models sequentially, focusing on errors
+
+    - Reduces underfitting but prone to overfitting
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Stacking
+  title: Stacking definition
+  prompt: What is stacking and how does it differ from bagging and boosting?
+  answer: '**Stacking** combines different base models all trained on the same task:
+
+
+    - Can mix model types (e.g., Neural Networks, SVM, Random Forest)
+
+    - Or same model with different hyperparameters
+
+    - **Train a meta-model** to optimally combine individual predictions
+
+    - Uses **two levels of cross-validation** to avoid overfitting
+
+
+    Benefit: Combines strengths of different model families, commonly used in high-performance
+    applications and Kaggle competitions.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Fundamentals
+  title: Ensemble best practices
+  prompt: What are the key best practices when implementing ensemble methods?
+  answer: '- Use **100-200 base models** for maximal benefits (though returns plateau)
+
+    - Combine bagging with **cross-validation** for reliable evaluation
+
+    - **Optimise individual base models** first using GridSearchCV
+
+    - Leverage **parallelisation** for bagging (models are independent)
+
+    - Be aware of **compute time vs performance** tradeoff
+
+    - Accept **reduced interpretability** in exchange for better performance
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Random Forest
+  title: Random Forest feature subsetting
+  prompt: How do Random Forests differ from standard bagging in their use of features?
+  answer: 'Random Forests use **two types of subsetting**:
+
+
+    1. **Data subsetting**: Bootstrap sampling (like bagging)
+
+    2. **Feature subsetting**: At each node, only a random subset of features is available
+    for splitting
+
+
+    This promotes variance in predictions because:
+
+
+    - If all trees had the same features, they would likely choose the same splits
+
+    - Random feature selection happens at **every node**, not just the root
+
+    - Creates more diverse trees even with identical training data
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Fundamentals
+  title: Base model instability in ensembles
+  prompt: Why should base models in ensemble methods be unstable or brittle?
+  answer: 'Unstable/brittle base models (like decision trees or nearest neighbours)
+    benefit ensembles because:
+
+
+    - They create **larger differences in variance** between predictions
+
+    - Different training subsets lead to very different models (e.g., decision trees
+    vary split features)
+
+    - Models prone to **overfitting** are counteracted by ensemble aggregation
+
+
+    The instability that''s a weakness for individual models becomes a strength when
+    aggregated.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Bagging
+  title: Imbalanced data in bagging
+  prompt: What consideration should be made when using bagging with imbalanced data?
+  answer: 'Bootstrap sampling can result in some models trained on subsets that **do
+    not contain any examples of the minority class**.
+
+
+    **Implications**:
+
+
+    - Good if you only care about the majority class
+
+    - Provides a way to ignore outliers
+
+    - May weaken prediction of minority classes under-represented in the data
+
+
+    Consider this tradeoff when working with imbalanced datasets.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Optimal number of trees in Random Forest
+  prompt: What is the typical range for the number of trees in a Random Forest and
+    what are the considerations?
+  answer: '**Typical range**: 100-1000 trees (highly dependent on dataset size)
+
+
+    **Considerations**:
+
+
+    - **Computational cost** scales linearly with number of trees
+
+    - Performance plateaus after a certain point
+
+    - Lecturers suggest **50-400 trees** as practical range
+
+    - More trees improve stability but have diminishing returns
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Random Forest hyperparameters
+  prompt: What are the key hyperparameters to tune in a Random Forest?
+  answer: "- **Number of trees**: How many estimators in the ensemble\n- **Max depth**:\
+    \ How many nodes deep trees can grow (None = unlimited)\n- **Number of leaf nodes**:\
+    \ Prevents too few leaves with too few samples\n- **Max features**: How many features\
+    \ considered per node\n  - Default: $\\sqrt{n_{features}}$\n  - Increase for one-hot\
+    \ encoded data\n\nTypically use the same hyperparameters for all trees in the\
+    \ forest.\n"
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Extremely Randomised Trees mechanism
+  prompt: How do Extremely Randomised Trees (Extra-Trees) differ from Random Forests?
+  answer: "Extra-Trees generate randomness **at node splitting**:\n\n**At each node\
+    \ split**:\n1. Select a random subset of $K$ features\n2. For each feature, select\
+    \ a **random threshold** (not the optimal one):\n   - Numerical: uniform probability\
+    \ within value range\n   - Categorical: random split\n3. From these random splits,\
+    \ choose the feature with best separation gain\n\n**Key difference**: Random Forests\
+    \ subsample **data rows** and **columns**, Extra-Trees only subsample **columns**\
+    \ (no bootstrapping needed).\n"
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Extra-Trees advantages
+  prompt: What are the advantages of Extremely Randomised Trees over Random Forests?
+  answer: '- **Computationally more efficient** than normal decision trees
+
+    - Promotes **intra-tree variance**, reducing overall variance
+
+    - **No bootstrapping required** - can use same dataset for all trees
+
+    - The extremely random feature selection process provides sufficient diversity
+
+
+    **Lecturer note**: Can be slightly better than Random Forests, but not seen as
+    much in practice despite their effectiveness.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Random Forest efficacy
+  prompt: What makes Random Forests and their variations highly effective in practice?
+  answer: '- One of the **most robust and effective** prediction models
+
+    - Works **out-of-the-box** on many datasets with small to medium dimensionality
+
+    - **Strong benchmark performance** across many datasets
+
+    - Broadly used in **industry and Kaggle competitions**
+
+    - **Limitation**: Not as good as neural networks for very high-dimensional compositional
+    data (e.g., images)
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Uncertainty Estimation
+  title: Ensembles for predictive uncertainty
+  prompt: How can ensembles be used to estimate prediction confidence?
+  answer: 'The **variance of predictions** from individual models indicates prediction
+    confidence:
+
+
+    - Low variance = high confidence (models agree)
+
+    - High variance = low confidence (models disagree)
+
+
+    **Process**:
+
+
+    1. Train multiple models on bootstrap samples
+
+    2. Get predictions from all models for a given sample
+
+    3. Calculate variance of these predictions
+
+    4. Use variance as uncertainty estimate
+
+
+    Important for sensitive applications (e.g., medicine) where knowing confidence
+    is crucial.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Uncertainty Estimation
+  title: Uncertainty estimation with robust models
+  prompt: Can ensembles be used for uncertainty estimation with models that aren't
+    brittle?
+  answer: 'Yes! Ensembles for uncertainty work with **robust models** like neural
+    networks, not just brittle models like decision trees.
+
+
+    The ensemble provides:
+
+
+    - **Blue**: Average prediction from the ensemble
+
+    - **Gray**: Uncertainty (variance of individual predictions)
+
+
+    Typically uses 5+ models to make reliable uncertainty predictions.
+
+
+    Reference paper: *Simple and scalable predictive uncertainty estimation using
+    deep ensembles* (Lakshminarayanan et al. 2017)
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Boosting
+  title: PAC theory origin of boosting
+  prompt: What theoretical foundation does boosting come from?
+  answer: '**Probably Approximately Correct (PAC)** theory - proposed by Leslie Valiant
+    in 1984.
+
+
+    The idea: Have several different learning methods that can be combined to overcome
+    their individual limitations and produce a result greater than the sum of its
+    parts.
+
+
+    Each weak learner refocuses on examples that previous learners found difficult
+    and misclassified.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: Boosting sequential training process
+  prompt: Describe the iterative process of boosting training.
+  answer: 'Starting with ensemble $H$ containing a single trained classifier $h_1$:
+
+
+    1. Create a new dataset with emphasis on items $H$ got wrong
+
+    2. Train a new classifier $h_2$ on this weighted dataset
+
+    3. Add $h_2$ to ensemble $H$
+
+    4. Repeat until $H$ contains $k$ models
+
+
+    Each model quantifies "wrongness" of predictions:
+
+
+    - **Regression**: uses residuals (difference between expected and predicted)
+
+    - **Classification**: uses partial derivative
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: AdaBoost weighting mechanism
+  prompt: How does AdaBoost calculate and update weights for training samples?
+  answer: 'For each data point $x_i$ with correct class $y_i \in \{-1, +1\}$:
+
+
+    1. Calculate error $e$ = (sum of weights of incorrect items) / (sum of all weights)
+
+    2. Update weights:
+
+
+    **If correctly classified** ($h_t(x_i) = y_i$):
+
+
+    $$w_{i+1} = w_i\sqrt{\frac{e}{1-e}}$$ (weight decreases)
+
+
+    **If incorrectly classified** ($h_t(x_i) \neq y_i$):
+
+
+    $$w_{i+1} = w_i\sqrt{\frac{1-e}{e}}$$ (weight increases)
+
+
+    This creates an **exponential effect** focusing subsequent models on difficult
+    samples.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: AdaBoost example calculation
+  prompt: If the first AdaBoost model gets 60% accuracy, what are the new weights
+    for correct and incorrect predictions?
+  answer: 'Given 60% accuracy: $e = 0.4$
+
+
+    **For correctly classified rows**:
+
+
+    $$w_2 = 1 \times \sqrt{\frac{0.4}{0.6}} = \sqrt{\frac{2}{3}} < 1$$
+
+    (weight decreases - less focus in next iteration)
+
+
+    **For incorrectly classified rows**:
+
+
+    $$w_2 = 1 \times \sqrt{\frac{0.6}{0.4}} = \sqrt{\frac{3}{2}} > 1$$
+
+    (weight increases - more focus in next iteration)
+
+
+    The second model focuses more on incorrect samples (weights > 1) and less on correct
+    ones (weights < 1).
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: AdaBoost aggregation formula
+  prompt: How does AdaBoost weight each model's predictions during aggregation?
+  answer: 'For each model in the ensemble:
+
+    1. Calculate error rate $e$ with respect to weighted training data
+
+    2. Set model weight: $$\alpha = \frac{1}{2}\ln\left(\frac{1-e}{e}\right)$$
+
+
+    **Result**:
+
+
+    - **Lower error** → **higher weight** (trust this model more)
+
+    - Error = 0.5 → weight = 0 (ignore predictions)
+
+    - **Very high error** (0.8-1.0) → **negative weight** (flip predictions!)
+
+
+    The negative weighting for consistently wrong models is why AdaBoost uses {-1,
+    +1} instead of {0, 1}.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: Gradient Boosting generalization
+  prompt: How does Gradient Boosting generalize beyond AdaBoost?
+  answer: '**AdaBoost limitation**: Designed for a specific exponential loss function,
+    limiting the problems it can solve.
+
+
+    **Gradient Boosting**: Generalizes boosting for **any cost/loss function** (e.g.,
+    MSE, log loss).
+
+
+    Minimizes ensemble prediction loss through weighted averaging:
+
+    $$\min_{w,\alpha} \ L\left( y, \sum_{k=1}^N \alpha_k f(x,w_k) \right)$$
+
+
+    This makes it applicable to regression, classification, and other tasks with different
+    loss functions.
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Boosting
+  title: Gradient Boosting iterative optimization
+  prompt: How does Gradient Boosting add new models iteratively?
+  answer: 'At each iteration $k$, greedily add the $k$-th model''s predictions to
+    the previous ensemble using gradient descent:
+
+
+    $$\min_{w_k,\alpha_k} \ L\left( y, \hat{y}_{k-1} + \alpha_k f(x,w_k) \right)$$
+
+
+    **Process**:
+
+
+    - $f(x,w_k)$ = current model''s predictions
+
+    - $\hat{y}_{k-1}$ = ensemble predictions from all previous models
+
+    - $\alpha_k$ = weight for current model
+
+    - Add: $(\alpha \times f_1) + (\alpha \times f_2) + ...$
+
+
+    The base model can be anything, though decision trees are most common.
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Boosting
+  title: Pseudo-residuals in Gradient Boosting
+  prompt: What are pseudo-residuals and why are they used in Gradient Boosting?
+  answer: '**Problem**: Decision trees are non-parametric - we can''t write a formula
+    for their output, so we can''t use the gradient over the loss function.
+
+
+    **Solution**: Use the prediction gradient as **pseudo-residuals**:
+
+    $$r_{ik} = -\frac{\partial L(y_i, \hat{y}_i)}{\partial \hat{y}_i} \bigg|_{\hat{y}_i
+    = F_{k-1}(x_i)}$$
+
+
+    Where:
+
+
+    - $r_{ik}$ = pseudo-residual for sample $i$ and tree $k$
+
+    - $F_{k-1}(x_i)$ = predictions from all models up to (but not including) model
+    $k$
+
+
+    This allows us to minimize loss using available residuals instead of requiring
+    parametric gradients.
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Boosting
+  title: Gradient Boosting target changes
+  prompt: How does the target variable change across iterations in Gradient Boosting?
+  answer: 'Gradient Boosting changes the **target** at each iteration while leaving
+    features unchanged:
+
+
+    - **First learner**: Target = original labels $y$
+
+    - **Second learner**: Target = residuals (difference between true values and first
+    learner''s predictions)
+
+    - **Third+ learners**: Target = pseudo-residuals (combination of previous learners''
+    errors)
+
+
+    **Example with MSE and decision trees**:
+
+    First tree: $$r_{ik} = (y_i - F_{k-1}(x_i))$$
+
+    (true residuals)
+
+
+    After training, fit weight $\alpha_k$ to minimize loss:
+
+    $$\min_{\alpha_k} \ L\left( y, \hat{y}_{k-1} + \alpha_k f(x,w_k) \right)$$
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Boosting
+  title: Preventing overfitting in Gradient Boosting
+  prompt: How does Gradient Boosting control overfitting through the alpha parameter?
+  answer: '**Problem**: Gradient Boosting is very good at reducing bias, which can
+    lead to overfitting.
+
+
+    **Solution**: Fix $\alpha$ (the model weight) as a **hyperparameter** instead
+    of optimizing it per tree.
+
+
+    - Theoretically, $\alpha$ should be optimized for each tree
+
+    - In practice, we set $\alpha$ to a small value (e.g., 0.1) for **all models**
+
+    - This prevents complete optimization per learner, reducing overfitting
+
+    - Acts as a **learning rate** or **step size** in the gradient descent
+
+
+    Similar to gradient descent: too large → overshoot optimum; too small → slow convergence.
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Fundamentals
+  title: Gradient descent in function space
+  prompt: How can Gradient Boosting be viewed as gradient descent in function space?
+  answer: '**Visualization**: Instead of optimizing parameters, we''re optimizing
+    functions.
+
+
+    - **Goal**: Walk from an initial bad function to the best possible function (zero
+    error)
+
+    - **Method**: Modify the initial function by **adding extra functions** (rounds
+    of boosting)
+
+    - **Gradient**: Each round moves us along a gradient toward the optimal function
+
+    - **Step size**: The $\alpha$ parameter controls how big each step is
+
+
+    Just like gradient descent:
+
+
+    - Step too large → overshoot the optimum
+
+    - Step too small → slow/never reach optimum
+
+    '
+  reference: 05-gradient-boosting.md
+- topic: Boosting
+  title: Boosting caveats in practice
+  prompt: What are the main challenges when using boosting in practice?
+  answer: "- **Prone to overfitting**: Continuously reduces bias, can overfit training\
+    \ data\n  - *Mitigation*: Regularization (fixed small $\\alpha$, limit tree depth)\n\
+    \n- **Less interpretable**: Many trees and intermediate learners trained on weighted\
+    \ data/pseudo-residuals make the model opaque\n\n- **Hard to parallelize**: Sequential\
+    \ training means each model depends on the previous one (unlike bagging)\n  -\
+    \ Some libraries (XGBoost, CatBoost) offer GPU support for larger datasets\n"
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: Sklearn boosting implementation pattern
+  prompt: How do you implement Gradient Boosting in sklearn and evaluate staged performance?
+  answer: "**Basic implementation**:\n```python\nfrom sklearn.ensemble import GradientBoostingClassifier\n\
+    \ngbc = GradientBoostingClassifier(n_estimators=200)\ngbc.fit(X_train, y_train)\n\
+    ```\n\n**Evaluate cumulative accuracy** using `staged_predict()`:\n```python\n\
+    plt.plot([np.mean(np.equal(preds, y_train)) \n          for preds in gbc.staged_predict(X_train)])\n\
+    plt.plot([np.mean(np.equal(preds, y_test)) \n          for preds in gbc.staged_predict(X_test)])\n\
+    ```\n\n`staged_predict()` returns predictions up to each boosting iteration, showing\
+    \ when performance plateaus.\n"
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: Boosting library implementations
+  prompt: What are the main Python libraries for boosting and their characteristics?
+  answer: '- **sklearn.ensemble**: General implementation, can use any model type
+
+    - **XGBoost**: Highly optimized for performance, uses decision trees
+
+    - **LightGBM**: Modern implementation with efficient bin-based splits
+
+    - **CatBoost**: Optimized for categorical features
+
+
+    **Key characteristics**:
+
+
+    - All specialized libraries use decision trees as base learners
+
+    - Easy to integrate with sklearn utilities (metrics, GridSearch)
+
+    - XGBoost/CatBoost offer GPU support for larger datasets
+
+    - Boosting is generally hard to parallelize (sequential training)
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: XGBoost innovation and impact
+  prompt: What makes XGBoost highly effective and widely adopted?
+  answer: '**Key innovations**:
+
+
+    - Runs **10+ times faster** than existing solutions on single machine
+
+    - Scales to billions of examples in distributed/memory-limited settings
+
+    - Sparsity-aware algorithm for sparse data
+
+    - Weighted quantile sketch for approximate tree learning
+
+    - Novel algorithmic and systems optimizations
+
+
+    **Impact**: Consensus choice of learner in competitions and benchmarks, showing
+    XGBoost''s importance in tree boosting.
+
+
+    **Use cases**: Store sales, physics event classification, web text classification,
+    customer behavior, motion detection, ad CTR, malware classification, product categorization,
+    hazard risk, MOOC dropout prediction.
+
+    '
+  reference: papers/XG-boost-a-scalale-tree-boosting-system-2016.pdf
+- topic: Boosting
+  title: XGBoost sparsity-aware splitting
+  prompt: How does XGBoost handle sparse data efficiently?
+  answer: '**Sparsity causes**:
+
+
+    1. Missing values in data
+
+    2. Frequent zero entries
+
+    3. Feature engineering artifacts (e.g., one-hot encoding)
+
+
+    **Solution**: XGBoost uses **default directions** at each tree node:
+
+
+    - Learn optimal default directions from the data
+
+    - When a data point has missing/sparse values at a node, use the default direction
+
+    - Treats non-presence as missing value
+
+
+    **Result**:
+
+
+    - Handles all sparsity patterns in a unified way
+
+    - Computational complexity **linear to non-missing entries** (not total features)
+
+    '
+  reference: papers/XG-boost-a-scalale-tree-boosting-system-2016.pdf
+- topic: Boosting
+  title: XGBoost column blocks optimization
+  prompt: How does XGBoost's column block pre-sorting improve performance?
+  answer: '**Problem**: "The most time-consuming part of tree learning is getting
+    data into sorted order"
+
+
+    **Solution**: Pre-sort and store data in **column blocks**:
+
+
+    - Store data with its sorted index in compressed column storage
+
+    - Sort once at the beginning, not at each node
+
+
+    **Why sorting matters**:
+
+    Decision trees need to evaluate all possible split thresholds per feature, which
+    requires sorted feature values for efficiency.
+
+
+    **Modern alternative**: Libraries like LightGBM discretize features into bins,
+    avoiding the need to sort continuous variables.
+
+    '
+  reference: papers/XG-boost-a-scalale-tree-boosting-system-2016.pdf
+- topic: Stacking
+  title: Stacking definition and components
+  prompt: What is stacking and what are its key components?
+  answer: '**Stacking** combines **any variety of models** trained on the same task,
+    learning the best way to combine them.
+
+
+    **Components**:
+
+
+    - **Level 1**: Multiple diverse models (e.g., Neural Networks, SVM, Random Forest)
+    or same model with different hyperparameters
+
+    - **Level 2**: Meta-model trained to optimally combine Level 1 predictions
+
+
+    **Rationale**: Different learners are good at different parts of the data space.
+    The meta-learner learns when to trust each model.
+
+
+    Commonly used in high-performance applications and Kaggle competitions.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Basic stacking algorithm steps
+  prompt: What are the four steps of the basic stacking algorithm?
+  answer: '**Step 1**: Train individual models on training data (Level 1)
+
+
+    - All models see the same data, trained in parallel
+
+
+    **Step 2**: Generate predictions on validation set
+
+
+    - Pass fresh validation data through each Level 1 model
+
+
+    **Step 3**: Train the meta-learner
+
+
+    - Features = predictions from Level 1 models
+
+    - Target = actual labels from validation data
+
+    - Meta-learner learns optimal weighting/combination
+
+
+    **Step 4**: Validate the ensemble
+
+
+    - Pass unseen test data through entire pipeline
+
+    - Level 1 makes predictions → Level 2 combines → evaluate
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Meta-learner design considerations
+  prompt: What are the key decisions when choosing a meta-learner in stacking?
+  answer: '**Simple meta-learner** (e.g., Linear/Logistic Regression):
+
+
+    - Applies fixed weighting to Level 1 predictions
+
+    - Fast, requires less data
+
+    - Example: 0.5 × (tree) + 0.3 × (SVM) + 0.2 × (NN)
+
+
+    **Complex meta-learner** (e.g., Gradient Boosting, Neural Network):
+
+
+    - Can apply different weightings for different regions of feature space
+
+    - More flexible, captures nuanced patterns
+
+    - May include original features along with predictions
+
+
+    **Tradeoff**: More complex meta-learners need more data and cross-validation to
+    avoid overfitting.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: K-fold cross-validation for stacking
+  prompt: Why use K-fold cross-validation in stacking and how does it work?
+  answer: "**Goal**: Give the meta-learner more training data while maintaining validation\
+    \ integrity.\n\n**Process**:\n\n1. Split data: training/validation (for K-fold)\
+    \ + final test (held out)\n2. For each of $k$ folds:\n   - Train Level 1 models\
+    \ on training portion\n   - Generate predictions on validation portion\n3. Stack\
+    \ all validation predictions (now same size as original training set)\n4. Train\
+    \ Level 2 meta-learner on stacked predictions\n5. Retrain Level 1 models on full\
+    \ training set\n6. Evaluate entire ensemble on held-out test set\n\n**Result**:\
+    \ Meta-learner sees predictions for every training example, trained on same amount\
+    \ of data as Level 1 models.\n"
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Stacking model count calculation
+  prompt: How many models are trained in a stacking ensemble with 3 Level 1 models
+    and 6-fold cross-validation?
+  answer: "**Scenario**: 3 Level 1 models, k=6 cross-validation\n\n**Calculation**:\n\
+    \n- Cross-validation training: $6 \\times 3 = 18$ models\n  (6 folds × 3 learners\
+    \ per fold)\n- Meta-learner: $1$ model\n- Full training set refits: $3$ Level\
+    \ 1 models\n\n**Total**: $18 + 1 + 3 = 22$ models trained\n\n**Alternative view**:\
+    \ With 1000 rows and 80/20 split per fold:\n\n- 5 folds × 200 validation predictions\
+    \ = 1000 total predictions for meta-learner\n- Then Level 1 models retrained on\
+    \ full 1000 rows\n"
+  reference: notebooks/stacking-slides.ipynb
+- topic: Fundamentals
+  title: Two-level K-fold cross-validation
+  prompt: How does 2-level K-fold cross-validation differ from single-level and when
+    is it used?
+  answer: '**Difference**: Applies cross-validation to the **entire ensemble**, not
+    just Level 2.
+
+
+    **Process**: Run the complete stacking procedure (including internal K-fold) for
+    each outer fold.
+
+
+    **Result**:
+
+
+    - Get mean score ± standard deviation (like regular CV)
+
+    - With 4 outer folds and 5 inner folds: train ~25 models per outer fold
+
+
+    **When to use**:
+
+
+    - Need robust performance estimates with confidence intervals
+
+    - Have computational budget for expensive training
+
+    - Maximizing last few percentage points of performance
+
+    - Don''t care about interpretability
+
+
+    **Warning**: Extremely expensive, especially with grid search!
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Tuning stacking ensembles
+  prompt: Should you optimize individual Level 1 models before stacking them?
+  answer: '**Counterintuitive answer**: Not necessarily!
+
+
+    Think of stacking as a **whole system**, not individual parts. Improving an individual
+    model may hurt overall performance.
+
+
+    **Example**: Pruning a decision tree to improve its individual performance might:
+
+
+    - Give it more weight in the meta-learner
+
+    - Reduce weight of a better-performing model
+
+    - Decrease overall ensemble performance
+
+
+    **Check model weights**:
+
+
+    ```python
+
+    model_stack.final_estimator_.coef_
+
+    # array([0.48, 0.42, 0.35])  # tuned individual models
+
+    # array([0.66, 0.47, 0.11])  # untuned (better ensemble)
+
+    ```
+
+
+    The untuned ensemble puts less weight on the decision tree, performing better
+    overall.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Grid search for stacking models
+  prompt: How can you tune hyperparameters of a stacking ensemble using sklearn?
+  answer: '**View pipeline structure**:
+
+
+    ```python
+
+    model_stack  # Shows visual pipeline
+
+    ```
+
+
+    **Get available parameters**:
+
+
+    ```python
+
+    model_stack.get_params()
+
+    # Returns dict with keys like:
+
+    # ''svc__kernel'': ''rbf''
+
+    # ''dtr__max_depth'': None
+
+    # ''final_estimator__fit_intercept'': True
+
+    ```
+
+
+    **Tune with GridSearchCV**:
+
+
+    - Use parameter dict keys to specify search space
+
+    - Example: Try different SVC kernels (`svc__kernel`)
+
+    - Example: Vary tree depth (`dtr__max_depth`)
+
+
+    **Warning**: Very computationally expensive! Stacking already includes cross-validation;
+    adding grid search multiplies complexity.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Blending definition and use case
+  prompt: What is blending and when is it appropriate to use?
+  answer: '**Blending**: Simplified version of stacking using a **single train/validation
+    split** instead of K-fold cross-validation.
+
+
+    **Process**:
+
+
+    1. Train Level 1 models on training set
+
+    2. Generate predictions on validation set
+
+    3. Train Level 2 on validation predictions (one dataset, no CV)
+
+    4. Evaluate on held-out test set
+
+
+    **When appropriate**:
+
+
+    - Using a **simple meta-learner** (e.g., LinearRegression)
+
+    - Meta-learner doesn''t need lots of data
+
+    - Want faster training than full stacking
+
+
+    **Tradeoff**: Less robust than K-fold stacking, but much faster.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Blending implementation pattern
+  prompt: How do you implement a blending ensemble in Python?
+  answer: "```python\ndef train_blending(X_train, y_train, X_val, y_val):\n    # Step\
+    \ 1: Train Level 1 models\n    model_linreg_ = LinearRegression().fit(X_train,\
+    \ y_train)\n    model_svr_ = SVR().fit(X_train, y_train)\n    model_dtr_ = DecisionTreeRegressor().fit(X_train,\
+    \ y_train)\n    \n    # Step 2: Stack predictions on validation set\n    stacked_output_\
+    \ = np.array([\n        model_linreg_.predict(X_val),\n        model_svr_.predict(X_val),\
+    \ \n        model_dtr_.predict(X_val)\n    ]).T\n    \n    # Step 3: Train meta-learner\n\
+    \    meta_learner_ = LinearRegression().fit(stacked_output_, y_val)\n    \n  \
+    \  # Step 4: Return prediction function\n    blending_ = lambda x: meta_learner_.predict(np.array([\n\
+    \        model_linreg_.predict(x), \n        model_svr_.predict(x),\n        model_dtr_.predict(x)\n\
+    \    ]).T)\n    \n    return blending_\n```\n"
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: Stacking and blending tradeoffs
+  prompt: What are the key considerations when choosing between stacking, blending,
+    and simpler ensemble methods?
+  answer: "**Power vs Cost**:\n\n- **Extremely powerful**: Can extract last few percentage\
+    \ points of performance\n- **Not interpretable**: Impossible to explain individual\
+    \ predictions\n- **Computationally expensive**: Can become prohibitively expensive\n\
+    \  - 2-level K-fold with grid search: astronomical complexity\n\n**Use cases for\
+    \ the expense**:\n\n- High-stakes competitions (e.g., Netflix Prize won with stacking)\n\
+    - Maximum predictive accuracy required\n- Sufficient computational budget\n- Interpretability\
+    \ not required\n\n**Simpler alternatives**: Bagging or boosting may provide 80-90%\
+    \ of the benefit at 10% of the cost.\n"
+  reference: notebooks/stacking-slides.ipynb
+- topic: Fundamentals
+  title: ROC AUC vs accuracy for imbalanced datasets
+  prompt: Why is ROC AUC a better metric than accuracy for imbalanced classification
+    problems?
+  answer: 'For imbalanced datasets (e.g., 96% satisfied, 4% dissatisfied customers):
+
+
+    - **Accuracy can be misleadingly high**: A model predicting all samples as the
+    majority class achieves 96% accuracy
+
+    - **ROC AUC evaluates ranking quality**: Measures how well the model separates
+    classes across all threshold values
+
+    - **Uses prediction probabilities**: `predict_proba()` rather than binary decisions
+
+
+    ROC AUC provides a more meaningful assessment of model performance when classes
+    are unbalanced.
+
+    '
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Fundamentals
+  title: Stratified train-test split for imbalanced data
+  prompt: Why should you use stratification when splitting imbalanced datasets?
+  answer: "**Purpose**: Maintain the same class proportion in both train and test\
+    \ sets.\n\n```python\nX_train, X_val, y_train, y_val = train_test_split(\n   \
+    \ X, y, stratify=y, random_state=42\n)\n```\n\n**Without stratification**: Random\
+    \ splitting may create sets with different class proportions, leading to unreliable\
+    \ validation scores.\n\n**With stratification**: Both sets have the same imbalance\
+    \ ratio (e.g., 96%/4%), ensuring consistent evaluation.\n"
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Bagging
+  title: Custom bagging implementation
+  prompt: What are the key steps in implementing a custom bagging ensemble?
+  answer: "**`.fit()` method**:\n\n```python\ndef fit(self, X, y):\n    from sklearn.utils\
+    \ import resample\n    n_samples = int(len(X) * self.subsample)\n    \n    for\
+    \ model in self.base_models:\n        X_boot, y_boot = resample(X, y, \n     \
+    \                             n_samples=n_samples, \n                        \
+    \          replace=True)\n        model.fit(X_boot, y_boot)\n```\n\n**`.predict_proba()`\
+    \ method**:\n\n```python\ndef predict_proba(self, X):\n    all_probs = np.array([model.predict_proba(X)\
+    \ \n                          for model in self.base_models])\n    return all_probs.mean(axis=0)\n\
+    ```\n\nBootstrap sampling creates diverse models; averaging reduces variance.\n"
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Random Forest
+  title: Random Forest max_features rule of thumb
+  prompt: What is the typical rule of thumb for setting max_features in Random Forests?
+  answer: '**Rule of thumb**: Use the square root of the number of features.
+
+
+    ```python
+
+    import math
+
+    max_features = math.sqrt(n_features)
+
+
+    # For 370 features:
+
+    max_features = math.sqrt(370) ≈ 19
+
+    ```
+
+
+    **Important exception**: Increase `max_features` for **one-hot encoded data**,
+    as categorical features are exploded into many columns but represent single logical
+    features.
+
+
+    This promotes diversity by limiting features considered at each node split.
+
+    '
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Random Forest
+  title: Gradient boosting with regression trees
+  prompt: Why does Gradient Boosting require regression models as base learners?
+  answer: '**Reason**: Gradient Boosting needs continuous gradients, not discrete
+    class labels.
+
+
+    **Process**:
+
+
+    1. Each tree predicts **residuals** (continuous values), not classes
+
+    2. Residuals = difference between true labels and current predictions
+
+    3. Sequential trees correct errors from previous trees
+
+
+    For classification, treat raw regression outputs as probabilities (though proper
+    implementations like `GradientBoostingClassifier` use log-loss internally for
+    better calibration).
+
+
+    **MSE on probabilities** = Brier score
+
+    '
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Boosting
+  title: Custom gradient boosting implementation
+  prompt: How do you implement the fit method for custom gradient boosting?
+  answer: "```python\ndef fit(self, x, y):\n    predictions = np.zeros(len(y))\n \
+    \   \n    for model in self.models:\n        # Each tree fits to current residual\
+    \ errors\n        residual = y - predictions\n        model.fit(x, residual)\n\
+    \        \n        # Update ensemble, scaled by learning rate\n        predictions\
+    \ += self.learning_rate * model.predict(x)\n```\n\n**Key points**:\n\n- Start\
+    \ with zero predictions\n- Each tree learns from mistakes of all previous trees\n\
+    - Learning rate controls contribution of each tree (smaller = better generalization,\
+    \ needs more trees)\n"
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Boosting
+  title: Gradient boosting predict_proba for classification
+  prompt: How do you convert gradient boosting regression outputs to classification
+    probabilities?
+  answer: "```python\ndef predict_proba(self, x):\n    probs = np.zeros(len(x))\n\
+    \    \n    for model in self.models:\n        probs += self.learning_rate * model.predict(x)\n\
+    \    \n    # Clip to valid probability range [0, 1]\n    probs = np.clip(probs,\
+    \ 0, 1)\n    \n    # Return both class probabilities\n    return np.array([1 -\
+    \ probs, probs]).T\n```\n\n**Output shape**: (n_samples, 2) where column 0 = P(y=0),\
+    \ column 1 = P(y=1)\n\nThis matches the interface expected by sklearn evaluation\
+    \ tools.\n"
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Boosting
+  title: Sklearn boosting learning rate defaults
+  prompt: What is a typical learning rate for gradient boosting and why use a smaller
+    value?
+  answer: '**Typical values**: 0.01 to 0.5
+
+
+    **Tradeoff**:
+
+
+    - **Larger learning rate** (e.g., 0.5): Faster convergence, fewer trees needed,
+    higher risk of overfitting
+
+    - **Smaller learning rate** (e.g., 0.1 or 0.01): Slower convergence, more trees
+    needed, better generalization
+
+
+    **Classic strategy**: Lower rate + more trees
+
+
+    Example: `learning_rate=0.1` with `n_estimators=100` often outperforms `learning_rate=0.5`
+    with `n_estimators=20`.
+
+    '
+  reference: assignments/ensembles_customer_satisfaction.ipynb
+- topic: Bagging
+  title: Bootstrap sample distribution
+  prompt: What statistical property makes bootstrap sampling effective for bagging?
+  answer: '**Key property**: Bootstrap samples are **statistically similar** to the
+    overall dataset.
+
+
+    With replacement sampling of size $N$ from $N$ examples:
+
+
+    - Some examples appear **multiple times**
+
+    - Some examples **never appear** (≈37% for large N)
+
+    - Each sample is a valid representative of the data distribution
+
+
+    **Effect on rare items**:
+
+
+    - Rare items appear in fewer bootstrap samples
+
+    - Acts as implicit outlier reduction
+
+    - May weaken prediction for minority classes in imbalanced data
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Bagging
+  title: Oversample and undersample in bagging
+  prompt: How can you handle imbalanced data when using bagging?
+  answer: '**Problem**: Bootstrap sampling may create subsets with no minority class
+    examples.
+
+
+    **Solutions**:
+
+
+    **Oversample**: Duplicate rare items so they appear in more subsets
+
+
+    - Increases representation of minority class
+
+    - Helps if you care about predicting rare cases
+
+
+    **Undersample**: Drop common items so they appear less often
+
+
+    - Balances class representation
+
+    - May lose information from majority class
+
+
+    Choose based on whether you prioritize majority or minority class performance.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Random Forest feature importance calculation
+  prompt: How does Random Forest calculate feature importance using out-of-bag samples?
+  answer: "**Process for each tree**:\n\n1. Evaluate tree using **out-of-bag (OOB)**\
+    \ samples (data not in its training set)\n2. Count how many OOB samples it classifies\
+    \ correctly\n3. **For each feature**:\n   - Randomly shuffle that feature's values\
+    \ in OOB samples\n   - Re-evaluate the tree\n   - Subtract new correct count from\
+    \ original\n4. Feature importance = performance drop when shuffled\n\n**Interpretation**:\
+    \ If shuffling a feature hurts performance significantly, that feature is important\
+    \ for prediction.\n\nAccess with: `model.feature_importances_`\n"
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Random Forest pros and cons
+  prompt: What are the main advantages and disadvantages of Random Forests?
+  answer: '**Pros** ✓:
+
+
+    - Good performance for many data types (non-parametric)
+
+    - Generalizes well even for small datasets
+
+    - Fast to train (easily parallelized)
+
+    - Provides feature importance
+
+
+    **Cons** ✗:
+
+
+    - Difficult to interpret (hundreds of trees)
+
+    - Limited by simplicity of decision trees (cannot model higher-order feature interactions)
+
+    - Tradeoff between performance and explainability
+
+
+    Feature importance provides some interpretability, but individual decision paths
+    are lost in the ensemble.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Diminishing returns with number of trees
+  prompt: What is the relationship between the number of trees and Random Forest performance?
+  answer: '**Pattern**: Performance improves with more trees, then plateaus.
+
+
+    **Typical range**: 100-1000 trees (dataset dependent)
+
+
+    **Tradeoff**:
+
+
+    - **More trees**: Reduced variance, better training performance
+
+    - **Computational cost**: Linear with number of trees
+
+    - **Plateau effect**: Beyond a certain point, adding trees provides minimal improvement
+
+
+    **Best practice**: Plot validation score vs. number of trees to find the plateau
+    point, then use slightly beyond it for optimal performance/cost balance.
+
+    '
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Random Forest
+  title: Brittleness of decision trees visualization
+  prompt: How can you visualize the brittleness of decision trees in an ensemble?
+  answer: "**Method**: Plot multiple trees from the same ensemble, trained on different\
+    \ bootstrap samples.\n\n```python\nfrom sklearn import tree\n\ntree.plot_tree(ensemble.estimators_[0],\
+    \ \n               max_depth=2, filled=True)\ntree.plot_tree(ensemble.estimators_[1],\
+    \ \n               max_depth=2, filled=True)\n```\n\n**Observation**: Even at\
+    \ the root node, different trees split on **different features**, demonstrating\
+    \ instability.\n\nThis variance is why ensembles work - aggregating diverse unstable\
+    \ models creates a stable, robust predictor.\n"
+  reference: notebooks/bagging-random-forest-slides.ipynb
+- topic: Boosting
+  title: PAC learning theory connection to boosting
+  prompt: How does boosting relate to Probably Approximately Correct (PAC) learning
+    theory?
+  answer: '**PAC learning** defines machine learning goals with computational and
+    performance bounds:
+
+
+    **Goal**: For any data distribution, with polynomially many random samples, find
+    hypotheses with limited prediction error with high probability.
+
+
+    **Boosting origin**: Inspired by PAC theory question - "Can weak learners be combined
+    into strong learners?"
+
+
+    **Formal proofs**: Boosting weights (for data and models) are designed to allow
+    provable performance guarantees, not just empirical success.
+
+
+    This theoretical foundation differentiates boosting from heuristic ensemble methods.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: Staged predict for boosting diagnostics
+  prompt: What is staged_predict() and how is it useful for gradient boosting?
+  answer: "**Purpose**: Returns predictions at each boosting iteration, not just the\
+    \ final ensemble.\n\n```python\ntrain_acc = [np.mean(np.equal(preds, y_train))\
+    \ \n             for preds in gbc.staged_predict(X_train)]\nval_acc = [np.mean(np.equal(preds,\
+    \ y_test)) \n           for preds in gbc.staged_predict(X_test)]\n\nplt.plot(train_acc)\n\
+    plt.plot(val_acc)\n```\n\n**Use cases**:\n\n- Identify when performance plateaus\
+    \ (e.g., at 70 trees instead of 200)\n- Detect overfitting (train continues improving\
+    \ while val degrades)\n- Optimize `n_estimators` for computational efficiency\n"
+  reference: notebooks/boosting-slides.ipynb
+- topic: Fundamentals
+  title: Interpretability tools for black-box ensembles
+  prompt: What tools can help interpret gradient boosting and other black-box ensemble
+    models?
+  answer: 'Gradient Boosting is not directly interpretable, but tools exist:
+
+
+    **SHAP** (SHapley Additive exPlanations):
+
+
+    - Combines multiple interpretability approaches
+
+    - Shows which features contribute most/least to predictions
+
+    - Visualizes how features push/pull model output vs baseline
+
+    - GitHub: https://github.com/slundberg/shap
+
+
+    **LIME** (Local Interpretable Model-agnostic Explanations):
+
+
+    - Explains individual predictions with simpler local models
+
+    - GitHub: https://github.com/marcotcr/lime
+
+
+    Both help identify important features without opening the black box.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Boosting
+  title: XGBoost special features
+  prompt: What are the key advancements in XGBoost over traditional gradient boosting?
+  answer: '**Performance optimizations**:
+
+
+    - **Sparse data handling**: Default directions for missing values and one-hot
+    encoded features
+
+    - **Column blocks**: Pre-sorting with compressed column storage for faster split
+    finding
+
+    - **Out-of-core computation**: Handles datasets larger than memory
+
+    - **Regularization**: Multiple methods to optimize generalization
+
+
+    **Computational efficiency**:
+
+
+    - Parallelization within tree construction
+
+    - GPU support for large datasets
+
+    - Optimized memory usage
+
+
+    **API**: Similar to sklearn, easy integration with GridSearchCV and other sklearn
+    utilities.
+
+    '
+  reference: notebooks/boosting-slides.ipynb
+- topic: Fundamentals
+  title: Wisdom of crowds analogy
+  prompt: How does the "wisdom of crowds" principle apply to ensemble learning?
+  answer: '**Analogy**: Guessing the weight of a cow
+
+
+    - **Single expert**: May be slightly better than random (51% chance), but not
+    perfect
+
+    - **Crowd average**: Many non-expert guesses converge on the true answer
+
+    - **Key requirement**: Each person uses some information, not random guessing
+
+
+    **Applied to ML**:
+
+
+    - Replace people with predictive models
+
+    - Ensure diversity through different training data/features
+
+    - Aggregate predictions (majority vote or average)
+
+    - **Result**: Weak learners become collectively strong
+
+
+    Success depends on diversity - models must make different errors, not the same
+    ones.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Uncertainty Estimation
+  title: Model output variability sources
+  prompt: What causes a model's output to change for fixed input data?
+  answer: 'For **fixed input data**, output changes based on:
+
+
+    **1. Hyperparameters** (set by you):
+
+
+    - Example: SVM regularization parameter $C$
+
+    - Example: Decision tree `max_depth`
+
+
+    **2. Parameters** (learned from data):
+
+
+    - SVM: support vectors (specific decision points from training)
+
+    - Logistic regression: weights and biases (learned via gradient descent)
+
+    - Decision trees: split features and thresholds
+
+
+    **Ensemble insight**: Exploit variability in learned parameters by training multiple
+    models on different data subsets.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Fundamentals
+  title: Ideal base model characteristics for ensembles
+  prompt: What characteristics make a good base model for bagging and boosting?
+  answer: '**Required properties**:
+
+
+    1. **Simple to estimate**: Fast training time
+
+    2. **Simple to predict**: Efficient inference
+
+    3. **High variance**: Ensures diverse weak learners
+
+
+    **Example: Decision Trees**
+
+
+    - ✓ Fast to train
+
+    - ✓ Fast predictions
+
+    - ✓ High variance (unstable - small data changes cause different splits)
+
+    - ✓ Prone to overfitting (perfect for ensembles to correct)
+
+
+    **Poor choices**: Stable models like logistic regression (low variance = less
+    diversity benefit).
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Fundamentals
+  title: Ensemble model tradeoff summary
+  prompt: What is the fundamental tradeoff when using ensemble methods?
+  answer: '**Gains** ✓:
+
+
+    - **Improved performance**: Better accuracy/metrics through aggregation
+
+    - **Reduced overfitting**: Averaging reduces variance (bagging) or bias (boosting)
+
+    - **Robustness**: Less sensitive to data changes
+
+
+    **Costs** ✗:
+
+
+    - **Reduced interpretability**: Hard to explain decisions from 100+ trees
+
+    - **Additional training overhead**: Must train multiple models
+
+    - **Computational complexity**: Bagging parallelizes easily; boosting is sequential
+
+
+    **Decision**: Choose ensembles when performance gains outweigh interpretability
+    needs and computational budget allows.
+
+    '
+  reference: notebooks/introduction-to-ensemble-slides.ipynb
+- topic: Stacking
+  title: Simple three-way validation for stacking
+  prompt: What are the three data subsets needed for simple stacking validation and
+    what is each used for?
+  answer: '**Subset 1: Level 1 Training**
+
+
+    - Train individual base models
+
+    - Must be separate to avoid overfitting
+
+
+    **Subset 2: Level 2 Training (Validation)**
+
+
+    - Generate predictions from Level 1 models
+
+    - Train meta-learner on these predictions
+
+    - Simpler models need less data (e.g., linear regression with N features)
+
+
+    **Subset 3: Final Validation**
+
+
+    - Test complete ensemble on unseen data
+
+    - Standard validation set size
+
+
+    **Tradeoff**: Less data for Level 1 training may make ensemble worse than best
+    individual model on full data.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Stacking
+  title: K-fold stacking training advantage
+  prompt: How does K-fold cross-validation improve stacking over simple validation?
+  answer: '**Process**:
+
+
+    1. Split Level 1 data into K folds
+
+    2. Train K different ensembles of Level 1 models
+
+    3. Collect joint predictions for each validation subset
+
+    4. Train meta-learner on complete set of predictions (covers whole training set)
+
+    5. Retrain Level 1 models on full training data for final ensemble
+
+
+    **Advantage**: Uses entire training data for both levels, avoiding data loss from
+    validation splits.
+
+
+    **Cost**: Must train Level 1 models K+1 times (K folds + 1 final), which may be
+    prohibitive.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Fundamentals
+  title: Two-level K-fold cross-validation rationale
+  prompt: When and why would you use two-level K-fold cross-validation for stacking?
+  answer: '**Purpose**: Apply K-fold CV to the entire ensemble, not just Level 2.
+
+
+    **Benefits**:
+
+
+    - Uses whole dataset for training at both levels
+
+    - Avoids losing data to validation sets
+
+    - Provides robust performance estimates
+
+
+    **Cost**: Must train each model K₁ × K₂ times (e.g., 4×5 = 20 models per base
+    learner)
+
+
+    **When to use**:
+
+
+    - Need reliable performance estimates
+
+    - Have computational budget
+
+    - Two levels sufficient for real-world settings (more rarely needed)
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Fundamentals
+  title: Netflix Prize ensemble strategy
+  prompt: How did the Netflix Prize winners use ensemble methods to win $1 million?
+  answer: '**Strategy (BellKor''s Pragmatic Chaos)**:
+
+
+    - Trained huge variety of models: KNN, RBM, Matrix Factorization, Neural Networks
+
+    - Used **residual training**: Stopped individual model training when ensemble
+    stopped improving
+
+    - Started with linear stacking (called "Blending")
+
+    - Tried neural networks and polynomial meta-learners
+
+    - Created **two-level meta-learner** combining different ensemble approaches
+
+
+    **Key insight**: Some models (e.g., RBMs) weren''t great alone but complemented
+    others by predicting different samples correctly.
+
+
+    **Practical finding**: ~12 best models achieved near-top performance; 200+ models
+    used in final.
+
+    '
+  reference: notebooks/stacking-slides.ipynb
+- topic: Boosting
+  title: LightGBM dataset requirements
+  prompt: What data type requirements does LightGBM have and how do you prepare data
+    for it?
+  answer: '**Required types**: `int`, `float`, or `bool`
+
+
+    **Categorical handling**:
+
+
+    ```python
+
+    data[[''Month'', ''Region'']] = data[[''Month'', ''Region'']].astype(''category'')
+
+    ```
+
+
+    **Dataset creation**:
+
+
+    ```python
+
+    lgb_train = lgb.Dataset(X_train, y_train)
+
+    lgb_test = lgb.Dataset(X_test, y_test, reference=lgb_train)
+
+    ```
+
+
+    `reference=lgb_train` ensures test set uses training set''s full value range for
+    preprocessing (histogram bins, categorical combinations).
+
+    '
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Boosting
+  title: LightGBM key hyperparameters
+  prompt: What are the key hyperparameter categories in LightGBM and what do they
+    control?
+  answer: '**Task parameters**:
+
+
+    - `objective`: ''binary'', ''regression'', ''multiclass'', ''ranking''
+
+    - `metric`: ''binary_logloss'', ''auc'', ''rmse'', etc.
+
+
+    **Boosting parameters**:
+
+
+    - `learning_rate`: Gradient descent step size (default 0.1)
+
+    - `num_boost_round`: Number of boosting iterations
+
+
+    **Tree parameters**:
+
+
+    - `num_leaves`: Nodes per tree (default 31)
+
+    - `max_depth`: Tree depth (-1 = unlimited)
+
+    - `min_data_in_leaf`: Minimum samples per leaf (regularization)
+
+
+    **Performance**:
+
+
+    - `boosting_type`: ''gbdt'', ''rf'', etc.
+
+    - GPU/distributed options
+
+    '
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Boosting
+  title: LightGBM training with validation monitoring
+  prompt: How do you train LightGBM while monitoring multiple validation metrics?
+  answer: "```python\nevals = {}\n\nparams = {\n    'objective': 'binary',\n    'metric':\
+    \ ['binary_logloss', 'auc', 'average_precision'],\n    'learning_rate': 0.1,\n\
+    \    'num_leaves': 31\n}\n\nmodel = lgb.train(\n    params=params,\n    train_set=lgb_train,\n\
+    \    valid_sets=[lgb_train, lgb_test],\n    valid_names=['seen', 'unseen'],\n\
+    \    num_boost_round=200,\n    callbacks=[lgb.record_evaluation(evals),\n    \
+    \           lgb.log_evaluation(10)]\n)\n\nlgb.plot_metric(evals, metric='auc')\n\
+    ```\n\n`evals` stores metrics at each iteration; `log_evaluation(10)` prints every\
+    \ 10 iterations.\n"
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Random Forest
+  title: LightGBM feature importance types
+  prompt: What are the two types of feature importance in LightGBM and what do they
+    measure?
+  answer: '**Split importance**:
+
+
+    - Counts how many times a feature is used for splitting (excluding leaf nodes)
+
+    - Features used often for decisions are likely informative
+
+
+    **Gain importance**:
+
+
+    - Sum of information gain scores from using a feature in trees
+
+    - Measures how much the feature improved model performance
+
+
+    Both normalized by number of trees in ensemble.
+
+
+    ```python
+
+    lgb.plot_importance(model, importance_type=''split'')
+
+    lgb.plot_importance(model, importance_type=''gain'')
+
+    ```
+
+
+    Helps identify which data to prioritize gathering in future.
+
+    '
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Boosting
+  title: LightGBM overfitting reduction strategies
+  prompt: What hyperparameters can reduce overfitting in LightGBM?
+  answer: "**Recommended strategies**:\n\n1. **Small `max_bin`**: Fewer histogram\
+    \ bins for continuous features\n2. **Small `num_leaves`**: Limits tree complexity\n\
+    3. **Increase `min_data_in_leaf`**: Ensures leaves have sufficient samples\n4.\
+    \ **Use `min_gain_to_split`**: Regularizes tree growth\n\n**Example tuning**:\n\
+    \n```python\nparams = dict(\n    max_bin=[155, 255],\n    num_leaves=[7, 15, 31],\n\
+    \    min_data_in_leaf=[15, 20, 25],\n    min_gain_to_split=[0, 0.01, 0.02]\n)\n\
+    ```\n\nUse `GridSearchCV` to find optimal combination.\n"
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Boosting
+  title: LightGBM with sklearn integration
+  prompt: How do you use LightGBM with sklearn's GridSearchCV?
+  answer: "```python\nfrom sklearn.model_selection import GridSearchCV\nimport lightgbm\
+    \ as lgb\n\nparams = dict(\n    max_bin=[155, 255],\n    num_leaves=[7, 15, 31],\n\
+    \    min_data_in_leaf=[15, 20],\n    verbose=[-1],\n    seed=[0]\n)\n\nclassifier\
+    \ = lgb.LGBMClassifier()\n\ngcv = GridSearchCV(\n    estimator=classifier, \n\
+    \    param_grid=params, \n    n_jobs=-1, \n    verbose=1\n)\n\ngcv.fit(X_train,\
+    \ y_train)\n\nbest_model = gcv.best_estimator_\n```\n\nUse `LGBMClassifier()`\
+    \ (not `lgb.train()`) for sklearn compatibility.\n"
+  reference: practicals/boosting-practical-solution.ipynb
+- topic: Bagging
+  title: Bagging ensemble manual implementation
+  prompt: How do you manually implement a bagging ensemble in sklearn?
+  answer: "```python\nfrom sklearn.ensemble import BaggingClassifier\nfrom sklearn.naive_bayes\
+    \ import GaussianNB\n\nensemble = BaggingClassifier(\n    estimator=GaussianNB(),\n\
+    \    n_estimators=10,\n    random_state=5\n)\n\nensemble.fit(X_train, y_train)\n\
+    \n# Use like any sklearn model\naccuracy = ensemble.score(X_test, y_test)\npredictions\
+    \ = ensemble.predict(X_test)\n```\n\n**Key parameters**:\n\n- `estimator`: Base\
+    \ model to replicate\n- `n_estimators`: Number of models in ensemble (default\
+    \ 10)\n- Automatically handles bootstrap sampling and aggregation\n"
+  reference: practicals/introduction-to-ensembles-practical-solution.ipynb
+- topic: Fundamentals
+  title: Train-test split best practices
+  prompt: What are the best practices when splitting data for ensemble training and
+    evaluation?
+  answer: "```python\nfrom sklearn.model_selection import train_test_split\n\nX =\
+    \ data.drop(['target'], axis=1)\ny = data['target']\n\nX_train, X_test, y_train,\
+    \ y_test = train_test_split(\n    X, y, \n    random_state=5  # Reproducibility\n\
+    )\n```\n\n**Best practices**:\n\n- Default 75:25 train:test split (adjust if needed)\n\
+    - Set `random_state` for reproducibility\n- Train only on training set\n- Evaluate\
+    \ only on unseen test set\n- Never evaluate on data used for training (inflated\
+    \ performance)\n"
+  reference: practicals/introduction-to-ensembles-practical-solution.ipynb
+- topic: Fundamentals
+  title: Baseline model importance
+  prompt: Why establish baseline single-model performance before using ensembles?
+  answer: '**Purpose**: Determine if ensemble actually improved performance.
+
+
+    **Process**:
+
+
+    ```python
+
+    # Train single model
+
+    model = DecisionTreeClassifier()
+
+    model.fit(X_train, y_train)
+
+    baseline_score = model.score(X_test, y_test)
+
+
+    # Train ensemble
+
+    ensemble = BaggingClassifier(estimator=model, n_estimators=10)
+
+    ensemble.fit(X_train, y_train)
+
+    ensemble_score = ensemble.score(X_test, y_test)
+
+    ```
+
+
+    **Compare**: Does ensemble score > baseline score?
+
+
+    **Multiple baselines**: Try different model types (Naive Bayes, Decision Tree,
+    etc.) to identify best individual model before ensembling.
+
+    '
+  reference: practicals/introduction-to-ensembles-practical-solution.ipynb
+- topic: Random Forest
+  title: One-hot encoding for tree models
+  prompt: How do you prepare categorical data for tree-based models and why is it
+    necessary?
+  answer: '**Problem**: Decision trees need numerical splits, categorical strings
+    won''t work.
+
+
+    **Solution**: One-hot encoding
+
+
+    ```python
+
+    X = pd.get_dummies(X)
+
+    ```
+
+
+    **Effect**: Each category becomes a binary column
+
+
+    - `country`: ''US'', ''UK'', ''CA'' → `country_US`, `country_UK`, `country_CA`
+
+
+    **Important for Random Forests**: Increase `max_features` for one-hot encoded
+    data, as multiple columns represent single logical feature.
+
+
+    Alternative: Some libraries (LightGBM, CatBoost) handle categorical features natively
+    without encoding.
+
+    '
+  reference: practicals/random-forest-practical-solution.ipynb
+- topic: Random Forest
+  title: Random Forest GridSearchCV strategy
+  prompt: What hyperparameters should you tune when optimizing Random Forests with
+    GridSearchCV?
+  answer: "```python\nparams = dict(\n    max_depth=[None, 1, 2],\n    min_samples_split=[2,\
+    \ 3, 4],\n    min_samples_leaf=[1, 2, 3],\n    class_weight=[\n        {'class_a':\
+    \ 2, 'class_b': 1},\n        {'class_a': 1, 'class_b': 2}\n    ],\n    max_samples=[0.75,\
+    \ 0.25, 0.9],\n    n_estimators=[100, 200, 300]\n)\n\ngcv = GridSearchCV(\n  \
+    \  estimator=RandomForestClassifier(n_jobs=-1),\n    param_grid=params,\n    n_jobs=-1,\n\
+    \    verbose=2\n)\n```\n\n**Key parameters**:\n\n- Tree structure: `max_depth`,\
+    \ `min_samples_split`, `min_samples_leaf`\n- Sampling: `max_samples` (bootstrap\
+    \ proportion)\n- Class imbalance: `class_weight`\n- Ensemble size: `n_estimators`\n"
+  reference: practicals/random-forest-practical-solution.ipynb
+- topic: Fundamentals
+  title: Classification report for imbalanced classes
+  prompt: Why use classification_report instead of just accuracy for multi-class problems?
+  answer: '**Problem with accuracy**: Single score hides per-class performance, especially
+    problematic with imbalanced classes.
+
+
+    ```python
+
+    from sklearn.metrics import classification_report
+
+
+    y_pred = model.predict(X_test)
+
+    print(classification_report(y_test, y_pred))
+
+    ```
+
+
+    **Output per class**:
+
+
+    - **Precision**: Of predicted positives, how many were correct?
+
+    - **Recall**: Of actual positives, how many were found?
+
+    - **F1-score**: Harmonic mean of precision and recall
+
+    - **Support**: Number of true instances per class
+
+
+    Reveals if model is failing on specific classes (e.g., rare outcomes).
+
+    '
+  reference: practicals/random-forest-practical-solution.ipynb
+- topic: Random Forest
+  title: Feature importance extraction from best model
+  prompt: How do you extract and analyze feature importances from a GridSearchCV Random
+    Forest?
+  answer: "```python\nbest_model = gcv.best_estimator_\n\nf_imp = pd.DataFrame({\n\
+    \    'feature': X_train.columns,\n    'score': best_model.feature_importances_\n\
+    })\n\nf_imp = f_imp.sort_values('score', ascending=False)\nprint(f_imp.head(10))\n\
+    ```\n\n**Interpretation**:\n\n- Higher scores = more important for predictions\n\
+    - Identifies which data to prioritize gathering\n- May reveal domain insights\
+    \ (e.g., \"backers count\" predicts Kickstarter success)\n\n**Access**: `model.feature_importances_`\
+    \ (array aligned with `X_train.columns`)\n"
+  reference: practicals/random-forest-practical-solution.ipynb
+- topic: Fundamentals
+  title: Hyperparameter tuning diminishing returns
+  prompt: What pattern often emerges when comparing default vs optimized Random Forest
+    hyperparameters?
+  answer: '**Common observation**: Fine-tuning gives only modest improvements.
+
+
+    **Reasons**:
+
+
+    - Random Forests work well "out of the box"
+
+    - Feature engineering often more impactful than hyperparameter tuning
+
+    - Default parameters (100 trees, unlimited depth) often near-optimal
+
+
+    **Example scenario**: Kickstarter success prediction
+
+
+    - Default RF: ~65% accuracy
+
+    - Tuned RF: ~67% accuracy
+
+    - Limited by features, not hyperparameters
+
+
+    **Lesson**: If tuning doesn''t help much, focus on better features or different
+    model families rather than exhaustive hyperparameter search.
+
+    '
+  reference: practicals/random-forest-practical-solution.ipynb
+- topic: Stacking
+  title: StackingRegressor sklearn setup
+  prompt: How do you create and train a StackingRegressor in sklearn?
+  answer: "```python\nfrom sklearn.ensemble import StackingRegressor\nfrom sklearn.linear_model\
+    \ import LinearRegression\nfrom sklearn.svm import SVR\nfrom sklearn.tree import\
+    \ DecisionTreeRegressor\n\nstack_linreg = LinearRegression()\nmodel_stack = StackingRegressor(\n\
+    \    [\n        (\"linreg\", LinearRegression()),\n        (\"svc\", SVR()),\n\
+    \        (\"dtr\", DecisionTreeRegressor())\n    ],\n    final_estimator=stack_linreg,\n\
+    \    cv=6  # Level-2 cross-validation\n)\n\n# Train and evaluate with cross_val_score\n\
+    scores = cross_val_score(\n    model_stack, X, y,\n    scoring='neg_mean_squared_error',\n\
+    \    cv=5  # Level-1 cross-validation\n)\n```\n\nTwo levels of CV ensure proper\
+    \ validation at both ensemble levels.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Inspecting stacking model weights
+  prompt: How do you inspect which base models a stacking ensemble weights most heavily?
+  answer: '```python
+
+    # Fit stacking model to full dataset
+
+    model_stack.fit(X, y)
+
+
+    # Inspect meta-learner coefficients
+
+    weights = model_stack.final_estimator_.coef_
+
+    print(weights)
+
+    # Example output: [0.48, 0.42, 0.35]
+
+    ```
+
+
+    **Interpretation**:
+
+
+    - Higher coefficient = more weight in final prediction
+
+    - Shows which base models the meta-learner trusts most
+
+    - Better-performing models typically receive higher weights
+
+
+    Helps understand how the ensemble combines individual predictions.
+
+    '
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Fundamentals
+  title: cross_val_score for quick model evaluation
+  prompt: How does cross_val_score simplify model evaluation compared to manual loops?
+  answer: "**Manual approach**:\n\n```python\nscores = []\nfor train_idx, test_idx\
+    \ in cv.split(X):\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train,\
+    \ y_test = y[train_idx], y[test_idx]\n    model.fit(X_train, y_train)\n    error\
+    \ = mean_squared_error(model.predict(X_test), y_test)\n    scores.append(error)\n\
+    ```\n\n**cross_val_score approach**:\n\n```python\nscores = cross_val_score(\n\
+    \    model, X, y,\n    scoring='neg_mean_squared_error',\n    cv=cv\n)\n```\n\n\
+    Handles split iteration, training, and scoring automatically. Use `scoring='neg_mean_squared_error'`\
+    \ for regression tasks (negative because sklearn minimizes).\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Fundamentals
+  title: KFold shuffle importance
+  prompt: Why is shuffling important when creating KFold splits for ordered data?
+  answer: '```python
+
+    cv = KFold(n_splits=5, shuffle=True)
+
+    ```
+
+
+    **Problem with unshuffled data**: If data is ordered (e.g., all reds first, then
+    whites), sequential splits create biased distributions:
+
+
+    - Fold 1 might be all reds
+
+    - Fold 5 might be all whites
+
+    - Training and test sets have different distributions
+
+
+    **Solution**: `shuffle=True` randomizes samples before splitting
+
+
+    - Ensures each fold has representative distribution
+
+    - Training and test sets more similar
+
+    - More reliable cross-validation scores
+
+
+    Critical for ordered datasets!
+
+    '
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Blending vs Stacking implementation difference
+  prompt: What is the key implementation difference between Blending and full Stacking?
+  answer: "**Blending** (simple, one split):\n\n```python\n# Split once: train vs\
+    \ validation\nX_train, X_val = X[:-500], X[-500:]\n\n# Train base models on train\n\
+    model_linreg.fit(X_train, y_train)\n\n# Get predictions on validation\npreds =\
+    \ model_linreg.predict(X_val)\n\n# Train meta-learner on validation predictions\n\
+    meta_learner.fit(stacked_preds, y_val)\n```\n\n**Stacking** (K-fold):\n\n```python\n\
+    # K-fold splits, collect out-of-fold predictions\nfor train_idx, val_idx in kf.split(X):\n\
+    \    # Train and predict for each fold\n    oof_predictions[val_idx] = model.predict(X[val_idx])\n\
+    \n# Train meta-learner on full OOF predictions\nmeta_learner.fit(oof_predictions,\
+    \ y)\n```\n\nBlending: faster, one split. Stacking: better, uses all data.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Fundamentals
+  title: Stacked predictions array construction
+  prompt: How do you construct the stacked predictions array for meta-learner training?
+  answer: "```python\n# Get predictions from each base model\npred_linreg = model_linreg.predict(X_val)\n\
+    pred_svr = model_svr.predict(X_val)\npred_dtr = model_dtr.predict(X_val)\n\n#\
+    \ Stack into single array (transpose to get correct shape)\nstacked_output = np.array([\n\
+    \    pred_linreg,\n    pred_svr, \n    pred_dtr\n]).T\n\n# Shape: (n_samples,\
+    \ n_models)\n# Each row = all model predictions for one sample\n```\n\nThe meta-learner\
+    \ sees each base model's prediction as a feature:\n\n```python\nmeta_learner.fit(stacked_output,\
+    \ y_val)\n```\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Blending prediction function with lambda
+  prompt: How do you create a reusable blending prediction function?
+  answer: "```python\nblending = lambda x: meta_learner.predict(\n    np.array([\n\
+    \        model_linreg.predict(x), \n        model_svr.predict(x),\n        model_dtr.predict(x)\n\
+    \    ]).T\n)\n\n# Use it for predictions\npredictions = blending(X_test)\nerror\
+    \ = mean_squared_error(y_test, predictions)\n```\n\n**Process**:\n\n1. Pass new\
+    \ data through all base models\n2. Stack their predictions\n3. Pass stacked predictions\
+    \ through meta-learner\n4. Return final prediction\n\nLambda captures trained\
+    \ models in closure for convenient reuse.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Blending training function structure
+  prompt: What are the key steps in a complete blending training function?
+  answer: "```python\ndef train_blending(X_train, y_train, X_val, y_val):\n    # Step\
+    \ 1: Train base models on training set\n    model_linreg_ = LinearRegression().fit(X_train,\
+    \ y_train)\n    model_svr_ = SVR().fit(X_train, y_train)\n    model_dtr_ = DecisionTreeRegressor().fit(X_train,\
+    \ y_train)\n    \n    # Step 2: Stack predictions on validation set\n    stacked_output_\
+    \ = np.array([\n        model_linreg_.predict(X_val),\n        model_svr_.predict(X_val),\
+    \ \n        model_dtr_.predict(X_val)\n    ]).T\n    \n    # Step 3: Train meta-learner\
+    \ on stacked predictions\n    meta_learner_ = LinearRegression().fit(stacked_output_,\
+    \ y_val)\n    \n    # Step 4: Return prediction function\n    blending_ = lambda\
+    \ x: meta_learner_.predict(...)\n    return blending_\n```\n\nEncapsulates entire\
+    \ blending pipeline for reuse.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Two-level cross-validation for blending
+  prompt: How do you implement proper cross-validation when evaluating a blending
+    ensemble?
+  answer: "```python\ncv1 = 5\nval_size = 500\n\nsplits = KFold(n_splits=cv1, shuffle=True).split(X)\n\
+    \nscores = []\nfor train_index, test_index in splits:\n    X_train, X_test = X[train_index],\
+    \ X[test_index]\n    y_train, y_test = y[train_index], y[test_index]\n    \n \
+    \   # Train blending on training set (minus validation)\n    model = train_blending(\n\
+    \        X_train[:-val_size],  # Train base models\n        y_train[:-val_size],\n\
+    \        X_train[-val_size:],  # Train meta-learner\n        y_train[-val_size:]\n\
+    \    )\n    \n    # Evaluate on held-out test set\n    scores.append(mean_squared_error(y_test,\
+    \ model(X_test)))\n\nprint(np.mean(scores))\n```\n\n**Two levels**: Inner split\
+    \ (train/val for blending) + outer CV (evaluation).\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Out-of-fold predictions in stacking
+  prompt: What are out-of-fold (OOF) predictions and why are they used in stacking?
+  answer: "**OOF predictions**: Predictions made on validation folds during K-fold\
+    \ CV.\n\n```python\noof_predictions = np.zeros((len(X), 3))\n\nfor train_idx,\
+    \ val_idx in kf.split(X):\n    # Train on fold\n    m_lin.fit(X[train_idx], y[train_idx])\n\
+    \    \n    # Predict on out-of-fold samples\n    oof_predictions[val_idx, 0] =\
+    \ m_lin.predict(X[val_idx])\n```\n\n**Purpose**:\n\n- Each sample gets prediction\
+    \ from model that didn't see it during training\n- Prevents meta-learner from\
+    \ training on overfitted predictions\n- After CV loop, have predictions for entire\
+    \ training set\n- Use these to train meta-learner: `meta_learner.fit(oof_predictions,\
+    \ y)`\n\nCritical for avoiding overfitting in stacking!\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Full stacking final prediction function
+  prompt: What additional step is required for full stacking's prediction function
+    compared to blending?
+  answer: "```python\ndef train_stacking(X, y, n_folds=6):\n    # Step 1: Generate\
+    \ OOF predictions via K-fold\n    oof_predictions = ...\n    for fold in kf.split(X):\n\
+    \        # Train and collect OOF predictions\n        ...\n    \n    # Step 2:\
+    \ Train meta-learner on OOF predictions\n    meta_learner.fit(oof_predictions,\
+    \ y)\n    \n    # Step 3: Retrain base models on FULL dataset\n    model_linreg\
+    \ = LinearRegression().fit(X, y)\n    model_svr = SVR().fit(X, y)\n    model_dtr\
+    \ = DecisionTreeRegressor().fit(X, y)\n    \n    # Step 4: Create prediction function\
+    \ using full models\n    stacking_func = lambda x: meta_learner.predict(\n   \
+    \     np.array([...]).T\n    )\n    return stacking_func\n```\n\n**Key difference**:\
+    \ Base models retrained on full data after OOF collection. Meta-learner already\
+    \ trained on OOF predictions.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Fundamentals
+  title: Visualizing ensemble performance comparison
+  prompt: How do you visualize and compare the performance of multiple ensemble approaches?
+  answer: "```python\nfrom scipy.stats import sem\n\nscores = np.array([\n    scores_linreg,\
+    \ \n    -scores_svr,      # Negate if using neg_mean_squared_error\n    -scores_dtr,\
+    \ \n    -scores_stack\n])\nlabels = [\"linreg\", \"svc\", \"dtr\", \"stacking\"\
+    ]\n\nplt.bar(\n    range(4), \n    scores.mean(axis=1),  # Mean across folds\n\
+    \    yerr=sem(scores.T)    # Standard error of mean\n)\nplt.xticks(range(4), labels)\n\
+    plt.ylim(0.4)  # Set baseline for comparison\nplt.show()\n```\n\nError bars show\
+    \ variability; lower bars = better performance. Identifies best approach at a\
+    \ glance.\n"
+  reference: practicals/stacking-practical-solution.ipynb
+- topic: Stacking
+  title: Training error vs test error in blending
+  prompt: Why is the initial blending error not a reliable performance estimate?
+  answer: '```python
+
+    # After training blending on train/val split
+
+    training_error = mean_squared_error(y, blending(X))
+
+    ```
+
+
+    **Problem**: This is **training error**, not test error!
+
+
+    **Reasons it''s unreliable**:
+
+
+    - Base models saw training portion during training
+
+    - Meta-learner saw validation portion during training
+
+    - Together they''ve "seen" the entire dataset
+
+    - Will be optimistically low (overfitting)
+
+
+    **Solution**: Use level-2 cross-validation
+
+
+    - Hold out true test set that neither level saw
+
+    - Training error < test error (realistic estimate)
+
+
+    Always validate on completely unseen data!
+
+    '
+  reference: practicals/stacking-practical-solution.ipynb

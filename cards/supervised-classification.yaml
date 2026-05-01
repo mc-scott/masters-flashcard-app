@@ -1,2242 +1,2983 @@
 Supervised Classification:
-- topic: Supervised Classification
+- topic: Fundamentals
   title: Supervised learning prediction formula
-  prompt: In supervised learning, how do we express the relationship between inputs and outputs?
-  answer: |
-    Each instance has a corresponding label:
+  prompt: In supervised learning, how do we express the relationship between inputs
+    and outputs?
+  answer: 'Each instance has a corresponding label:
+
 
     $$y = f(x)$$
 
+
     Our goal is to find an approximation of $f$ that generates good predictions $\hat{y}$:
 
-    $$\hat{y} = \hat{f}(x)$$
-  reference: 01-classification-intro.md
 
-- topic: Supervised Classification
+    $$\hat{y} = \hat{f}(x)$$
+
+    '
+  reference: 01-classification-intro.md
+- topic: Fundamentals
   title: Cost function definition
   prompt: What is a cost function $L$ and what is its primary objective?
-  answer: |
-    A **cost function** $L$ evaluates the effectiveness of predictions by comparing predicted values $\hat{y}$ with ground-truth labels $y$:
+  answer: 'A **cost function** $L$ evaluates the effectiveness of predictions by comparing
+    predicted values $\hat{y}$ with ground-truth labels $y$:
+
 
     $$L(y, \hat{y})$$
 
-    The primary objective is to **minimise** the value of the cost function $L$.
-  reference: 01-classification-intro.md
 
-- topic: Supervised Classification
+    The primary objective is to **minimise** the value of the cost function $L$.
+
+    '
+  reference: 01-classification-intro.md
+- topic: Fundamentals
   title: Binary classification output space
   prompt: How does the output space differ between regression and binary classification?
-  answer: |
-    **Regression**: output can be any continuous value
+  answer: '**Regression**: output can be any continuous value
+
     $$\hat{y} \in \mathbb{R}$$
 
-    **Binary classification**: output is limited to two discrete values (TRUE/FALSE or 1/0)
-    $$\hat{y} \in \{0, 1\}$$
-  reference: 01-classification-intro.md
 
-- topic: Supervised Classification
+    **Binary classification**: output is limited to two discrete values (TRUE/FALSE
+    or 1/0)
+
+    $$\hat{y} \in \{0, 1\}$$
+
+    '
+  reference: 01-classification-intro.md
+- topic: Fundamentals
   title: Conditional probability formula
   prompt: What is the formula for conditional probability $P(A \mid B)$?
-  answer: |
-    $$P(A \mid B) = \frac{P(A, B)}{P(B)}$$
+  answer: '$$P(A \mid B) = \frac{P(A, B)}{P(B)}$$
+
 
     This gives the probability of event A occurring given that event B has occurred.
-  reference: 01-classification-intro.md
 
-- topic: Supervised Classification
+    '
+  reference: 01-classification-intro.md
+- topic: Fundamentals
   title: Product rule of probability
   prompt: What is the product rule for joint probability?
-  answer: |
-    $$P(A, B) = P(A \mid B) P(B) = P(B \mid A) P(A)$$
+  answer: '$$P(A, B) = P(A \mid B) P(B) = P(B \mid A) P(A)$$
+
 
     This expresses the joint probability of A and B in terms of conditional probabilities.
+
+    '
   reference: 01-classification-intro.md
-
-- topic: Supervised Classification
+- topic: Naive Bayes
   title: Discriminative vs generative models
-  prompt: What is the key difference between discriminative and generative classification models?
-  answer: |
-    **Discriminative models** learn to draw boundaries between classes by directly modeling $P(y|x)$ or $y = f(x)$.
+  prompt: What is the key difference between discriminative and generative classification
+    models?
+  answer: '**Discriminative models** learn to draw boundaries between classes by directly
+    modeling $P(y|x)$ or $y = f(x)$.
 
-    **Generative models** learn what each class looks like by modeling the joint probability $P(x,y)$ then deriving $P(y|x)$.
 
-    **Key insight**: Discriminative models answer "Given this data, what class is it?" while generative models answer "What's the probability this data comes from each class distribution?"
+    **Generative models** learn what each class looks like by modeling the joint probability
+    $P(x,y)$ then deriving $P(y|x)$.
+
+
+    **Key insight**: Discriminative models answer "Given this data, what class is
+    it?" while generative models answer "What''s the probability this data comes from
+    each class distribution?"
+
+    '
   reference: 02-discriminative-generative-classification.md
-
-- topic: Supervised Classification
+- topic: KNN
   title: K-Nearest Neighbour (KNN) algorithm
   prompt: How does the K-Nearest Neighbour (KNN) classifier make predictions?
-  answer: |
-    For a new data point:
+  answer: 'For a new data point:
+
 
     1. Find the K closest points in the training set
+
     2. Assign the class label based on the most common class among those K points
 
-    KNN is a **discriminative** classifier that learns decision boundaries between classes.
-  reference: 02-discriminative-generative-classification.md
 
-- topic: Supervised Classification
+    KNN is a **discriminative** classifier that learns decision boundaries between
+    classes.
+
+    '
+  reference: 02-discriminative-generative-classification.md
+- topic: KNN
   title: Distance metrics in KNN
   prompt: What are the three main distance metrics used in KNN, and when is each preferred?
-  answer: |
-    **Euclidean**: $\sqrt{\sum_{d=1}^n {(x_i^d-x_j^d)^2}}$
+  answer: '**Euclidean**: $\sqrt{\sum_{d=1}^n {(x_i^d-x_j^d)^2}}$
+
 
     - Most direct line between points
 
+
     **Manhattan**: $\sum_{d=1}^n |x_i^d-x_j^d|$
 
+
     - Grid-based distance
+
     - **Recommended for high-dimensional data** (more robust)
+
 
     **Minkowski**: $\left(\sum_{d=1}^n |x_i^d-x_j^d|^p\right)^\frac{1}{p}$
 
-    - Generalizes both (p=1 gives Manhattan, p=2 gives Euclidean)
-  reference: 02-discriminative-generative-classification.md
 
-- topic: Supervised Classification
+    - Generalizes both (p=1 gives Manhattan, p=2 gives Euclidean)
+
+    '
+  reference: 02-discriminative-generative-classification.md
+- topic: KNN
   title: Choosing k in KNN
   prompt: How does the choice of k affect the bias-variance trade-off in KNN?
-  answer: |
-    **Small k**:
+  answer: '**Small k**:
+
 
     - Rough boundary, local
+
     - Risk of **overfitting** (high variance, low bias)
+
     - Model becomes very specific to training data
+
 
     **Large k**:
 
+
     - Smooth boundary, global
+
     - Risk of **underfitting** (high bias, low variance)
+
     - Includes too much noise
 
-    For binary classification, choose **odd values** for k to avoid ties.
-  reference: 02-discriminative-generative-classification.md
 
-- topic: Supervised Classification
+    For binary classification, choose **odd values** for k to avoid ties.
+
+    '
+  reference: 02-discriminative-generative-classification.md
+- topic: KNN
   title: KNN considerations and limitations
   prompt: What are the main strengths and weaknesses of KNN classifiers?
-  answer: |
-    **Strengths**:
+  answer: '**Strengths**:
+
 
     - Often used as baseline classifier
+
     - Plain and intuitive for model explainability
+
 
     **Weaknesses**:
 
-    - Computationally expensive at prediction time for large datasets
-    - Performs poorly on high-dimensional data
-    - Stronger on highly separable classes
-    - Feature values can affect performance (normalization recommended)
-    - Doesn't work well for categorical features (unless binary)
-  reference: 02-discriminative-generative-classification.md
 
-- topic: Supervised Classification
+    - Computationally expensive at prediction time for large datasets
+
+    - Performs poorly on high-dimensional data
+
+    - Stronger on highly separable classes
+
+    - Feature values can affect performance (normalization recommended)
+
+    - Doesn''t work well for categorical features (unless binary)
+
+    '
+  reference: 02-discriminative-generative-classification.md
+- topic: Naive Bayes
   title: Bayes' theorem for classification
   prompt: What is Bayes' rule and what does each term represent?
-  answer: |
-    $$p(y|x)=\frac{p(x|y)p(y)}{p(x)}$$
+  answer: '$$p(y|x)=\frac{p(x|y)p(y)}{p(x)}$$
+
 
     - $p(y|x)$: **posterior probability** — probability of class $y$ given data $x$
-    - $p(x|y)$: **model likelihood** — probability of observing data $x$ if class is $y$
+
+    - $p(x|y)$: **model likelihood** — probability of observing data $x$ if class
+    is $y$
+
     - $p(y)$: **prior probability** — probability of class $y$ before observing data
+
     - $p(x)$: **normalization** — ensures probabilities sum to 1
 
-    To make a prediction, choose the class $y$ with the highest probability.
-  reference: 02-discriminative-generative-classification.md
 
-- topic: Supervised Classification
+    To make a prediction, choose the class $y$ with the highest probability.
+
+    '
+  reference: 02-discriminative-generative-classification.md
+- topic: Naive Bayes
   title: Naive Bayes classifier
   prompt: How does Naive Bayes work and what is the "naive" assumption?
-  answer: |
-    Naive Bayes applies Bayes' theorem with the **"naive" assumption of conditional independence** between every pair of features given the class label.
+  answer: 'Naive Bayes applies Bayes'' theorem with the **"naive" assumption of conditional
+    independence** between every pair of features given the class label.
 
-    For each class, it models the distribution of each feature given that class, then computes the probability of each class given the feature values using Bayes' theorem.
 
-    It's a **generative** classifier that can produce new data similar to training data.
+    For each class, it models the distribution of each feature given that class, then
+    computes the probability of each class given the feature values using Bayes''
+    theorem.
+
+
+    It''s a **generative** classifier that can produce new data similar to training
+    data.
+
+    '
   reference: 02-discriminative-generative-classification.md
-
-- topic: Supervised Classification
+- topic: Model Evaluation
   title: Types of prediction error
   prompt: What are the three types of error in machine learning models?
-  answer: |
-    1. **Bias** — expected (mean) difference between predictions and true values
+  answer: '1. **Bias** — expected (mean) difference between predictions and true values
+
     2. **Variance** — how much predictions change with different training datasets
+
     3. **Irreducible error** — inherent noise that cannot be reduced
 
-    We can manage bias and variance but not irreducible error.
-  reference: 03-model-generalisation.md
 
-- topic: Supervised Classification
+    We can manage bias and variance but not irreducible error.
+
+    '
+  reference: 03-model-generalisation.md
+- topic: Model Evaluation
   title: Bias characteristics
-  prompt: What does bias represent in machine learning and what are examples of high vs low bias models?
-  answer: |
-    **Bias** is the error from simplifying assumptions made by the model to approximate the target function.
+  prompt: What does bias represent in machine learning and what are examples of high
+    vs low bias models?
+  answer: '**Bias** is the error from simplifying assumptions made by the model to
+    approximate the target function.
+
 
     **High bias algorithms**:
 
+
     - Make more assumptions about data
+
     - Examples: linear regression, logistic regression
+
     - Risk: **underfitting**
 
-    **Low bias algorithms**:
-    - Make fewer assumptions about target function
-    - Examples: decision trees, k-NN, support vector machines
-  reference: 03-model-generalisation.md
 
-- topic: Supervised Classification
+    **Low bias algorithms**:
+
+    - Make fewer assumptions about target function
+
+    - Examples: decision trees, k-NN, support vector machines
+
+    '
+  reference: 03-model-generalisation.md
+- topic: Model Evaluation
   title: Variance in models
   prompt: What does variance represent in machine learning?
-  answer: |
-    **Variance** represents how much model predictions would change if we estimated it using a different training dataset.
+  answer: '**Variance** represents how much model predictions would change if we estimated
+    it using a different training dataset.
 
-    **High variance** means the model is very sensitive to specific data points in the training set and may **overfit** the data.
+
+    **High variance** means the model is very sensitive to specific data points in
+    the training set and may **overfit** the data.
+
 
     **Low variance** means the model is more stable across different training datasets.
-  reference: 03-model-generalisation.md
 
-- topic: Supervised Classification
+    '
+  reference: 03-model-generalisation.md
+- topic: Model Evaluation
   title: Model generalisation
   prompt: What is generalisation and what makes a 'good' model?
-  answer: |
-    **Generalisation** is the ability of a model to perform well on new, unseen data.
+  answer: '**Generalisation** is the ability of a model to perform well on new, unseen
+    data.
 
-    A **'good' model**:
+
+    A **''good'' model**:
+
 
     - Has **low bias** and **low variance** (balanced trade-off)
-    - Makes accurate predictions on unseen data
-    - Is robust to changes in data distribution
-    - Captures relevant patterns without overfitting to noise
-  reference: 03-model-generalisation.md
 
-- topic: Supervised Classification
+    - Makes accurate predictions on unseen data
+
+    - Is robust to changes in data distribution
+
+    - Captures relevant patterns without overfitting to noise
+
+    '
+  reference: 03-model-generalisation.md
+- topic: Model Evaluation
   title: Underfitting vs overfitting
   prompt: What are underfitting and overfitting in terms of bias and variance?
-  answer: |
-    **Underfitting**:
+  answer: '**Underfitting**:
+
 
     - Model too simple to capture underlying patterns
+
     - **High bias, low variance**
+
     - Not enough model complexity or training data
+
 
     **Overfitting**:
 
-    - Model too complex, captures noise in training data
-    - **Low bias, high variance**
-    - Model too complex or too much training data
-  reference: 03-model-generalisation.md
 
-- topic: Supervised Classification
+    - Model too complex, captures noise in training data
+
+    - **Low bias, high variance**
+
+    - Model too complex or too much training data
+
+    '
+  reference: 03-model-generalisation.md
+- topic: Cross Validation
   title: Data partitioning splits
-  prompt: What are the common splits for training, validation, and test sets and what is each used for?
-  answer: |
-    Common splits: **60/20/20** or **70/15/15** for training/validation/testing
+  prompt: What are the common splits for training, validation, and test sets and what
+    is each used for?
+  answer: 'Common splits: **60/20/20** or **70/15/15** for training/validation/testing
+
 
     - **Training set**: fit the model
+
     - **Validation set**: tune hyperparameters and select best model
+
     - **Test set**: evaluate final model performance (used only once at the end)
 
-    Never retrain on the test set after evaluation — it provides an unbiased estimate of performance on unseen data.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    Never retrain on the test set after evaluation — it provides an unbiased estimate
+    of performance on unseen data.
+
+    '
+  reference: 04-model-partitioning.md
+- topic: ROC Curves
   title: Pre-processing and data leakage
-  prompt: When should pre-processing techniques (scaling, encoding) be applied to avoid data leakage?
-  answer: |
-    Pre-processing should be done **after** splitting the data into training and testing sets.
+  prompt: When should pre-processing techniques (scaling, encoding) be applied to
+    avoid data leakage?
+  answer: 'Pre-processing should be done **after** splitting the data into training
+    and testing sets.
+
 
     **Process**:
 
+
     1. Split data into train/validation/test
+
     2. Fit preprocessing on training set only
-    3. Apply (transform) the fitted preprocessing to validation and test sets **without refitting**
+
+    3. Apply (transform) the fitted preprocessing to validation and test sets **without
+    refitting**
+
 
     This prevents information from test set leaking into the training process.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    '
+  reference: 04-model-partitioning.md
+- topic: Cross Validation
   title: Time series data partitioning
-  prompt: How should time series data be partitioned differently from non-time series data?
-  answer: |
-    **Time series**: maintain temporal order
+  prompt: How should time series data be partitioned differently from non-time series
+    data?
+  answer: '**Time series**: maintain temporal order
+
 
     - Training set: earlier time points
+
     - Testing set: later time points
+
     - Ensures model is evaluated on truly future data
+
 
     **Non-time series**: random shuffling recommended
 
+
     - Ensures representative samples in both sets
 
-    This reflects real-world scenarios where future data is not available during training.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    This reflects real-world scenarios where future data is not available during training.
+
+    '
+  reference: 04-model-partitioning.md
+- topic: Cross Validation
   title: IID assumptions in partitioning
-  prompt: What are the IID assumptions and why are they important when partitioning data?
-  answer: |
-    **IID** = Independent and Identically Distributed
+  prompt: What are the IID assumptions and why are they important when partitioning
+    data?
+  answer: '**IID** = Independent and Identically Distributed
+
 
     **Requirements**:
 
+
     - Data points drawn from same underlying distribution
+
     - Data points independent of each other
 
-    **Example violation**: If house A has 3 valuations over time, all 3 should be in the same partition (all in training OR all in testing), not split between them.
+
+    **Example violation**: If house A has 3 valuations over time, all 3 should be
+    in the same partition (all in training OR all in testing), not split between them.
+
 
     Violating IID leads to biased performance estimates and poor generalization.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    '
+  reference: 04-model-partitioning.md
+- topic: Cross Validation
   title: K-fold cross-validation
   prompt: How does k-fold cross-validation work?
-  answer: |
-    1. Split training data into k equally sized folds
+  answer: '1. Split training data into k equally sized folds
+
     2. Train model on k-1 folds
+
     3. Validate on the remaining fold
+
     4. Repeat k times, each fold serving as validation set once
+
     5. Average performance metric over all k iterations
 
-    This makes better use of data, especially for small datasets, by using all data for both training and validation.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    This makes better use of data, especially for small datasets, by using all data
+    for both training and validation.
+
+    '
+  reference: 04-model-partitioning.md
+- topic: Cross Validation
   title: Stratified k-fold cross-validation
   prompt: What is stratified k-fold cross-validation and when should it be used?
-  answer: |
-    A variation of k-fold that **ensures each fold has similar distribution of the target variable**.
+  answer: 'A variation of k-fold that **ensures each fold has similar distribution
+    of the target variable**.
+
 
     **When to use**:
 
+
     - Imbalanced datasets where one class is more prevalent
+
     - Ensures each fold is representative of overall dataset
+
     - Leads to more reliable performance estimates
 
-    ```python
-    from sklearn.model_selection import StratifiedKFold
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    skf.split(X, y)
-    ```
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    ```python
+
+    from sklearn.model_selection import StratifiedKFold
+
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+    skf.split(X, y)
+
+    ```
+
+    '
+  reference: 04-model-partitioning.md
+- topic: Cross Validation
   title: Cross-validation reporting
   prompt: What should be reported when presenting cross-validation results?
-  answer: |
-    Report both:
-    
+  answer: 'Report both:
+
+
     - **Mean**: estimate of overall performance
+
     - **Standard deviation**: variability across folds (reliability indicator)
 
+
     ```python
+
     from sklearn.model_selection import cross_val_score
+
     scores = cross_val_score(model, X, y, cv=5)
+
     print(f"Mean: {scores.mean():.3f}, Std: {scores.std():.3f}")
+
     ```
 
-    This gives a complete picture and helps identify overfitting/underfitting issues.
-  reference: 04-model-partitioning.md
 
-- topic: Supervised Classification
+    This gives a complete picture and helps identify overfitting/underfitting issues.
+
+    '
+  reference: 04-model-partitioning.md
+- topic: Model Evaluation
   title: Choosing evaluation metrics
-  prompt: What factors should be considered when choosing evaluation metrics for a machine learning model?
-  answer: |
-    Consider the following factors:
+  prompt: What factors should be considered when choosing evaluation metrics for a
+    machine learning model?
+  answer: 'Consider the following factors:
+
 
     - **Problem Type**: Ensure the metric aligns with classification vs regression
-    - **Business Objectives**: Choose metrics that reflect project goals (e.g., minimizing false negatives in medical diagnoses)
-    - **Data Characteristics**: Consider class distribution (classification) or target variable scale (regression)
+
+    - **Business Objectives**: Choose metrics that reflect project goals (e.g., minimizing
+    false negatives in medical diagnoses)
+
+    - **Data Characteristics**: Consider class distribution (classification) or target
+    variable scale (regression)
+
     - **Interpretability**: Select metrics stakeholders can easily understand
 
-    Consult domain experts to ensure metrics align with real-world needs and acceptable error types.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    Consult domain experts to ensure metrics align with real-world needs and acceptable
+    error types.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Model Evaluation
   title: Precision vs Recall definitions
   prompt: What are recall, specificity, and precision in classification?
-  answer: |
-    - **Recall** (True Positive Rate): Of all actual positive cases, how many did we correctly identify?
-    - **Specificity** (True Negative Rate): Of all actual negative cases, how many did we correctly identify?
-    - **Precision**: Of all cases we identified as positive, how many were actually positive?
-    - **F-measures**: Harmonic mean of precision and recall, providing a single balanced metric
-  reference: practicals/model-validation-slides.ipynb
+  answer: '- **Recall** (True Positive Rate): Of all actual positive cases, how many
+    did we correctly identify?
 
-- topic: Supervised Classification
+    - **Specificity** (True Negative Rate): Of all actual negative cases, how many
+    did we correctly identify?
+
+    - **Precision**: Of all cases we identified as positive, how many were actually
+    positive?
+
+    - **F-measures**: Harmonic mean of precision and recall, providing a single balanced
+    metric
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Fundamentals
   title: Classification vs regression metrics
   prompt: What are common metrics for classification vs regression problems?
-  answer: |
-    **Classification metrics**:
+  answer: '**Classification metrics**:
+
 
     - Precision and recall (especially for imbalanced datasets)
+
     - Accuracy (can be misleading with imbalanced data)
+
     - F1-score
+
 
     **Regression metrics**:
 
-    - **MAE (Mean Absolute Error)**: straightforward interpretation of average error
-    - **RMSE (Root Mean Squared Error)**: penalizes larger errors more heavily, useful when large errors are particularly undesirable
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    - **MAE (Mean Absolute Error)**: straightforward interpretation of average error
+
+    - **RMSE (Root Mean Squared Error)**: penalizes larger errors more heavily, useful
+    when large errors are particularly undesirable
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Cross-validation with custom metrics
   prompt: How can you use custom scoring metrics with scikit-learn's cross-validation?
-  answer: |
-    Use `make_scorer` to create custom scorers:
+  answer: 'Use `make_scorer` to create custom scorers:
+
 
     ```python
+
     from sklearn.model_selection import cross_val_score
+
     from sklearn.metrics import make_scorer, precision_score, recall_score, f1_score
 
+
     # Define custom scorers
+
     precision_scorer = make_scorer(precision_score)
+
     recall_scorer = make_scorer(recall_score)
+
     f1_scorer = make_scorer(f1_score)
 
-    # Perform cross-validation with different metrics
-    precision_scores = cross_val_score(model, X, y, cv=5, scoring=precision_scorer)
-    recall_scores = cross_val_score(model, X, y, cv=5, scoring=recall_scorer)
-    f1_scores = cross_val_score(model, X, y, cv=5, scoring=f1_scorer)
-    ```
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    # Perform cross-validation with different metrics
+
+    precision_scores = cross_val_score(model, X, y, cv=5, scoring=precision_scorer)
+
+    recall_scores = cross_val_score(model, X, y, cv=5, scoring=recall_scorer)
+
+    f1_scores = cross_val_score(model, X, y, cv=5, scoring=f1_scorer)
+
+    ```
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Time series cross-validation
   prompt: How should cross-validation be performed on time series data?
-  answer: |
-    Use `TimeSeriesSplit` to respect temporal order:
+  answer: 'Use `TimeSeriesSplit` to respect temporal order:
+
 
     ```python
+
     from sklearn.model_selection import TimeSeriesSplit, cross_val_score
 
+
     tscv = TimeSeriesSplit(n_splits=5)
-    scores = cross_val_score(model, X, y, cv=tscv, scoring='neg_mean_squared_error')
+
+    scores = cross_val_score(model, X, y, cv=tscv, scoring=''neg_mean_squared_error'')
+
     ```
 
-    This creates training and test sets that **do not overlap in time**, ensuring earlier data trains and later data tests, reflecting real-world scenarios.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    This creates training and test sets that **do not overlap in time**, ensuring
+    earlier data trains and later data tests, reflecting real-world scenarios.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Parameters vs hyperparameters
-  prompt: What is the difference between parameters and hyperparameters in machine learning?
-  answer: |
-    **Parameters**:
+  prompt: What is the difference between parameters and hyperparameters in machine
+    learning?
+  answer: '**Parameters**:
+
 
     - Values the model learns from data
+
     - We rarely have control over these
+
     - Examples: weights, biases
+
 
     **Hyperparameters**:
 
-    - Control how the model learns
-    - Choices we make before training
-    - Can be fine-tuned using data
-    - Examples: loss function, regularization strength, learning rate
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    - Control how the model learns
+
+    - Choices we make before training
+
+    - Can be fine-tuned using data
+
+    - Examples: loss function, regularization strength, learning rate
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: ROC Curves
   title: Hyperparameter tuning process
   prompt: What is the general process for hyperparameter tuning?
-  answer: |
-    1. Set hyperparameter value
+  answer: '1. Set hyperparameter value
+
     2. Train model
+
     3. Evaluate on validation set
+
     4. Change hyperparameter
+
     5. Repeat
 
-    The goal is to find hyperparameter values that optimize performance on validation data.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    The goal is to find hyperparameter values that optimize performance on validation
+    data.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Grid search for hyperparameters
   prompt: How does GridSearchCV work in scikit-learn?
-  answer: |
-    GridSearchCV exhaustively tests all combinations of hyperparameter values:
+  answer: 'GridSearchCV exhaustively tests all combinations of hyperparameter values:
+
 
     ```python
+
     from sklearn.model_selection import GridSearchCV
+
     from sklearn.neighbors import KNeighborsClassifier
 
+
     model = KNeighborsClassifier()
+
     hyperparams = {"n_neighbors": [1, 2, 3]}
 
-    gridsearch = GridSearchCV(model, hyperparams, cv=5, scoring='accuracy')
+
+    gridsearch = GridSearchCV(model, hyperparams, cv=5, scoring=''accuracy'')
+
     gridsearch.fit(X, y)
 
+
     print(gridsearch.best_estimator_)
+
     ```
 
-    It performs k-fold cross-validation for each combination and stores results in `.cv_results_`. The best model is accessible via `.best_estimator_`.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    It performs k-fold cross-validation for each combination and stores results in
+    `.cv_results_`. The best model is accessible via `.best_estimator_`.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Naive Bayes
   title: Bayesian optimization strategy
-  prompt: How does Bayesian optimization differ from grid search for hyperparameter tuning?
-  answer: |
-    Bayesian optimization takes a **sequential strategy** rather than exhaustive search:
+  prompt: How does Bayesian optimization differ from grid search for hyperparameter
+    tuning?
+  answer: 'Bayesian optimization takes a **sequential strategy** rather than exhaustive
+    search:
+
 
     1. Treats objective function as a random function
+
     2. Places a Gaussian process (GP) prior over it
+
     3. After evaluating at some points, calculates posterior distribution
+
     4. Uses posterior to determine next candidate point
+
     5. Leverages tractable posterior distribution from GP
 
-    **Advantage**: More efficient for expensive-to-evaluate functions than grid search.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Advantage**: More efficient for expensive-to-evaluate functions than grid search.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Decision Trees
   title: Decision tree structure
   prompt: What are the key components of a decision tree?
-  answer: |
-    - **Nodes**: Internal decision points where binary rules are applied
+  answer: '- **Nodes**: Internal decision points where binary rules are applied
+
     - **Leaves**: Terminal nodes representing final classifications
+
     - **Decision Path**: The sequence of rules followed from root to leaf
+
     - **Branches**: Connections between nodes representing rule outcomes
 
-    Each internal node corresponds to a binary rule based on a single attribute (e.g., "is red?" or "less than 50g?").
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    Each internal node corresponds to a binary rule based on a single attribute (e.g.,
+    "is red?" or "less than 50g?").
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Recursive binary splitting
   prompt: How are decision trees trained using recursive binary splitting?
-  answer: |
-    A greedy, divide-and-conquer algorithm:
+  answer: 'A greedy, divide-and-conquer algorithm:
+
 
     1. Start with root node containing all training data
-    2. For each attribute, evaluate all possible splitting points
-    3. Select the attribute and split that provides the best separation
-    4. Create child nodes based on the split
-    5. Recursively repeat for each child node until stopping criteria are met
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    2. For each attribute, evaluate all possible splitting points
+
+    3. Select the attribute and split that provides the best separation
+
+    4. Create child nodes based on the split
+
+    5. Recursively repeat for each child node until stopping criteria are met
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Gini impurity formula
   prompt: What is Gini impurity and how is it calculated?
-  answer: |
-    Gini impurity quantifies the misclassification probability when randomly assigning class labels proportional to class distribution:
+  answer: 'Gini impurity quantifies the misclassification probability when randomly
+    assigning class labels proportional to class distribution:
+
 
     $$G(S) = 1 - \sum_{i=1}^k p_i^2$$
 
+
     Where $p_i$ is the proportion of samples in class $i$.
+
 
     **Properties**:
 
-    - Range: 0 to 0.5 (for binary classification)
-    - 0 indicates pure node (single class)
-    - Higher values indicate more impurity
-    - Maximum occurs at equal class distribution
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    - Range: 0 to 0.5 (for binary classification)
+
+    - 0 indicates pure node (single class)
+
+    - Higher values indicate more impurity
+
+    - Maximum occurs at equal class distribution
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Gini gain for splits
   prompt: How is Gini gain calculated and what is its purpose?
-  answer: |
-    **Gini Gain** measures improvement from a split:
+  answer: '**Gini Gain** measures improvement from a split:
+
 
     $$Gain_{Gini}(S,A) = G(S) - \sum_{i \in \{1,2\}} \frac{|S_i|}{|S|}G(S_i)$$
 
+
     Where:
 
+
     - $S$ is the original sample set
+
     - $A$ is the decision rule (attribute + splitting point)
+
     - $S_1, S_2$ are the resulting subsets
+
     - $|S|, |S_1|, |S_2|$ are the set sizes
 
-    **Objective**: Maximize Gini gain to find optimal splits
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    **Objective**: Maximize Gini gain to find optimal splits
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Information gain and entropy
   prompt: What is information gain based on entropy?
-  answer: |
-    An alternative measure to Gini impurity based on **entropy**:
+  answer: 'An alternative measure to Gini impurity based on **entropy**:
+
 
     $$I_H = -\sum_{i=1}^k p_i \log_2(p_i)$$
 
+
     **Information Gain**:
+
 
     $$Gain_{H}(S,A) = I_H(S) - \sum_{i \in \{1,2\}} \frac{|S_i|}{|S|}I_H(S_i)$$
 
+
     **Comparison with Gini**:
 
-    - Produces similar results to Gini impurity
-    - Computationally slightly more expensive (uses logarithms)
-    - Better calibrated for probabilistic classification
-    - Similar to cross-entropy loss
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    - Produces similar results to Gini impurity
+
+    - Computationally slightly more expensive (uses logarithms)
+
+    - Better calibrated for probabilistic classification
+
+    - Similar to cross-entropy loss
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Decision tree pruning criteria
   prompt: What pruning criteria prevent overfitting in decision trees?
-  answer: |
-    Without constraints, decision trees can overfit. Control complexity using:
+  answer: 'Without constraints, decision trees can overfit. Control complexity using:
+
 
     1. **Maximum Depth**: Limit the maximum depth of any branch
+
     2. **Minimum Samples**: Require minimum number of samples for node/leaf creation
+
     3. **Minimum Gain**: Require minimum improvement in impurity for splits
 
-    Use validation set to tune these hyperparameters for optimal performance.
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    Use validation set to tune these hyperparameters for optimal performance.
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Model Evaluation
   title: Bias-variance in tree depth
   prompt: How does tree depth affect the bias-variance trade-off in decision trees?
-  answer: |
-    - **Low Depth Trees**: High bias, low variance — oversimplify the data
+  answer: '- **Low Depth Trees**: High bias, low variance — oversimplify the data
+
     - **Deep Trees**: Low bias, high variance — overfit the training data
-    - **Optimal Depth**: Balance between fitting training data and generalizing to unseen data
+
+    - **Optimal Depth**: Balance between fitting training data and generalizing to
+    unseen data
+
 
     Use validation set to find the optimal depth that balances this trade-off.
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Decision tree regression
   prompt: How are decision trees adapted for regression tasks?
-  answer: |
-    **Prediction Method**: Leaf value = average of target values for training examples in that leaf
+  answer: '**Prediction Method**: Leaf value = average of target values for training
+    examples in that leaf
+
 
     **Splitting Criterion**: Variance reduction instead of Gini gain
 
+
     $$Gain_V = V(S) - \sum_{i \in \{1,2\}} \frac{|S_i|}{|S|}V(S_i)$$
+
 
     Where $V(S)$ is the variance of target values in set $S$.
 
-    **Interpretation**: Node with $V(S) = 0$ has zero prediction error (all samples have same target value).
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    **Interpretation**: Node with $V(S) = 0$ has zero prediction error (all samples
+    have same target value).
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Fundamentals
   title: Feature importance in trees
   prompt: How is feature importance calculated in decision trees?
-  answer: |
-    Feature importance quantifies the contribution of each feature:
+  answer: 'Feature importance quantifies the contribution of each feature:
 
-    $$\text{Feature Importance} = \frac{|S|}{N} \left(G(S) - \frac{|S_1|}{|S|} G(S_1) - \frac{|S_2|}{|S|} G(S_2) \right)$$
+
+    $$\text{Feature Importance} = \frac{|S|}{N} \left(G(S) - \frac{|S_1|}{|S|} G(S_1)
+    - \frac{|S_2|}{|S|} G(S_2) \right)$$
+
 
     **Properties**:
 
-    - Normalized by probability of reaching the node ($|S|/N$)
-    - Based on Gini gain (or information gain) for splits using that feature
-    - Higher values indicate more important features
-    - Useful for feature selection and model interpretation
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    - Normalized by probability of reaching the node ($|S|/N$)
+
+    - Based on Gini gain (or information gain) for splits using that feature
+
+    - Higher values indicate more important features
+
+    - Useful for feature selection and model interpretation
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Fundamentals
   title: Handling missing values in trees
   prompt: What are three approaches for handling missing values in decision trees?
-  answer: |
-    1. **Imputation**: Fill with typical values (median, mode) either within class or overall
-
-    2. **Null Category**: Create separate category for missing values
-       - Appropriate when missing values are informative
-       - Example: High-income individuals not disclosing income
-
-    3. **Ignore During Splitting**: 
-       - Exclude missing values when calculating separation gain
-       - At test time, assign randomly proportional to training split distribution
+  answer: "1. **Imputation**: Fill with typical values (median, mode) either within\
+    \ class or overall\n\n2. **Null Category**: Create separate category for missing\
+    \ values\n   - Appropriate when missing values are informative\n   - Example:\
+    \ High-income individuals not disclosing income\n\n3. **Ignore During Splitting**:\
+    \ \n   - Exclude missing values when calculating separation gain\n   - At test\
+    \ time, assign randomly proportional to training split distribution\n"
   reference: notebooks/decision_tree_slides.ipynb
-
-- topic: Supervised Classification
+- topic: Fundamentals
   title: Random forests construction
   prompt: How are random forests constructed and how do they make predictions?
-  answer: |
-    An ensemble method to address decision tree instability:
+  answer: 'An ensemble method to address decision tree instability:
+
 
     **Construction**:
 
+
     - Train $k$ decision trees on random subsets of training data
+
     - Each tree makes independent predictions
+
     - Final prediction via majority vote (classification) or averaging (regression)
+
 
     **Probability Estimation**: Average node proportions across ensemble
 
-    **Advantages**: Reduces variance and overfitting, more stable than single trees
-  reference: notebooks/decision_tree_slides.ipynb
 
-- topic: Supervised Classification
+    **Advantages**: Reduces variance and overfitting, more stable than single trees
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Decision tree advantages
   prompt: What are the main advantages of decision trees?
-  answer: |
-    1. **Interpretability**: Easy to understand and visualize decision logic
-    2. **No Feature Scaling**: No need to normalize or standardize features
-    3. **Mixed Data Types**: Handles both numerical and categorical data natively
-    4. **Feature Importance**: Provides insights into which features matter most
-    5. **Compact Representation**: Efficient storage and communication
-    6. **Fast Prediction**: Prediction time scales with tree depth, not data size
-    7. **Non-linear Relationships**: Captures complex interactions without manual feature engineering
-  reference: notebooks/decision_tree_slides.ipynb
+  answer: '1. **Interpretability**: Easy to understand and visualize decision logic
 
-- topic: Supervised Classification
+    2. **No Feature Scaling**: No need to normalize or standardize features
+
+    3. **Mixed Data Types**: Handles both numerical and categorical data natively
+
+    4. **Feature Importance**: Provides insights into which features matter most
+
+    5. **Compact Representation**: Efficient storage and communication
+
+    6. **Fast Prediction**: Prediction time scales with tree depth, not data size
+
+    7. **Non-linear Relationships**: Captures complex interactions without manual
+    feature engineering
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Decision Trees
   title: Decision tree limitations
   prompt: What are the main limitations of decision trees?
-  answer: |
-    1. **Overfitting Risk**: Can easily overfit training data without proper constraints
-    2. **Instability**: Small data variations can produce very different trees
-    3. **Class Imbalance Bias**: Tends to favor majority class in imbalanced datasets
-    4. **Greedy Training**: Locally optimal splits may not lead to globally optimal tree
-    5. **Limited Extrapolation**: Cannot predict beyond range seen in training data
-    6. **Axis-aligned Splits**: Only considers splits parallel to feature axes
-  reference: notebooks/decision_tree_slides.ipynb
+  answer: '1. **Overfitting Risk**: Can easily overfit training data without proper
+    constraints
 
-- topic: Supervised Classification
+    2. **Instability**: Small data variations can produce very different trees
+
+    3. **Class Imbalance Bias**: Tends to favor majority class in imbalanced datasets
+
+    4. **Greedy Training**: Locally optimal splits may not lead to globally optimal
+    tree
+
+    5. **Limited Extrapolation**: Cannot predict beyond range seen in training data
+
+    6. **Axis-aligned Splits**: Only considers splits parallel to feature axes
+
+    '
+  reference: notebooks/decision_tree_slides.ipynb
+- topic: Model Evaluation
   title: Model capacity and complexity
   prompt: What is model capacity and how does it relate to underfitting and overfitting?
-  answer: |
-    **Model capacity** (or complexity) is the ability of a model to fit various functions.
+  answer: '**Model capacity** (or complexity) is the ability of a model to fit various
+    functions.
+
 
     - **Low capacity**: Leads to underfitting (model too simple, high bias)
+
     - **High capacity**: Leads to overfitting (model too complex, high variance)
+
     - **Optimal capacity**: Balances fitting training data with generalization
 
-    The tendency to underfit or overfit can be controlled by adjusting the model's capacity.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    The tendency to underfit or overfit can be controlled by adjusting the model''s
+    capacity.
+
+    '
+  reference: 07-svm.md
+- topic: Model Evaluation
   title: VC dimension definition
   prompt: What is VC dimension and what does it measure?
-  answer: |
-    **VC dimension** measures the capacity of a binary classifier.
+  answer: '**VC dimension** measures the capacity of a binary classifier.
 
-    **Definition**: The largest possible $m$ so that we can **arbitrarily** label $m$ different points.
 
-    **Example**: A simple threshold classifier for real numbers (returns class 1 if value > $k$, otherwise class 0) has VC dimension of 1, because only one point can be arbitrarily classified.
+    **Definition**: The largest possible $m$ so that we can **arbitrarily** label
+    $m$ different points.
+
+
+    **Example**: A simple threshold classifier for real numbers (returns class 1 if
+    value > $k$, otherwise class 0) has VC dimension of 1, because only one point
+    can be arbitrarily classified.
+
+    '
   reference: 07-svm.md
-
-- topic: Supervised Classification
+- topic: Model Evaluation
   title: Test error bound
   prompt: What did Vapnik & Chervonenkis show about the upper bound on test error?
-  answer: |
-    $$Test\ error \leq Training\ error + Model\ complexity$$
+  answer: '$$Test\ error \leq Training\ error + Model\ complexity$$
+
 
     **Implications**:
 
+
     - Training error often smaller for models with larger capacity
+
     - Larger capacity models risk overfitting
+
     - If training error is 0, we can minimize model capacity to improve test performance
 
-    This is possible when data are **linearly separable**.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    This is possible when data are **linearly separable**.
+
+    '
+  reference: 07-svm.md
+- topic: Fundamentals
   title: Linear separability concept
   prompt: What does linear separability mean in binary classification?
-  answer: |
-    In binary classification, classes are **linearly separable** when we can divide them into two classes by drawing a line (2D), plane (3D), or hyperplane (higher dimensions) between them.
+  answer: 'In binary classification, classes are **linearly separable** when we can
+    divide them into two classes by drawing a line (2D), plane (3D), or hyperplane
+    (higher dimensions) between them.
 
-    **Ideal case**: All of one class on one side, all of the other class on the other side.
+
+    **Ideal case**: All of one class on one side, all of the other class on the other
+    side.
+
 
     **Prediction**: For a new point, check which side of the line it falls on.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Optimal separating hyperplane
   prompt: How is the optimal separating hyperplane determined in SVMs?
-  answer: |
-    The optimal separating hyperplane is **maximally distant from both classes**.
+  answer: 'The optimal separating hyperplane is **maximally distant from both classes**.
+
 
     - The points on the margin are called **support vectors**
-    - Moving any other points (not support vectors) won't change the margin
+
+    - Moving any other points (not support vectors) won''t change the margin
+
     - The best line has the largest margin
 
-    This is important for classifying new data points without bias toward either class.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    This is important for classifying new data points without bias toward either class.
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Distance to hyperplane formula
   prompt: What is the formula for distance between a point and a hyperplane in SVMs?
-  answer: |
-    For a point $\boldsymbol{x}$ and hyperplane $\boldsymbol{w}^T \boldsymbol{x} + w_0 = 0$:
+  answer: 'For a point $\boldsymbol{x}$ and hyperplane $\boldsymbol{w}^T \boldsymbol{x}
+    + w_0 = 0$:
 
-    $$\text{Distance} = \frac{1}{||\boldsymbol{w}||} |\boldsymbol{w}^T \boldsymbol{x} + w_0|$$
+
+    $$\text{Distance} = \frac{1}{||\boldsymbol{w}||} |\boldsymbol{w}^T \boldsymbol{x}
+    + w_0|$$
+
 
     This formula allows us to:
 
-    - Measure the distance from any point to the decision boundary
-    - Determine the margin's value
-    - Find the optimal separating hyperplane
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    - Measure the distance from any point to the decision boundary
+
+    - Determine the margin''s value
+
+    - Find the optimal separating hyperplane
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: SVM margin calculation
   prompt: How is the margin calculated in SVMs?
-  answer: |
-    The margin $m$ is the distance from the support vectors to the hyperplane:
+  answer: 'The margin $m$ is the distance from the support vectors to the hyperplane:
+
 
     $$m = \frac{2}{||\boldsymbol{w}||}$$
 
+
     **Derivation**:
 
-    - For points on the hyperplanes $\boldsymbol{w}^T \boldsymbol{x} + w_0 = \pm 1$
-    - Apply normalization constraint: $\min_i |\boldsymbol{w}^T \boldsymbol{x}_i + w_0| = 1$
-    - Distance from each hyperplane to decision boundary is $\pm \frac{1}{||\boldsymbol{w}||}$
-    - Total margin is twice this distance
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    - For points on the hyperplanes $\boldsymbol{w}^T \boldsymbol{x} + w_0 = \pm 1$
+
+    - Apply normalization constraint: $\min_i |\boldsymbol{w}^T \boldsymbol{x}_i +
+    w_0| = 1$
+
+    - Distance from each hyperplane to decision boundary is $\pm \frac{1}{||\boldsymbol{w}||}$
+
+    - Total margin is twice this distance
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Maximum margin and capacity
   prompt: How does maximizing the margin relate to minimizing model capacity in SVMs?
-  answer: |
-    - The margin is $\frac{2}{||\boldsymbol{w}||}$
-    - Minimizing $\frac{||\boldsymbol{w}||^2}{2}$ is equivalent to maximizing the margin
+  answer: '- The margin is $\frac{2}{||\boldsymbol{w}||}$
+
+    - Minimizing $\frac{||\boldsymbol{w}||^2}{2}$ is equivalent to maximizing the
+    margin
+
     - Analysis shows minimizing $||\boldsymbol{w}||^2$ leads to lower model capacity
 
-    **Result**: When data are linearly separable (training error = 0), maximizing the margin minimizes the capacity, which minimizes test error.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    **Result**: When data are linearly separable (training error = 0), maximizing
+    the margin minimizes the capacity, which minimizes test error.
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: SVM optimization problem
   prompt: What is the formal optimization problem for SVMs?
-  answer: |
-    $$\min_{\boldsymbol{w}} ||\boldsymbol{w}||^2$$
+  answer: '$$\min_{\boldsymbol{w}} ||\boldsymbol{w}||^2$$
+
 
     subject to:
+
 
     $$y_i (\boldsymbol{w}^T \boldsymbol{x}_i + w_0) \geq 1 \text{ for all } i$$
 
+
     This is a **quadratic optimization problem** that:
 
-    - Maximizes the margin
-    - Ensures linear separability (all points correctly classified)
-    - Applies normalization constraint
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    - Maximizes the margin
+
+    - Ensures linear separability (all points correctly classified)
+
+    - Applies normalization constraint
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: SVM predictions
   prompt: How are predictions made with a trained SVM?
-  answer: |
-    For a new data point $\boldsymbol{x}_i$, check the sign:
+  answer: 'For a new data point $\boldsymbol{x}_i$, check the sign:
+
 
     $$\hat{y}_i = \text{sign}(\boldsymbol{w}^T \boldsymbol{x}_i + w_0)$$
 
-    - Predict class 1 if $\boldsymbol{w}^T \boldsymbol{x}_i + w_0$ is positive
-    - Predict class -1 otherwise
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    - Predict class 1 if $\boldsymbol{w}^T \boldsymbol{x}_i + w_0$ is positive
+
+    - Predict class -1 otherwise
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Soft margin motivation
   prompt: Why are soft margins needed in SVMs?
-  answer: |
-    Data often exhibit "fuzziness" and overlap, making perfect linear separation impossible.
+  answer: 'Data often exhibit "fuzziness" and overlap, making perfect linear separation
+    impossible.
+
 
     **Solution**: Soft margins that:
 
+
     - Encourage a large margin
+
     - Penalize misclassified points
+
     - Apply larger penalty for larger errors
 
-    This allows SVMs to work with real-world data that isn't perfectly separable.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    This allows SVMs to work with real-world data that isn''t perfectly separable.
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Slack variables in SVMs
   prompt: What are slack variables and how do they enable soft margins?
-  answer: |
-    Introduce a "slack" variable $\xi_i \geq 0$ for each training example.
+  answer: 'Introduce a "slack" variable $\xi_i \geq 0$ for each training example.
+
 
     **New optimization problem**:
 
+
     $$\min_{\boldsymbol{w}} ||\boldsymbol{w}||^2 + C \sum_{i=1}^{n} \xi_i$$
+
 
     subject to:
 
-    - $\boldsymbol{w}^T \boldsymbol{x}_i + w_0 \geq 1 - \xi_i$ for all $i$ with $y_i = 1$
-    - $\boldsymbol{w}^T \boldsymbol{x}_i + w_0 \leq -1 + \xi_i$ for all $i$ with $y_i = -1$
+
+    - $\boldsymbol{w}^T \boldsymbol{x}_i + w_0 \geq 1 - \xi_i$ for all $i$ with $y_i
+    = 1$
+
+    - $\boldsymbol{w}^T \boldsymbol{x}_i + w_0 \leq -1 + \xi_i$ for all $i$ with $y_i
+    = -1$
+
 
     The slack variables provide additional flexibility for misclassified points.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Regularization parameter C in SVMs
   prompt: How does the regularization hyperparameter C control SVM behavior?
-  answer: |
-    **Small C**: Softer margin
+  answer: '**Small C**: Softer margin
+
 
     - Larger margin
+
     - Classification mistakes given less importance
+
     - Focus more on maximizing the margin
+
 
     **Large C**: Harder margin
 
+
     - Smaller margin
+
     - Focus more on avoiding misclassification
+
     - Margin kept small to reduce errors
 
-    C controls the trade-off between margin size and classification accuracy.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    C controls the trade-off between margin size and classification accuracy.
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Non-linear SVM approach
   prompt: How do SVMs handle non-linearly separable data?
-  answer: |
-    Three-step approach using kernels:
+  answer: 'Three-step approach using kernels:
+
 
     1. **Embed** the data in a higher dimensional space
+
     2. **Apply** SVM in the higher dimensional space
+
     3. **Invert** the embedding back to original space
 
-    Example: Map 2D points $(x,y)$ to 3D points $(x,y,x^2+y^2)$ to transform circles into layers.
+
+    Example: Map 2D points $(x,y)$ to 3D points $(x,y,x^2+y^2)$ to transform circles
+    into layers.
+
 
     Can do all three steps in one go using a **kernel**.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Kernel function definition
   prompt: What is a kernel function and what is the kernel trick?
-  answer: |
-    **Kernel function**: Gives the inner product between two points in a transformed space
+  answer: '**Kernel function**: Gives the inner product between two points in a transformed
+    space
 
-    $$k(\boldsymbol{x}, \boldsymbol{x}') = \phi(\boldsymbol{x})^T \phi(\boldsymbol{x}')$$
 
-    **Kernel trick**: Calculate the inner product and then do transformations, instead of calculating new features $\phi$ and then taking the inner product.
+    $$k(\boldsymbol{x}, \boldsymbol{x}'') = \phi(\boldsymbol{x})^T \phi(\boldsymbol{x}'')$$
 
-    Example: Directly compute $k(\boldsymbol{x}, \boldsymbol{x}') = (\boldsymbol{x} \cdot \boldsymbol{x}')^2$ rather than explicitly creating quadratic features.
+
+    **Kernel trick**: Calculate the inner product and then do transformations, instead
+    of calculating new features $\phi$ and then taking the inner product.
+
+
+    Example: Directly compute $k(\boldsymbol{x}, \boldsymbol{x}'') = (\boldsymbol{x}
+    \cdot \boldsymbol{x}'')^2$ rather than explicitly creating quadratic features.
+
 
     **Advantage**: Much more efficient, especially in many dimensions.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: Polynomial kernel
   prompt: What is the polynomial kernel and how does the kernel trick apply to it?
-  answer: |
-    **Polynomial kernel of order $d$**:
+  answer: '**Polynomial kernel of order $d$**:
 
-    $$k(\boldsymbol{x}, \boldsymbol{x}') = (\boldsymbol{x} \cdot \boldsymbol{x}')^d$$
+
+    $$k(\boldsymbol{x}, \boldsymbol{x}'') = (\boldsymbol{x} \cdot \boldsymbol{x}'')^d$$
+
 
     **Example** (2D to 3D, $d=2$):
 
+
     Explicit mapping:
 
-    $$\phi((x_1, x_2)) \cdot \phi((x_1', x_2')) = x_1^2x_1'^2 + 2x_1x_1'x_2x_2' + x_2^2x_2'^2$$
+
+    $$\phi((x_1, x_2)) \cdot \phi((x_1'', x_2'')) = x_1^2x_1''^2 + 2x_1x_1''x_2x_2''
+    + x_2^2x_2''^2$$
+
 
     Kernel trick:
 
-    $$k(\boldsymbol{x}, \boldsymbol{x}') = (x_1x_1' + x_2x_2')^2 = x_1^2x_1'^2 + x_2^2x_2'^2 + 2x_1x_1'x_2x_2'$$
+
+    $$k(\boldsymbol{x}, \boldsymbol{x}'') = (x_1x_1'' + x_2x_2'')^2 = x_1^2x_1''^2
+    + x_2^2x_2''^2 + 2x_1x_1''x_2x_2''$$
+
 
     Much more efficient — no need to calculate the features explicitly!
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: RBF kernel
   prompt: What is the Radial Basis Function (RBF) kernel and what are its properties?
-  answer: |
-    $$k(\boldsymbol{x}, \boldsymbol{x}') = \exp\left(-\gamma ||\boldsymbol{x} - \boldsymbol{x}'||^2\right)$$
+  answer: '$$k(\boldsymbol{x}, \boldsymbol{x}'') = \exp\left(-\gamma ||\boldsymbol{x}
+    - \boldsymbol{x}''||^2\right)$$
+
 
     **Properties**:
 
+
     - One of the most popular and powerful kernels
+
     - Can be visualized as a "bump" (Gaussian) around each data point
+
     - The spread controlled by $\gamma$
+
     - Feature map has **infinite dimensions** (cannot calculate directly)
+
     - More expressive than polynomial kernel
 
-    Often preferred due to enhanced expressive capabilities.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    Often preferred due to enhanced expressive capabilities.
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: SVM strengths
   prompt: What are the main strengths of Support Vector Machines?
-  answer: |
-    1. **Good for high dimensional spaces**: Applicable to complex problem domains
-    2. **One unique solution**: Quadratic optimization guarantees stability
-    3. **Versatile thanks to kernels**: Handles nonlinear data effectively
-    4. **Very strong performance**: Robust predictive capabilities
-    5. **Probabilistic extensions**: Can provide confidence estimates
-    6. **Feature importance**: Available with linear kernel
-  reference: 07-svm.md
+  answer: '1. **Good for high dimensional spaces**: Applicable to complex problem
+    domains
 
-- topic: Supervised Classification
+    2. **One unique solution**: Quadratic optimization guarantees stability
+
+    3. **Versatile thanks to kernels**: Handles nonlinear data effectively
+
+    4. **Very strong performance**: Robust predictive capabilities
+
+    5. **Probabilistic extensions**: Can provide confidence estimates
+
+    6. **Feature importance**: Available with linear kernel
+
+    '
+  reference: 07-svm.md
+- topic: SVM
   title: SVM weaknesses
   prompt: What are the main limitations of Support Vector Machines?
-  answer: |
-    1. **Quadratic optimization can be expensive**: Especially with large datasets
-    2. **Binary classification only**: Requires extensions (one-vs-all, one-vs-one) for multi-class
+  answer: '1. **Quadratic optimization can be expensive**: Especially with large datasets
+
+    2. **Binary classification only**: Requires extensions (one-vs-all, one-vs-one)
+    for multi-class
+
     3. **Hyperparameter tuning required**: Must choose parameter $C$ and kernel type
-    4. **Probability estimates not direct**: Often need expensive cross-validation for reliable probabilities
+
+    4. **Probability estimates not direct**: Often need expensive cross-validation
+    for reliable probabilities
+
 
     Understanding these limitations helps in choosing when to use SVMs.
-  reference: 07-svm.md
 
-- topic: Supervised Classification
+    '
+  reference: 07-svm.md
+- topic: ROC Curves
   title: ROC curve definition
-  prompt: What is a Receiver Operating Characteristic (ROC) curve and what does it plot?
-  answer: |
-    The ROC curve is a visual representation composed by plotting a model's **True-Positive Rate (TPR)** versus its **False-Positive Rate (FPR)** across all possible classification thresholds.
+  prompt: What is a Receiver Operating Characteristic (ROC) curve and what does it
+    plot?
+  answer: 'The ROC curve is a visual representation composed by plotting a model''s
+    **True-Positive Rate (TPR)** versus its **False-Positive Rate (FPR)** across all
+    possible classification thresholds.
+
 
     **Where**:
 
-    - **TPR**: The probability that a positive sample is correctly predicted in the positive class
-    - **FPR**: The probability that a negative sample is incorrectly predicted in the positive class
 
-    The curve provides a convenient visual of classifier performance as a function of the classification threshold.
+    - **TPR**: The probability that a positive sample is correctly predicted in the
+    positive class
+
+    - **FPR**: The probability that a negative sample is incorrectly predicted in
+    the positive class
+
+
+    The curve provides a convenient visual of classifier performance as a function
+    of the classification threshold.
+
+    '
   reference: 09-roc-curves.md
-
-- topic: Supervised Classification
+- topic: ROC Curves
   title: ROC curve purpose
   prompt: What is the goal when analyzing a ROC curve?
-  answer: |
-    The goal is to find the classification threshold that **best maximizes true positives while minimizing false positives**.
+  answer: 'The goal is to find the classification threshold that **best maximizes
+    true positives while minimizing false positives**.
+
 
     The ROC curve allows us to:
 
-    - Understand how performance changes as a function of the model's classification threshold
-    - Compare the performance of different classifiers visually
-    - Select an optimal classification threshold for the model
-  reference: 09-roc-curves.md
 
-- topic: Supervised Classification
+    - Understand how performance changes as a function of the model''s classification
+    threshold
+
+    - Compare the performance of different classifiers visually
+
+    - Select an optimal classification threshold for the model
+
+    '
+  reference: 09-roc-curves.md
+- topic: ROC Curves
   title: Interpreting ROC curves
   prompt: What makes a good ROC curve and what does a diagonal line indicate?
-  answer: |
-    **Perfect classifier**: Hugs along the outer-left and top of the chart
+  answer: '**Perfect classifier**: Hugs along the outer-left and top of the chart
+
 
     - Implies TPR = 1 regardless of FPR
+
     - Maximizes true positives while minimizing false positives
+
 
     **Diagonal line**: Indicates TPR = FPR for every classification threshold
 
-    - The classifier is making **random guesses**
-    - No better than chance
-    - This is the baseline we must beat
-  reference: 09-roc-curves.md
 
-- topic: Supervised Classification
+    - The classifier is making **random guesses**
+
+    - No better than chance
+
+    - This is the baseline we must beat
+
+    '
+  reference: 09-roc-curves.md
+- topic: ROC Curves
   title: Training vs validation ROC curves
   prompt: What does the gap between training and validation ROC curves indicate?
-  answer: |
-    A large gap between training and validation AUC signals **overfitting**.
+  answer: 'A large gap between training and validation AUC signals **overfitting**.
+
 
     **Training curve** (hugging top-left, AUC ≈ 1.00):
 
+
     - Model memorizes training data perfectly
+
     - Every positive sample ranked above every negative one
+
 
     **Validation curve** (lower, AUC typically 0.70-0.85):
 
+
     - Honest measure of generalization
-    - Model has learned noise from training set that doesn't transfer to unseen data
 
-    **Solution**: Constrain the model (e.g., max_depth, min_samples_leaf) or use ensemble methods like Random Forest.
+    - Model has learned noise from training set that doesn''t transfer to unseen data
+
+
+    **Solution**: Constrain the model (e.g., max_depth, min_samples_leaf) or use ensemble
+    methods like Random Forest.
+
+    '
   reference: 09-roc-curves.md
-
-- topic: Supervised Classification
+- topic: ROC Curves
   title: AUC interpretation
   prompt: What does the Area Under the ROC Curve (AUC) represent?
-  answer: |
-    AUC quantifies the overall predictive power of a classifier:
+  answer: 'AUC quantifies the overall predictive power of a classifier:
+
 
     - **AUC = 1.0**: Perfect classifier
+
     - **AUC = 0.5**: Random classifier (no predictive power)
+
     - **AUC between 0.7-0.85**: Typical good performance on validation data
 
-    **Validation AUC** is the number that matters for deployment — it represents how well the model will perform on data it has never seen.
-  reference: 09-roc-curves.md
 
-- topic: Supervised Classification
+    **Validation AUC** is the number that matters for deployment — it represents how
+    well the model will perform on data it has never seen.
+
+    '
+  reference: 09-roc-curves.md
+- topic: Fundamentals
   title: Class imbalance handling
-  prompt: Why is class_weight="balanced" useful in decision tree classifiers for imbalanced datasets?
-  answer: |
-    When a dataset is imbalanced (one class more prevalent than another), the model may bias toward the majority class.
+  prompt: Why is class_weight="balanced" useful in decision tree classifiers for imbalanced
+    datasets?
+  answer: 'When a dataset is imbalanced (one class more prevalent than another), the
+    model may bias toward the majority class.
+
 
     **Solution**: Use `class_weight="balanced"` parameter
 
+
     - Gives more weight to the minority class
-    - Prevents the model from achieving high accuracy by simply predicting the majority class
+
+    - Prevents the model from achieving high accuracy by simply predicting the majority
+    class
+
     - Ensures both classes are adequately represented in the learning process
 
-    This is essential when classes have different proportions (e.g., 85% vs 15%).
-  reference: assignments/asteroids.ipynb
 
-- topic: Supervised Classification
+    This is essential when classes have different proportions (e.g., 85% vs 15%).
+
+    '
+  reference: assignments/asteroids.ipynb
+- topic: Cross Validation
   title: Stratified splitting importance
   prompt: Why should stratify=y be used in train_test_split for classification problems?
-  answer: |
-    **Stratified splitting** ensures each split has similar distribution of the target variable.
+  answer: '**Stratified splitting** ensures each split has similar distribution of
+    the target variable.
+
 
     ```python
+
     train_test_split(X, y, stratify=y, test_size=0.25, random_state=8)
+
     ```
+
 
     **Benefits**:
 
-    - Each set (train/test) is representative of the overall dataset
-    - Particularly important for imbalanced datasets
-    - Prevents one split having disproportionate class distribution
-    - Leads to more reliable performance estimates
-  reference: assignments/asteroids.ipynb
 
-- topic: Supervised Classification
+    - Each set (train/test) is representative of the overall dataset
+
+    - Particularly important for imbalanced datasets
+
+    - Prevents one split having disproportionate class distribution
+
+    - Leads to more reliable performance estimates
+
+    '
+  reference: assignments/asteroids.ipynb
+- topic: Fundamentals
   title: Min-Max feature scaling
   prompt: What is Min-Max feature scaling and why is it important in machine learning?
-  answer: |
-    **Min-Max scaling** brings all features to a pre-defined range (typically [0,1]).
+  answer: '**Min-Max scaling** brings all features to a pre-defined range (typically
+    [0,1]).
+
 
     **Purpose**:
 
+
     - Brings all features to the same scale
+
     - Avoids having some features being more dominant than others
+
     - Standard procedure before training most models
+
 
     **Implementation**:
 
+
     ```python
+
     from sklearn.preprocessing import MinMaxScaler
+
     scaler = MinMaxScaler()
+
     X_scaled = scaler.fit_transform(X_train)
+
     ```
+
 
     **Critical**: Only fit on training set to avoid data leakage.
-  reference: assignments/banknote_counterfeit_classification.ipynb
 
-- topic: Supervised Classification
+    '
+  reference: assignments/banknote_counterfeit_classification.ipynb
+- topic: Fundamentals
   title: Feature scaling workflow
-  prompt: What is the correct workflow for applying feature scaling to train and test sets?
-  answer: |
-    **Correct workflow**:
+  prompt: What is the correct workflow for applying feature scaling to train and test
+    sets?
+  answer: '**Correct workflow**:
+
 
     1. Fit the scaler on **training set only**
+
     2. Transform the training set using fitted scaler
+
     3. Transform the test set using **same fitted scaler** (without refitting)
 
+
     ```python
+
     scaler = MinMaxScaler()
+
     X_train_scaled = scaler.fit_transform(X_train)
+
     X_test_scaled = scaler.transform(X_test)  # No fit!
+
     ```
 
-    **Critical**: Never refit the scaler on test set — this would leak information from test into training process.
-  reference: assignments/banknote_counterfeit_classification.ipynb
 
-- topic: Supervised Classification
+    **Critical**: Never refit the scaler on test set — this would leak information
+    from test into training process.
+
+    '
+  reference: assignments/banknote_counterfeit_classification.ipynb
+- topic: Fundamentals
   title: Wavelet transformation features
   prompt: What types of features can be extracted from images using Wavelet Transformation?
-  answer: |
-    **Wavelet Transformation (WT)** extracts frequency-based features from images:
+  answer: '**Wavelet Transformation (WT)** extracts frequency-based features from
+    images:
+
 
     - **Variance**: Spread of wavelet coefficients
+
     - **Skewness**: Asymmetry of coefficient distribution
+
     - **Kurtosis**: Tail heaviness of coefficient distribution
+
     - **Entropy**: Randomness/complexity measure
 
-    **Application**: These features capture object-specific characteristics useful for classification (e.g., distinguishing genuine from counterfeit banknotes based on unique printing patterns).
-  reference: assignments/banknote_counterfeit_classification.ipynb
 
-- topic: Supervised Classification
+    **Application**: These features capture object-specific characteristics useful
+    for classification (e.g., distinguishing genuine from counterfeit banknotes based
+    on unique printing patterns).
+
+    '
+  reference: assignments/banknote_counterfeit_classification.ipynb
+- topic: ROC Curves
   title: ROC vs Precision-Recall curves
   prompt: When should ROC curves vs Precision-Recall curves be used?
-  answer: |
-    **ROC Curves**: Appropriate when observations are **balanced** between each class
+  answer: '**ROC Curves**: Appropriate when observations are **balanced** between
+    each class
+
 
     - Summarize trade-off between TPR and FPR
+
     - Work well when classes have similar proportions
+
 
     **Precision-Recall Curves**: Appropriate for **imbalanced** datasets
 
+
     - Focus on performance on positive class
+
     - More informative when one class is rare
 
-    Choose based on dataset characteristics and what matters most for the application.
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    Choose based on dataset characteristics and what matters most for the application.
+
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Logistic Regression
   title: Decision boundary in logistic regression
   prompt: What is a decision boundary in logistic regression and how is it calculated?
-  answer: |
-    A **decision boundary** is the threshold that separates different class predictions.
+  answer: 'A **decision boundary** is the threshold that separates different class
+    predictions.
+
 
     For a single feature model with weight $w$ and bias $b$:
 
+
     $$w \cdot x - b = 0$$
+
 
     Solving for $x$:
 
+
     $$x_{threshold} = \frac{b}{w}$$
 
-    **Interpretation**: The model decides one class if the feature value is below this threshold, and the other class if above it.
+
+    **Interpretation**: The model decides one class if the feature value is below
+    this threshold, and the other class if above it.
+
 
     Samples on opposite sides of the boundary receive different predictions.
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Fundamentals
   title: Z-score normalization
   prompt: What is z-score normalization and why is it used in logistic regression?
-  answer: |
-    **Z-score normalization** (standardization) transforms features to have mean 0 and standard deviation 1:
+  answer: '**Z-score normalization** (standardization) transforms features to have
+    mean 0 and standard deviation 1:
+
 
     $$X_{norm} = \frac{X - \mu}{\sigma}$$
 
+
     ```python
+
     X_norm = (X - X.mean()) / X.std()
+
     ```
+
 
     **Purpose**:
 
-    - Optimization algorithms perform better with normalized inputs
-    - Prevents features with larger scales from dominating
-    - Improves convergence speed in gradient descent
-    - Standard practice for logistic regression and neural networks
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    - Optimization algorithms perform better with normalized inputs
+
+    - Prevents features with larger scales from dominating
+
+    - Improves convergence speed in gradient descent
+
+    - Standard practice for logistic regression and neural networks
+
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Fundamentals
   title: False positive and false negative rates
-  prompt: How are false positive rate (FPR) and false negative rate (FNR) calculated from a confusion matrix?
-  answer: |
-    From a confusion matrix with True Positives (TP), True Negatives (TN), False Positives (FP), and False Negatives (FN):
+  prompt: How are false positive rate (FPR) and false negative rate (FNR) calculated
+    from a confusion matrix?
+  answer: 'From a confusion matrix with True Positives (TP), True Negatives (TN),
+    False Positives (FP), and False Negatives (FN):
+
 
     **False Positive Rate**:
 
+
     $$FPR = \frac{FP}{FP + TN} = \frac{\text{False Positives}}{\text{All Actual Negatives}}$$
+
 
     **False Negative Rate**:
 
+
     $$FNR = \frac{FN}{FN + TP} = \frac{\text{False Negatives}}{\text{All Actual Positives}}$$
 
-    These rates can be very different, especially with imbalanced datasets.
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    These rates can be very different, especially with imbalanced datasets.
+
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Model Evaluation
   title: Imbalanced data confusion matrix
-  prompt: Why might false positive and false negative rates differ significantly in imbalanced datasets?
-  answer: |
-    With imbalanced datasets (e.g., 85% healthy, 15% unhealthy):
+  prompt: Why might false positive and false negative rates differ significantly in
+    imbalanced datasets?
+  answer: 'With imbalanced datasets (e.g., 85% healthy, 15% unhealthy):
+
 
     **Challenge**: Small number of samples from minority class to learn from
 
+
     **Result**: The model may achieve:
 
+
     - Low false positive rate (correctly identifying majority class)
+
     - High false negative rate (failing to identify minority class)
+
 
     Or vice versa, depending on the decision threshold.
 
-    **Implication**: The model's errors are asymmetric because it has more training examples from the majority class.
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    **Implication**: The model''s errors are asymmetric because it has more training
+    examples from the majority class.
+
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Model Evaluation
   title: Balanced error decision threshold
-  prompt: How can you find a decision threshold that balances false positive and false negative rates?
-  answer: |
-    Use the ROC curve to find where FPR and FNR are equal:
+  prompt: How can you find a decision threshold that balances false positive and false
+    negative rates?
+  answer: 'Use the ROC curve to find where FPR and FNR are equal:
+
 
     1. Find the index where TPR + FPR ≈ 1 (equivalently, where FNR ≤ FPR)
+
     2. Use the corresponding threshold from the ROC curve output
 
+
     ```python
+
     fpr, tpr, thresholds = roc_curve(y_true, y_prob)
+
     index = np.where(fpr + tpr >= 1)[0][0]
+
     balanced_threshold = thresholds[index]
+
     ```
 
-    **Note**: This threshold is often different from 0.5 (50%) and depends on class distribution and costs of different error types.
-  reference: assignments/logistic-regression-blood-predictions.ipynb
 
-- topic: Supervised Classification
+    **Note**: This threshold is often different from 0.5 (50%) and depends on class
+    distribution and costs of different error types.
+
+    '
+  reference: assignments/logistic-regression-blood-predictions.ipynb
+- topic: Fundamentals
   title: Decision threshold selection factors
   prompt: What factors should influence the choice of decision threshold in classification?
-  answer: |
-    The optimal decision threshold depends on:
-
-    1. **Cost of errors**: Which is worse — false positives or false negatives?
-
-       - Medical diagnosis: False negatives (missing disease) may be worse
-       - Spam filtering: False positives (blocking legitimate email) may be worse
-
-    2. **Class imbalance**: Imbalanced datasets may require threshold adjustment
-
-    3. **Business objectives**: Domain requirements and acceptable error rates
-
-    4. **Balanced vs optimized**: Choose between equal error rates or optimizing for specific metric
-
-    The default 0.5 threshold is often not optimal for real-world applications.
+  answer: "The optimal decision threshold depends on:\n\n1. **Cost of errors**: Which\
+    \ is worse — false positives or false negatives?\n\n   - Medical diagnosis: False\
+    \ negatives (missing disease) may be worse\n   - Spam filtering: False positives\
+    \ (blocking legitimate email) may be worse\n\n2. **Class imbalance**: Imbalanced\
+    \ datasets may require threshold adjustment\n\n3. **Business objectives**: Domain\
+    \ requirements and acceptable error rates\n\n4. **Balanced vs optimized**: Choose\
+    \ between equal error rates or optimizing for specific metric\n\nThe default 0.5\
+    \ threshold is often not optimal for real-world applications.\n"
   reference: assignments/logistic-regression-blood-predictions.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: Logistic regression gradient descent
-  prompt: What are the key components needed to implement gradient descent for logistic regression?
-  answer: |
-    **Required components**:
-
-    1. **Sigmoid function**: $\sigma(u) = \frac{1}{1 + e^{-u}}$
-
-    2. **Gradient function**: Computes direction to update weights
-
-       $$\nabla = \frac{X^T (y_{prob} - y)}{n}$$
-
-    3. **Loss function**: Cross-entropy loss to measure error
-
-       $$L = -\frac{1}{n} \sum [y \log(y_{prob}) + (1-y) \log(1-y_{prob})]$$
-
-    4. **Weight update**: $w_{new} = w_{old} - \alpha \cdot \nabla$
-
-    5. **Learning rate** ($\alpha$): Controls step size (e.g., 2.0)
-
-    6. **Iterations**: Number of gradient descent steps (e.g., 200)
+  prompt: What are the key components needed to implement gradient descent for logistic
+    regression?
+  answer: "**Required components**:\n\n1. **Sigmoid function**: $\\sigma(u) = \\frac{1}{1\
+    \ + e^{-u}}$\n\n2. **Gradient function**: Computes direction to update weights\n\
+    \n   $$\\nabla = \\frac{X^T (y_{prob} - y)}{n}$$\n\n3. **Loss function**: Cross-entropy\
+    \ loss to measure error\n\n   $$L = -\\frac{1}{n} \\sum [y \\log(y_{prob}) + (1-y)\
+    \ \\log(1-y_{prob})]$$\n\n4. **Weight update**: $w_{new} = w_{old} - \\alpha \\\
+    cdot \\nabla$\n\n5. **Learning rate** ($\\alpha$): Controls step size (e.g., 2.0)\n\
+    \n6. **Iterations**: Number of gradient descent steps (e.g., 200)\n"
   reference: assignments/logistic-regression-blood-predictions.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: Maximum likelihood estimation for logistic regression
-  prompt: What is maximum likelihood estimation (MLE) and how does it differ from linear regression?
-  answer: |
-    **MLE** maximizes the likelihood of observing the training data given the model.
+  prompt: What is maximum likelihood estimation (MLE) and how does it differ from
+    linear regression?
+  answer: '**MLE** maximizes the likelihood of observing the training data given the
+    model.
+
 
     **Difference from linear regression**:
 
+
     - **Linear regression**: Minimizes sum of squared residuals (SSE)
+
     - **Logistic regression**: Maximizes likelihood of data given model parameters
 
-    **Likelihood** quantifies how probable the ground-truth data is, given the model's predictions.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    **Likelihood** quantifies how probable the ground-truth data is, given the model''s
+    predictions.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Fundamentals
   title: Likelihood calculation for binary classification
-  prompt: How is the likelihood calculated for a single observation in binary logistic regression?
-  answer: |
-    For observation $n$ with prediction $p_n$ and true label $y_n$:
+  prompt: How is the likelihood calculated for a single observation in binary logistic
+    regression?
+  answer: 'For observation $n$ with prediction $p_n$ and true label $y_n$:
+
 
     $$\ell_n = p_n y_n + (1-p_n)(1-y_n)$$
 
+
     **Equivalent form**:
+
 
     $$\ell_n = p_n^{y_n} (1-p_n)^{(1-y_n)}$$
 
+
     **Total likelihood** (assuming independence):
+
 
     $$L = \prod_{n=1}^N \ell_n$$
 
-    Multiply individual likelihoods to get total likelihood across all observations.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    Multiply individual likelihoods to get total likelihood across all observations.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Logistic Regression
   title: Log-likelihood motivation
   prompt: Why do we use log-likelihood instead of likelihood in logistic regression?
-  answer: |
-    **Computational issues with likelihood**:
+  answer: '**Computational issues with likelihood**:
+
 
     - Multiplying many probabilities (between 0 and 1) causes $L \to 0$ as $N$ increases
+
     - Very small numbers cause numerical instability
+
 
     **Solution: Log-likelihood**
 
-    $$L_{\text{log-likelihood}} = \sum_{n=1}^N \left(\log(p_n)y_n + \log(1-p_n)(1-y_n) \right)$$
+
+    $$L_{\text{log-likelihood}} = \sum_{n=1}^N \left(\log(p_n)y_n + \log(1-p_n)(1-y_n)
+    \right)$$
+
 
     **Benefits**:
 
-    - Converts products to sums (using $\log(a \times b) = \log(a) + \log(b)$)
-    - Tends to $-\infty$ instead of 0, avoiding computational issues
-    - Maximizing log-likelihood is equivalent to maximizing likelihood
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    - Converts products to sums (using $\log(a \times b) = \log(a) + \log(b)$)
+
+    - Tends to $-\infty$ instead of 0, avoiding computational issues
+
+    - Maximizing log-likelihood is equivalent to maximizing likelihood
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Decision Trees
   title: Cross-entropy loss derivation
   prompt: How is cross-entropy loss derived from log-likelihood?
-  answer: |
-    **Cross-entropy loss** is the negative, normalized log-likelihood:
+  answer: '**Cross-entropy loss** is the negative, normalized log-likelihood:
+
 
     $$L_{\text{CEL}} = -\frac{1}{N} L_{\text{log-likelihood}}$$
 
+
     $$L_{\text{CEL}} = -\frac{1}{N} \sum_{n=1}^N \left(\log(p_n)y_n + \log(1-p_n)(1-y_n)\right)$$
+
 
     **Why this form**:
 
-    - Gradient descent minimizes loss (so use negative)
-    - Normalize by $N$ for consistency across dataset sizes
-    - Penalizes incorrect predictions more heavily as confidence decreases
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    - Gradient descent minimizes loss (so use negative)
+
+    - Normalize by $N$ for consistency across dataset sizes
+
+    - Penalizes incorrect predictions more heavily as confidence decreases
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Fundamentals
   title: Logarithmic penalty intuition
   prompt: Why does cross-entropy loss use logarithms to penalize predictions?
-  answer: |
-    **Logarithms create non-linear penalties**:
+  answer: '**Logarithms create non-linear penalties**:
+
 
     - As probability decreases, $\log(p)$ changes faster
+
     - $\log(1.0) = 0.0$ (perfect prediction, no penalty)
+
     - $\log(0.75) = -0.29$
+
     - $\log(0.5) = -0.69$
+
 
     **Why not linear**:
 
+
     - Linear: difference between 0.5→0.6 same as 0.8→0.9 (both 0.1)
+
     - Logarithmic: $\log(0.6)-\log(0.5) = 0.18$ but $\log(0.9)-\log(0.8) = 0.11$
 
-    **Result**: Worse predictions receive disproportionately higher penalties.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    **Result**: Worse predictions receive disproportionately higher penalties.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Logistic Regression
   title: Overconfidence in logistic regression
-  prompt: What is the overconfidence problem in logistic regression and how does it manifest?
-  answer: |
-    **Problem**: The more easily separable the classes, the larger the weights grow
+  prompt: What is the overconfidence problem in logistic regression and how does it
+    manifest?
+  answer: '**Problem**: The more easily separable the classes, the larger the weights
+    grow
+
 
     **Consequences**:
 
+
     - Large weights → extremely steep sigmoid curve
+
     - Steep curve → extremely sharp decision boundary
-    - Model becomes overconfident in predictions (probabilities very close to 0 or 1)
 
-    **Example**: If data is linearly separable, weights can grow indefinitely, creating step-function-like behavior.
+    - Model becomes overconfident in predictions (probabilities very close to 0 or
+    1)
 
-    **Issue**: Model doesn't generalize well; no room for uncertainty on new data.
+
+    **Example**: If data is linearly separable, weights can grow indefinitely, creating
+    step-function-like behavior.
+
+
+    **Issue**: Model doesn''t generalize well; no room for uncertainty on new data.
+
+    '
   reference: notebooks/advanced-logistic-regression.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: L1 vs L2 regularization in logistic regression
   prompt: What are the differences between L1 and L2 regularization in logistic regression?
-  answer: |
-    **L1 (Lasso) regularization**:
+  answer: '**L1 (Lasso) regularization**:
+
 
     - Adds sum of absolute values: $\lambda \sum |w_j|$
+
     - Can drive some weights to exactly zero
+
     - Performs feature selection
+
 
     **L2 (Ridge) regularization**:
 
+
     - Adds sum of squares: $\lambda \sum w_j^2$
+
     - Shrinks all weights but rarely to zero
+
     - Most commonly used in logistic regression
+
     - Has convenient mathematical properties
 
-    **Both**: Encourage smaller parameter values and prevent overfitting.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    **Both**: Encourage smaller parameter values and prevent overfitting.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Logistic Regression
   title: C parameter in sklearn logistic regression
-  prompt: How does the C parameter in sklearn's LogisticRegression relate to regularization strength?
-  answer: |
-    **C is the inverse of regularization strength** ($C = 1/\lambda$):
+  prompt: How does the C parameter in sklearn's LogisticRegression relate to regularization
+    strength?
+  answer: '**C is the inverse of regularization strength** ($C = 1/\lambda$):
+
 
     **Small C** (e.g., 1):
 
+
     - More regularization
+
     - Smaller, more constrained weights
+
     - Smoother decision boundary
+
 
     **Large C** (e.g., 10000):
 
+
     - Less regularization
+
     - Larger weights allowed
+
     - Steeper decision boundary
 
-    **Default**: `C=1.0` with L2 penalty
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    **Default**: `C=1.0` with L2 penalty
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Logistic Regression
   title: Multivariate logistic regression formula
   prompt: How does logistic regression extend from univariate to multivariate?
-  answer: |
-    **Single variable**:
+  answer: '**Single variable**:
+
 
     $$y = \sigma(w x + b)$$
 
+
     **Two variables**:
+
 
     $$y = \sigma(b + w_1 x_1 + w_2 x_2)$$
 
+
     **J variables**:
+
 
     $$y = \sigma(b + \sum_{j=1}^J w_j x_j)$$
 
-    Each feature gets its own weight; the model learns one weight per input feature.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    Each feature gets its own weight; the model learns one weight per input feature.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Logistic Regression
   title: Matrix notation for logistic regression
   prompt: How is multivariate logistic regression expressed in matrix notation?
-  answer: |
-    $$X = \begin{bmatrix}
-        1 & x_{1,1} & \dots & x_{1,J} \\
-        1 & x_{2,1} & \dots & x_{2,J} \\
-        \vdots & \vdots & \ddots & \vdots \\
-        1 & x_{n,1} & \dots & x_{n,J}
-    \end{bmatrix}, \quad \boldsymbol{\beta} = \begin{bmatrix} \beta_0 & \beta_1 & \dots & \beta_J \end{bmatrix}$$
-
-    $$\hat{y} = \sigma(X \boldsymbol{\beta})$$
-
-    Where:
-
-    - First column of $X$ is all 1s (for bias term)
-    - $\beta_0$ is the intercept (bias)
-    - $\beta_j$ is the weight for feature $j$
-    - Matrix multiplication handles all features at once
+  answer: "$$X = \\begin{bmatrix}\n    1 & x_{1,1} & \\dots & x_{1,J} \\\\\n    1\
+    \ & x_{2,1} & \\dots & x_{2,J} \\\\\n    \\vdots & \\vdots & \\ddots & \\vdots\
+    \ \\\\\n    1 & x_{n,1} & \\dots & x_{n,J}\n\\end{bmatrix}, \\quad \\boldsymbol{\\\
+    beta} = \\begin{bmatrix} \\beta_0 & \\beta_1 & \\dots & \\beta_J \\end{bmatrix}$$\n\
+    \n$$\\hat{y} = \\sigma(X \\boldsymbol{\\beta})$$\n\nWhere:\n\n- First column of\
+    \ $X$ is all 1s (for bias term)\n- $\\beta_0$ is the intercept (bias)\n- $\\beta_j$\
+    \ is the weight for feature $j$\n- Matrix multiplication handles all features\
+    \ at once\n"
   reference: notebooks/advanced-logistic-regression.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: Logistic regression assumptions
   prompt: What assumptions does logistic regression make about the data?
-  answer: |
-    Similar to linear regression:
+  answer: 'Similar to linear regression:
 
-    1. **Linear relationships**: Between $x$ and $\log(\text{odds})$ (sigmoid is non-linear, but underlying model is linear)
-    2. **Lack of multicollinearity**: Parameter estimates unstable with correlated features
+
+    1. **Linear relationships**: Between $x$ and $\log(\text{odds})$ (sigmoid is non-linear,
+    but underlying model is linear)
+
+    2. **Lack of multicollinearity**: Parameter estimates unstable with correlated
+    features
+
     3. **Homoscedasticity**: Error terms have fixed distribution with constant variance
+
     4. **Independence**: Observations generated independently (i.i.d.)
 
-    **In practice**: Often care more about predictive performance than strict adherence to assumptions.
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    **In practice**: Often care more about predictive performance than strict adherence
+    to assumptions.
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Model Evaluation
   title: Precision, recall, and F1 score formulas
   prompt: What are the formulas for precision, recall, and F1 score?
-  answer: |
-    Using TP (true positives), FP (false positives), FN (false negatives):
+  answer: 'Using TP (true positives), FP (false positives), FN (false negatives):
+
 
     **Precision**: Of predicted positives, how many are correct?
 
+
     $$\text{Precision} = \frac{TP}{TP + FP}$$
+
 
     **Recall**: Of actual positives, how many did we find?
 
+
     $$\text{Recall} = \frac{TP}{TP + FN}$$
+
 
     **F1 Score**: Harmonic mean of precision and recall
 
-    $$F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$
-  reference: notebooks/advanced-logistic-regression.ipynb
 
-- topic: Supervised Classification
+    $$F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} +
+    \text{Recall}}$$
+
+    '
+  reference: notebooks/advanced-logistic-regression.ipynb
+- topic: Feature Engineering
   title: Feature engineering for classification
   prompt: What are common feature engineering techniques for classification tasks?
-  answer: |
-    **From text features**:
+  answer: '**From text features**:
+
 
     - Length of text (e.g., `blurb_len`, `name_len`)
+
     - Word counts or character counts
+
 
     **From datetime features**:
 
+
     - Convert Unix timestamps to datetime
+
     - Create time deltas (e.g., `created_to_launched`, `created_to_deadline`)
+
     - Extract components (day, month, year, day of week)
+
 
     **From categorical features**:
 
+
     - Extract from nested JSON structures
+
     - One-hot encoding for categories
+
     - Lump rare categories into "Other"
+
 
     **Scaling**:
 
-    - Normalize numerical features (MinMaxScaler, StandardScaler)
-  reference: notebooks/classification_model_selection_practicle.ipynb
 
-- topic: Supervised Classification
+    - Normalize numerical features (MinMaxScaler, StandardScaler)
+
+    '
+  reference: notebooks/classification_model_selection_practicle.ipynb
+- topic: Feature Engineering
   title: Lumping categories technique
   prompt: What is category lumping and when should it be used?
-  answer: |
-    **Lumping** reduces high-cardinality categorical features by grouping rare categories.
+  answer: '**Lumping** reduces high-cardinality categorical features by grouping rare
+    categories.
+
 
     **Process**:
+
 
     1. Calculate frequency/percentage of each category
+
     2. Identify categories below a threshold (e.g., <0.5%)
+
     3. Replace rare categories with "Other"
+
     4. Then apply one-hot encoding
 
+
     **Benefits**:
+
 
     - Reduces dimensionality after one-hot encoding
+
     - Prevents overfitting on rare categories
+
     - Improves model generalization
 
-    **Example**: If you have 100 countries but 95% of data is from 10 countries, lump the rest.
-  reference: notebooks/classification_model_selection_practicle.ipynb
 
-- topic: Supervised Classification
+    **Example**: If you have 100 countries but 95% of data is from 10 countries, lump
+    the rest.
+
+    '
+  reference: notebooks/classification_model_selection_practicle.ipynb
+- topic: Feature Engineering
   title: Time delta features
   prompt: How can time-based features be engineered from datetime columns?
-  answer: |
-    **Process**:
+  answer: '**Process**:
+
 
     1. Convert Unix timestamps to datetime format
+
     2. Calculate differences between timestamps
+
     3. Convert to seconds for numerical feature
 
+
     ```python
-    df['created_at'] = pd.to_datetime(df['created_at'], unit='s')
-    df['launched_at'] = pd.to_datetime(df['launched_at'], unit='s')
-    df['created_to_launched'] = (df['launched_at'] - df['created_at']).dt.total_seconds()
+
+    df[''created_at''] = pd.to_datetime(df[''created_at''], unit=''s'')
+
+    df[''launched_at''] = pd.to_datetime(df[''launched_at''], unit=''s'')
+
+    df[''created_to_launched''] = (df[''launched_at''] - df[''created_at'']).dt.total_seconds()
+
     ```
+
 
     **Benefits**:
 
-    - Captures temporal relationships
-    - More informative than raw timestamps
-    - Examples: campaign duration, time to deadline, response time
-  reference: notebooks/classification_model_selection_practicle.ipynb
 
-- topic: Supervised Classification
+    - Captures temporal relationships
+
+    - More informative than raw timestamps
+
+    - Examples: campaign duration, time to deadline, response time
+
+    '
+  reference: notebooks/classification_model_selection_practicle.ipynb
+- topic: Feature Engineering
   title: Extracting nested JSON features
   prompt: How can features be extracted from JSON-like columns in pandas?
-  answer: |
-    **Problem**: Some columns contain JSON strings or dict objects
-
-    **Solution**: Create helper function to extract keys
-
-    ```python
-    def get_key(x, key):
-        if isinstance(x, dict):
-            return x.get(key)
-        if isinstance(x, str):
-            try:
-                return json.loads(x).get(key)
-            except json.JSONDecodeError:
-                return None
-        return None
-
-    df["category_name"] = df["category"].apply(get_key, key="name")
-    ```
-
-    Safely handles both dict and string representations of JSON.
+  answer: "**Problem**: Some columns contain JSON strings or dict objects\n\n**Solution**:\
+    \ Create helper function to extract keys\n\n```python\ndef get_key(x, key):\n\
+    \    if isinstance(x, dict):\n        return x.get(key)\n    if isinstance(x,\
+    \ str):\n        try:\n            return json.loads(x).get(key)\n        except\
+    \ json.JSONDecodeError:\n            return None\n    return None\n\ndf[\"category_name\"\
+    ] = df[\"category\"].apply(get_key, key=\"name\")\n```\n\nSafely handles both\
+    \ dict and string representations of JSON.\n"
   reference: notebooks/classification_model_selection_practicle.ipynb
-
-- topic: Supervised Classification
+- topic: Fundamentals
   title: Handling missing values in classification
-  prompt: What are different strategies for handling missing values in classification models?
-  answer: |
-    **Strategy selection depends on the data**:
-
-    1. **Imputation**: Fill with typical values (mean, median, mode)
-       - For numerical: use median
-       - For categorical: use mode
-
-    2. **Create null category**: For categorical features
-       - Missing values can be informative (e.g., income not disclosed)
-
-    3. **Ignore during splitting**: For decision trees
-       - Exclude missing values when calculating split gain
-
-    4. **Drop rows**: If very few missing values
-
-    5. **Drop columns**: If feature has too many missing values
-
-    6. **Fill with empty string**: For text features before extracting length
+  prompt: What are different strategies for handling missing values in classification
+    models?
+  answer: "**Strategy selection depends on the data**:\n\n1. **Imputation**: Fill\
+    \ with typical values (mean, median, mode)\n   - For numerical: use median\n \
+    \  - For categorical: use mode\n\n2. **Create null category**: For categorical\
+    \ features\n   - Missing values can be informative (e.g., income not disclosed)\n\
+    \n3. **Ignore during splitting**: For decision trees\n   - Exclude missing values\
+    \ when calculating split gain\n\n4. **Drop rows**: If very few missing values\n\
+    \n5. **Drop columns**: If feature has too many missing values\n\n6. **Fill with\
+    \ empty string**: For text features before extracting length\n"
   reference: notebooks/classification_model_selection_practicle.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: Sigmoid function definition
   prompt: What is the sigmoid function and what are its properties?
-  answer: |
-    The sigmoid function transforms any real-valued input to output between 0 and 1:
+  answer: 'The sigmoid function transforms any real-valued input to output between
+    0 and 1:
+
 
     $$\sigma(z) = \frac{1}{1 + e^{-z}}$$
 
+
     **Properties**:
 
+
     - Domain: $(-\infty, \infty)$
+
     - Range: $(0, 1)$
+
     - Flat around 0 and 1
+
     - Rises sharply in the middle
+
     - $\sigma(0) = 0.5$
 
-    Used in logistic regression to convert linear outputs to probabilities.
-  reference: notebooks/into-logistic-regression-slides.ipynb
 
-- topic: Supervised Classification
+    Used in logistic regression to convert linear outputs to probabilities.
+
+    '
+  reference: notebooks/into-logistic-regression-slides.ipynb
+- topic: Logistic Regression
   title: Logistic regression output interpretation
   prompt: How should the output of a logistic regression model be interpreted?
-  answer: |
-    The output $p$ represents the **probability** of the target being TRUE (class 1):
-
-    - $p = 1$: Model is certain the target is TRUE
-    - $p = 0$: Model is certain the target is FALSE
-    - $0 < p < 1$: Probability that target is TRUE
-      - Closer to 1 → more likely TRUE
-      - Closer to 0 → more likely FALSE
-
-    **Discrete predictions**: Apply threshold (typically 0.5)
-
-    $$\hat{y} = \begin{cases} 1 & p \geq 0.5 \\ 0 & p < 0.5 \end{cases}$$
+  answer: "The output $p$ represents the **probability** of the target being TRUE\
+    \ (class 1):\n\n- $p = 1$: Model is certain the target is TRUE\n- $p = 0$: Model\
+    \ is certain the target is FALSE\n- $0 < p < 1$: Probability that target is TRUE\n\
+    \  - Closer to 1 → more likely TRUE\n  - Closer to 0 → more likely FALSE\n\n**Discrete\
+    \ predictions**: Apply threshold (typically 0.5)\n\n$$\\hat{y} = \\begin{cases}\
+    \ 1 & p \\geq 0.5 \\\\ 0 & p < 0.5 \\end{cases}$$\n"
   reference: notebooks/into-logistic-regression-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Logistic Regression
   title: Logistic regression parameters
   prompt: What do the parameters w and b control in logistic regression?
-  answer: |
-    In $p = \sigma(wx + b)$:
+  answer: 'In $p = \sigma(wx + b)$:
+
 
     **Weight (w)**: Controls the steepness of the sigmoid curve
 
+
     - Larger $|w|$ → steeper curve → sharper decision boundary
+
     - Smaller $|w|$ → flatter curve → smoother decision boundary
+
 
     **Bias (b)**: Controls where the curve occurs
 
+
     - The ratio $-b/w$ determines where $\sigma(wx + b) = 0.5$
+
     - Shifts the decision boundary left or right
 
-    Both parameters are learned from training data to best fit the data.
-  reference: notebooks/into-logistic-regression-slides.ipynb
 
-- topic: Supervised Classification
+    Both parameters are learned from training data to best fit the data.
+
+    '
+  reference: notebooks/into-logistic-regression-slides.ipynb
+- topic: Fundamentals
   title: Why not use linear regression for classification
   prompt: Why is linear regression unsuitable for classification tasks?
-  answer: |
-    **Problems with linear regression for classification**:
-
-    1. **Unbounded predictions**: Can predict any value from $-\infty$ to $\infty$
-       - No clear interpretation for values like -0.9, 0.4, or 1000
-
-    2. **Inconsistent errors**: Error varies greatly within each class
-       - Want similar errors for all predictions in same class
-
-    3. **No probability interpretation**: Cannot interpret outputs as probabilities
-
-    **Solution**: Transform output using sigmoid function to bound predictions between 0 and 1.
+  answer: "**Problems with linear regression for classification**:\n\n1. **Unbounded\
+    \ predictions**: Can predict any value from $-\\infty$ to $\\infty$\n   - No clear\
+    \ interpretation for values like -0.9, 0.4, or 1000\n\n2. **Inconsistent errors**:\
+    \ Error varies greatly within each class\n   - Want similar errors for all predictions\
+    \ in same class\n\n3. **No probability interpretation**: Cannot interpret outputs\
+    \ as probabilities\n\n**Solution**: Transform output using sigmoid function to\
+    \ bound predictions between 0 and 1.\n"
   reference: notebooks/into-logistic-regression-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Fundamentals
   title: Probability predictions in sklearn
-  prompt: How do you get probability predictions from a sklearn logistic regression model?
-  answer: |
-    Use `.predict_proba()` method instead of `.predict()`:
+  prompt: How do you get probability predictions from a sklearn logistic regression
+    model?
+  answer: 'Use `.predict_proba()` method instead of `.predict()`:
+
 
     ```python
+
     model = LogisticRegression()
+
     model.fit(X_train, y_train)
 
+
     # Get probabilities for each class
+
     probabilities = model.predict_proba(X_test)
+
     # Returns array with [p(class 0), p(class 1)]
 
+
     # Get discrete predictions
+
     predictions = model.predict(X_test)
+
     ```
 
-    **Interpretation**: Probabilities indicate model confidence in predictions.
-  reference: notebooks/into-logistic-regression-slides.ipynb
 
-- topic: Supervised Classification
+    **Interpretation**: Probabilities indicate model confidence in predictions.
+
+    '
+  reference: notebooks/into-logistic-regression-slides.ipynb
+- topic: Cross Validation
   title: Stratified sampling importance
   prompt: Why is stratified sampling important when splitting classification data?
-  answer: |
-    **Stratified sampling** preserves the class distribution in train/test splits.
+  answer: '**Stratified sampling** preserves the class distribution in train/test
+    splits.
+
 
     **Example**: If dataset has 63% class 0 and 37% class 1:
 
-    - Without stratification: Random split might give 70% class 0 in training, 55% in test
+
+    - Without stratification: Random split might give 70% class 0 in training, 55%
+    in test
+
     - With stratification: Both sets maintain ~63%/37% split
 
+
     ```python
+
     train_test_split(X, y, stratify=y, test_size=0.2)
+
     ```
+
 
     **Benefits**:
 
-    - Ensures representative samples in both sets
-    - Critical for imbalanced datasets
-    - More reliable performance estimates
-  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
 
-- topic: Supervised Classification
+    - Ensures representative samples in both sets
+
+    - Critical for imbalanced datasets
+
+    - More reliable performance estimates
+
+    '
+  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
+- topic: KNN
   title: Why scale features for KNN
   prompt: Why is feature scaling critical for KNN performance?
-  answer: |
-    KNN uses **distance** between points to determine similarity.
+  answer: 'KNN uses **distance** between points to determine similarity.
+
 
     **Problem without scaling**:
 
+
     - Features with larger ranges dominate distance calculations
+
     - Example: Feature A (range 1-5) vs Feature B (range 400-290000)
+
     - Distances heavily weighted by Feature B
+
 
     **Solution**: Scale all features to same range (typically [0,1])
 
+
     ```python
+
     from sklearn.preprocessing import MinMaxScaler
+
     scaler = MinMaxScaler()
+
     X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)  # Don't refit!
+
+    X_test_scaled = scaler.transform(X_test)  # Don''t refit!
+
     ```
 
-    **Result**: Improved accuracy, fair feature weighting
-  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
 
-- topic: Supervised Classification
+    **Result**: Improved accuracy, fair feature weighting
+
+    '
+  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
+- topic: Fundamentals
   title: Data snooping problem
   prompt: What is data snooping and why is it a concern in model evaluation?
-  answer: |
-    **Data snooping** occurs when repeatedly testing models on the same test set.
+  answer: '**Data snooping** occurs when repeatedly testing models on the same test
+    set.
+
 
     **Problem**:
 
+
     - The more we run models on test data, the less trustworthy test scores become
+
     - Model selection becomes biased toward test set characteristics
+
     - Test performance no longer represents true out-of-sample performance
+
 
     **Solution**:
 
-    - Use validation set for hyperparameter tuning and model selection
-    - Reserve test set for final evaluation only (use once)
-    - Use cross-validation to avoid overfitting to specific data splits
-  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
 
-- topic: Supervised Classification
+    - Use validation set for hyperparameter tuning and model selection
+
+    - Reserve test set for final evaluation only (use once)
+
+    - Use cross-validation to avoid overfitting to specific data splits
+
+    '
+  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
+- topic: Model Evaluation
   title: Confusion matrix interpretation
   prompt: What information does a confusion matrix provide for classification?
-  answer: |
-    A confusion matrix shows the breakdown of predictions vs actual classes:
+  answer: 'A confusion matrix shows the breakdown of predictions vs actual classes:
+
 
     |                | Predicted Positive | Predicted Negative |
+
     |----------------|-------------------|-------------------|
+
     | Actual Positive | TP (True Positive) | FN (False Negative) |
+
     | Actual Negative | FP (False Positive) | TN (True Negative) |
+
 
     **Critical for healthcare/safety applications**:
 
+
     - **TP**: Disease present and detected
+
     - **FN**: Disease present but missed (Type II error)
+
     - **FP**: No disease but flagged (Type I error)
+
     - **TN**: No disease and correctly identified
 
-    ```python
-    from sklearn.metrics import confusion_matrix
-    cm = confusion_matrix(y_true, y_pred)
-    ```
-  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
 
-- topic: Supervised Classification
+    ```python
+
+    from sklearn.metrics import confusion_matrix
+
+    cm = confusion_matrix(y_true, y_pred)
+
+    ```
+
+    '
+  reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
+- topic: KNN
   title: Implementing Euclidean distance
   prompt: What is the formula for Euclidean distance between two points?
-  answer: |
-    For points $(x_1, y_1)$ and $(x_2, y_2)$:
-
-    $$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
-
-    **Implementation**:
-
-    ```python
-    from math import sqrt
-
-    def euclidean_distance(point1, point2):
-        return sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
-    ```
-
-    **Interpretation**: Most direct line between points (as the crow flies).
+  answer: "For points $(x_1, y_1)$ and $(x_2, y_2)$:\n\n$$d = \\sqrt{(x_2 - x_1)^2\
+    \ + (y_2 - y_1)^2}$$\n\n**Implementation**:\n\n```python\nfrom math import sqrt\n\
+    \ndef euclidean_distance(point1, point2):\n    return sqrt((point2[0] - point1[0])**2\
+    \ + (point2[1] - point1[1])**2)\n```\n\n**Interpretation**: Most direct line between\
+    \ points (as the crow flies).\n"
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-
-- topic: Supervised Classification
+- topic: KNN
   title: Implementing Manhattan distance
   prompt: What is the formula for Manhattan distance between two points?
-  answer: |
-    For points $(x_1, y_1)$ and $(x_2, y_2)$:
-
-    $$d = |x_1 - x_2| + |y_1 - y_2|$$
-
-    **Implementation**:
-
-    ```python
-    def manhattan_distance(point1, point2):
-        return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
-    ```
-
-    **Interpretation**: Grid-based distance (like traveling city blocks).
-
-    **When to use**: More robust for high-dimensional data than Euclidean.
+  answer: "For points $(x_1, y_1)$ and $(x_2, y_2)$:\n\n$$d = |x_1 - x_2| + |y_1 -\
+    \ y_2|$$\n\n**Implementation**:\n\n```python\ndef manhattan_distance(point1, point2):\n\
+    \    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])\n```\n\n**Interpretation**:\
+    \ Grid-based distance (like traveling city blocks).\n\n**When to use**: More robust\
+    \ for high-dimensional data than Euclidean.\n"
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-
-- topic: Supervised Classification
+- topic: KNN
   title: KNN classification workflow
   prompt: What are the steps to classify a new point using KNN?
-  answer: |
-    **Workflow**:
+  answer: '**Workflow**:
+
 
     1. **Calculate distances**: Measure distance from new point to all training points
+
     2. **Sort by distance**: Order points from nearest to farthest
+
     3. **Select k nearest**: Take top k neighbors
+
     4. **Count classes**: Determine most common class among k neighbors
+
     5. **Assign class**: Predict the majority class
 
+
     ```python
+
     neighbours = get_neighbours(new_point, train_data, distance_function)
+
     prediction = classify(neighbours, k=3)
+
     ```
+
 
     **Probability**: Proportion of each class in k neighbors gives probability estimate.
-  reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
 
-- topic: Supervised Classification
+    '
+  reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
+- topic: Fundamentals
   title: Using collections.Counter for classification
   prompt: How can collections.Counter be used to find the most common class in KNN?
-  answer: |
-    `Counter` creates a dictionary of item:count pairs from a list:
+  answer: '`Counter` creates a dictionary of item:count pairs from a list:
+
 
     ```python
+
     from collections import Counter
 
+
     # Get classes of k nearest neighbors
-    neighbor_classes = ['A', 'A', 'B', 'C', 'A']
+
+    neighbor_classes = [''A'', ''A'', ''B'', ''C'', ''A'']
+
 
     # Count occurrences
+
     counts = Counter(neighbor_classes)
-    # Result: {'A': 3, 'B': 1, 'C': 1}
+
+    # Result: {''A'': 3, ''B'': 1, ''C'': 1}
+
 
     # Get most common class
+
     most_common = counts.most_common()[0][0]
-    # Result: 'A'
+
+    # Result: ''A''
+
     ```
 
-    **Usage in KNN**: Efficiently determines majority class for classification.
-  reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
 
-- topic: Supervised Classification
+    **Usage in KNN**: Efficiently determines majority class for classification.
+
+    '
+  reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
+- topic: Model Evaluation
   title: Bias-variance decomposition formula
-  prompt: How can mean squared error be decomposed into bias, variance, and irreducible error?
-  answer: |
-    For a model $f(x)$ predicting target $y$:
+  prompt: How can mean squared error be decomposed into bias, variance, and irreducible
+    error?
+  answer: 'For a model $f(x)$ predicting target $y$:
+
 
     $$MSE(f(x)) = E[(f(x) - y)^2]$$
 
+
     **Decomposition**:
+
 
     $$MSE = \text{Var}(f(x)) + [\text{Bias}(f(x))]^2 + \text{Var}(\epsilon)$$
 
+
     Where:
 
+
     - **Variance**: How much predictions vary across different training sets
+
     - **Bias**: Expected difference between predictions and true values
+
     - **Irreducible error**: Inherent noise in data ($\epsilon$)
 
-    **Implication**: We can control bias and variance through model complexity, but not irreducible error.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Implication**: We can control bias and variance through model complexity, but
+    not irreducible error.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Model Evaluation
   title: Underfitting vs overfitting characteristics
   prompt: What are the characteristics of underfitting and overfitting models?
-  answer: |
-    **Underfitting** (high bias, low variance):
+  answer: '**Underfitting** (high bias, low variance):
+
 
     - Model too simple to capture patterns
+
     - Poor performance on both training and test data
+
     - Example: Linear model for non-linear data
+
 
     **Overfitting** (low bias, high variance):
 
+
     - Model too complex, learns noise
+
     - Excellent training performance, poor test performance
+
     - Example: High-degree polynomial perfectly fitting noisy data
 
-    **Goal**: Balance between the two for good generalization.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Goal**: Balance between the two for good generalization.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Data partitioning best practices
   prompt: What are best practices for partitioning data to avoid leakage?
-  answer: |
-    **Pre-processing rules**:
+  answer: '**Pre-processing rules**:
+
 
     1. **Split data first**: Train/validation/test before any preprocessing
+
     2. **Fit on training only**: Learn preprocessing parameters from training set
-    3. **Transform other sets**: Apply fitted preprocessing to validation/test (no refitting)
+
+    3. **Transform other sets**: Apply fitted preprocessing to validation/test (no
+    refitting)
+
 
     ```python
+
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
+
     scaler = StandardScaler()
+
     X_train = scaler.fit_transform(X_train)  # Fit and transform
+
     X_test = scaler.transform(X_test)        # Transform only
+
     ```
 
-    **Why**: Prevents information leakage from test set into training process.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Why**: Prevents information leakage from test set into training process.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Time series data partitioning
-  prompt: How should time series data be partitioned differently from non-time series data?
-  answer: |
-    **Time series**: Maintain temporal order
+  prompt: How should time series data be partitioned differently from non-time series
+    data?
+  answer: '**Time series**: Maintain temporal order
+
 
     - Training: Earlier time points
+
     - Test: Later time points
+
     - **Never shuffle** time series data
+
 
     **Non-time series**: Can shuffle
 
+
     - Ensures no ordering effects
+
     - Avoid biases from data collection order
+
     - Use `shuffle=True` in train_test_split
 
-    **Caution**: Ensure IID (Independent and Identically Distributed) assumption holds. Watch for:
+
+    **Caution**: Ensure IID (Independent and Identically Distributed) assumption holds.
+    Watch for:
+
 
     - Repeated measurements
-    - Correlated observations
-    - Duplicates in dataset
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    - Correlated observations
+
+    - Duplicates in dataset
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: ROC Curves
   title: K-fold cross-validation process
   prompt: How does k-fold cross-validation work?
-  answer: |
-    **Process**:
-
-    1. Split data into k equal-sized folds
-    2. For each fold:
-       - Use k-1 folds for training
-       - Use remaining fold for validation
-    3. Repeat k times (each fold used once as validation)
-    4. Average performance across all k iterations
-
-    ```python
-    from sklearn.model_selection import KFold
-
-    kf = KFold(n_splits=5, shuffle=True, random_state=42)
-    for train_idx, test_idx in kf.split(X, y):
-        # Train and evaluate
-    ```
-
-    **Typical values**: k=5 or k=10
-
-    **Benefit**: Uses all data for both training and validation.
+  answer: "**Process**:\n\n1. Split data into k equal-sized folds\n2. For each fold:\n\
+    \   - Use k-1 folds for training\n   - Use remaining fold for validation\n3. Repeat\
+    \ k times (each fold used once as validation)\n4. Average performance across all\
+    \ k iterations\n\n```python\nfrom sklearn.model_selection import KFold\n\nkf =\
+    \ KFold(n_splits=5, shuffle=True, random_state=42)\nfor train_idx, test_idx in\
+    \ kf.split(X, y):\n    # Train and evaluate\n```\n\n**Typical values**: k=5 or\
+    \ k=10\n\n**Benefit**: Uses all data for both training and validation.\n"
   reference: practicals/model-validation-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Cross Validation
   title: Stratified k-fold advantage
   prompt: When and why should you use StratifiedKFold instead of regular KFold?
-  answer: |
-    **Use StratifiedKFold when**:
-
-    - Classes are imbalanced
-    - Want to preserve class distribution in each fold
-
-    ```python
-    from sklearn.model_selection import StratifiedKFold
-
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    for train_idx, test_idx in skf.split(X, y):
-        # Each fold maintains same class ratio as overall dataset
-    ```
-
-    **Benefit**: Ensures each fold is representative, especially important when one class has few samples.
-
-    **Regular KFold risk**: Some folds might have very few (or zero) samples of minority class.
+  answer: "**Use StratifiedKFold when**:\n\n- Classes are imbalanced\n- Want to preserve\
+    \ class distribution in each fold\n\n```python\nfrom sklearn.model_selection import\
+    \ StratifiedKFold\n\nskf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)\n\
+    for train_idx, test_idx in skf.split(X, y):\n    # Each fold maintains same class\
+    \ ratio as overall dataset\n```\n\n**Benefit**: Ensures each fold is representative,\
+    \ especially important when one class has few samples.\n\n**Regular KFold risk**:\
+    \ Some folds might have very few (or zero) samples of minority class.\n"
   reference: practicals/model-validation-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Cross Validation
   title: Cross-validation reporting standards
   prompt: What should be reported when using cross-validation?
-  answer: |
-    **Report both**:
+  answer: '**Report both**:
+
 
     - **Mean**: Average performance across all folds
+
     - **Standard deviation**: Variability of performance
 
+
     ```python
+
     from sklearn.model_selection import cross_val_score
 
+
     scores = cross_val_score(model, X, y, cv=5)
+
     print(f"Mean: {scores.mean():.3f} (+/- {scores.std():.3f})")
+
     ```
+
 
     **Interpretation**:
 
+
     - High mean, low std: Consistent, good performance
+
     - High mean, high std: Performance depends heavily on data split
+
     - Low mean: Poor performance overall
 
-    **Visualization**: Bar plot with error bars for comparing models.
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Visualization**: Bar plot with error bars for comparing models.
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Time series cross-validation approach
   prompt: How should cross-validation be performed on time series data?
-  answer: |
-    **Do not use regular k-fold** (would shuffle temporal order)
-
-    **Use sequential splits**:
-
-    - Create expanding window or sliding window
-    - Always predict future samples from past samples
-
-    ```python
-    from sklearn.model_selection import TimeSeriesSplit
-
-    tscv = TimeSeriesSplit(n_splits=5)
-    for train_idx, test_idx in tscv.split(X):
-        # train_idx contains earlier points
-        # test_idx contains later points
-    ```
-
-    **Each fold**: Training set grows (or slides), test set always follows training chronologically.
+  answer: "**Do not use regular k-fold** (would shuffle temporal order)\n\n**Use sequential\
+    \ splits**:\n\n- Create expanding window or sliding window\n- Always predict future\
+    \ samples from past samples\n\n```python\nfrom sklearn.model_selection import\
+    \ TimeSeriesSplit\n\ntscv = TimeSeriesSplit(n_splits=5)\nfor train_idx, test_idx\
+    \ in tscv.split(X):\n    # train_idx contains earlier points\n    # test_idx contains\
+    \ later points\n```\n\n**Each fold**: Training set grows (or slides), test set\
+    \ always follows training chronologically.\n"
   reference: practicals/model-validation-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Cross Validation
   title: GridSearchCV workflow
   prompt: How does GridSearchCV work in sklearn?
-  answer: |
-    GridSearchCV tries every combination of hyperparameters with cross-validation:
-
-    ```python
-    from sklearn.model_selection import GridSearchCV
-
-    param_grid = {
-        'n_neighbors': [3, 5, 7],
-        'weights': ['uniform', 'distance']
-    }
-
-    grid = GridSearchCV(
-        estimator=KNeighborsClassifier(),
-        param_grid=param_grid,
-        cv=5,
-        scoring='accuracy'
-    )
-
-    grid.fit(X_train, y_train)
-
-    # Best model
-    best_model = grid.best_estimator_
-    best_params = grid.best_params_
-    ```
-
-    **Combinations**: 3 × 2 = 6 parameter combinations × 5 CV folds = 30 models trained.
+  answer: "GridSearchCV tries every combination of hyperparameters with cross-validation:\n\
+    \n```python\nfrom sklearn.model_selection import GridSearchCV\n\nparam_grid =\
+    \ {\n    'n_neighbors': [3, 5, 7],\n    'weights': ['uniform', 'distance']\n}\n\
+    \ngrid = GridSearchCV(\n    estimator=KNeighborsClassifier(),\n    param_grid=param_grid,\n\
+    \    cv=5,\n    scoring='accuracy'\n)\n\ngrid.fit(X_train, y_train)\n\n# Best\
+    \ model\nbest_model = grid.best_estimator_\nbest_params = grid.best_params_\n\
+    ```\n\n**Combinations**: 3 × 2 = 6 parameter combinations × 5 CV folds = 30 models\
+    \ trained.\n"
   reference: practicals/model-validation-slides.ipynb
-
-- topic: Supervised Classification
+- topic: Fundamentals
   title: True risk vs empirical risk
   prompt: What is the difference between true risk and empirical risk in machine learning?
-  answer: |
-    **True risk** (what we want): Expected loss over all possible data
+  answer: '**True risk** (what we want): Expected loss over all possible data
+
 
     $$R_{true} = E_{x \sim P(X)}[L(x)]$$
 
-    - Unknown because we don't know the true data distribution
+
+    - Unknown because we don''t know the true data distribution
+
 
     **Empirical risk** (what we minimize): Average loss over training data
 
+
     $$R_{emp} = \frac{1}{N_{train}} \sum_{train} L(x_{train})$$
+
 
     - What we optimize during training
 
+
     **Estimated true risk**: Performance on test data
+
 
     $$\hat{R}_{true} = \frac{1}{N_{test}} \sum_{test} L(x_{test})$$
 
-    **Goal**: Minimize empirical risk while keeping estimated true risk low (generalization).
-  reference: practicals/model-validation-slides.ipynb
 
-- topic: Supervised Classification
+    **Goal**: Minimize empirical risk while keeping estimated true risk low (generalization).
+
+    '
+  reference: practicals/model-validation-slides.ipynb
+- topic: Cross Validation
   title: Leave-One-Out Cross-Validation
   prompt: What is Leave-One-Out Cross-Validation (LOOCV) and when is it used?
-  answer: |
-    **LOOCV** is a special case of k-fold cross-validation where k equals the number of data points.
+  answer: '**LOOCV** is a special case of k-fold cross-validation where k equals the
+    number of data points.
+
 
     **Process**:
 
+
     - Each data point used once as test set
+
     - Remaining points form training set
+
     - Repeat for every data point
+
     - Average performance across all iterations
+
 
     **Characteristics**:
 
+
     - Maximum use of training data
+
     - Computationally expensive for large datasets
+
     - Provides nearly unbiased estimate of model performance
+
     - High variance in performance estimates
 
-    **When to use**: Small datasets where you want to maximize training data usage.
-  reference: practicals/session-one.md
 
-- topic: Supervised Classification
+    **When to use**: Small datasets where you want to maximize training data usage.
+
+    '
+  reference: practicals/session-one.md
+- topic: KNN
   title: Fuzzy distance metrics concept
   prompt: What are fuzzy distance metrics and why are they useful?
-  answer: |
-    **Fuzzy distance metrics** allow for more nuanced similarity measures between data points.
+  answer: '**Fuzzy distance metrics** allow for more nuanced similarity measures between
+    data points.
+
 
     **Benefits**:
 
+
     - Capture uncertainty in data
+
     - Useful when class boundaries are not well-defined
+
     - Can improve classification performance in ambiguous scenarios
+
     - More sophisticated than traditional metrics (Euclidean, Manhattan)
 
-    **Application**: Scenarios where strict distance measures don't adequately represent the similarity or dissimilarity between data points.
-  reference: practicals/session-one.md
 
-- topic: Supervised Classification
+    **Application**: Scenarios where strict distance measures don''t adequately represent
+    the similarity or dissimilarity between data points.
+
+    '
+  reference: practicals/session-one.md
+- topic: Model Evaluation
   title: Detecting overfitting from training scores
   prompt: How can you detect overfitting by examining training set performance?
-  answer: |
-    **Overfitting indicators**:
+  answer: '**Overfitting indicators**:
+
 
     - Model performs significantly better on training set than test set
+
     - Training accuracy near 100% before checking test set
+
     - Model has learned noise and outliers, not just patterns
 
+
     **Example**:
 
+
     ```python
+
     model.fit(X_train, y_train)
+
     train_score = model.score(X_train, y_train)  # Near 100%
+
     test_score = model.score(X_test, y_test)     # Much lower
+
     ```
 
+
     **Solutions**:
+
 
     - Apply regularization techniques
-    - Simplify the model
-    - Gather more training data
-    - Use cross-validation
-  reference: practicals/session-one.md
 
-- topic: Supervised Classification
+    - Simplify the model
+
+    - Gather more training data
+
+    - Use cross-validation
+
+    '
+  reference: practicals/session-one.md
+- topic: Model Evaluation
   title: Detecting underfitting from training scores
   prompt: How can you detect underfitting by examining training set performance?
-  answer: |
-    **Underfitting indicators**:
+  answer: '**Underfitting indicators**:
+
 
     - Poor performance on both training and test sets
+
     - Low training accuracy (not just test accuracy)
+
     - Model too simple to capture underlying patterns
+
 
     **Example**:
 
+
     ```python
+
     model.fit(X_train, y_train)
+
     train_score = model.score(X_train, y_train)  # Low accuracy
+
     test_score = model.score(X_test, y_test)     # Also low
+
     ```
+
 
     **Solutions**:
 
-    - Increase model complexity
-    - Add more features
-    - Reduce regularization
-    - Use more sophisticated model architecture
-  reference: practicals/session-one.md
 
-- topic: Supervised Classification
+    - Increase model complexity
+
+    - Add more features
+
+    - Reduce regularization
+
+    - Use more sophisticated model architecture
+
+    '
+  reference: practicals/session-one.md
+- topic: KNN
   title: Benefits of implementing KNN from scratch
-  prompt: Why is it useful to implement KNN from first principles rather than just using sklearn?
-  answer: |
-    **Educational benefits**:
+  prompt: Why is it useful to implement KNN from first principles rather than just
+    using sklearn?
+  answer: '**Educational benefits**:
+
 
     1. **Solidifies understanding**: Learn how KNN works under the hood
+
     2. **Distance metrics**: Understand importance and implementation details
+
     3. **Voting mechanism**: See how majority voting works in practice
+
     4. **Optimization insights**: Identify potential customizations
+
 
     **Practical benefits**:
 
+
     - Implement weighted voting based on distance
+
     - Experiment with custom distance metrics
+
     - Optimize for specific use cases
+
     - Understand performance trade-offs
 
-    **Key components**: Distance functions, neighbor selection, majority voting.
-  reference: practicals/session-one.md
 
-- topic: Supervised Classification
+    **Key components**: Distance functions, neighbor selection, majority voting.
+
+    '
+  reference: practicals/session-one.md
+- topic: KNN
   title: Custom vs sklearn KNN implementations
   prompt: What are the key differences between custom and sklearn KNN implementations?
-  answer: |
-    **Custom implementation**:
+  answer: '**Custom implementation**:
+
 
     - Uses Python data structures: lists, tuples, dictionaries, sets
+
     - Educational value in understanding algorithm
+
     - Slower performance
+
     - More flexible for custom distance metrics and voting schemes
+
 
     **sklearn implementation**:
 
+
     - Uses NumPy arrays for efficiency
+
     - Highly optimized C/Cython backend
+
     - Much faster performance
+
     - Standard interface with other sklearn tools
 
-    **Comparison**: Compare both implementations across different k values to understand trade-offs between flexibility and performance.
+
+    **Comparison**: Compare both implementations across different k values to understand
+    trade-offs between flexibility and performance.
+
+    '
   reference: practicals/session-one.md

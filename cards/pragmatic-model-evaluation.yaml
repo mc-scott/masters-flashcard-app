@@ -1,0 +1,670 @@
+Pragmatic Model Evaluation:
+  - topic: Enterprise Architecture
+    title: Layers of an enterprise architecture
+    prompt: What are the four layers of enterprise architecture and what does each focus on?
+    answer: |
+      1. **Business Architecture** — capabilities and functions of the business from stakeholder and customer perspective.
+      2. **Data Architecture** — how data is modelled, governed, stored, and integrated across the organisation.
+      3. **Application Architecture** — how applications are structured, interact, and scale.
+      4. **Technology Architecture** — IT infrastructure, finance systems, communications, etc.
+    reference: 01-enterprise-architecture.md
+
+  - topic: Enterprise Architecture
+    title: Five key areas of data architecture
+    prompt: What are the five areas that a data architecture must address?
+    answer: |
+      1. **Data Model** — multiple layers representing different views, from business domain to storage detail.
+      2. **Data Dictionary / Catalogue** — documents all available data with business meaning attached.
+      3. **Data Governance** — control and policies around data usage, compliance, and quality.
+      4. **Data Integration** — how data flows accurately and timely between systems and domains.
+      5. **Data Security** — protects data from internal and external threats via access controls and encryption.
+    reference: 01-enterprise-architecture.md
+
+  - topic: Enterprise Architecture
+    title: Role of data governance in an organisation
+    prompt: What does data governance refer to in enterprise data architecture?
+    answer: |
+      Data governance refers to the **control and policies** around data cataloguing and usage.
+
+      It ensures data is used appropriately and enables an organisation to:
+
+      - Apply **data quality rules** (schema validation, completeness checks) at ingestion pipelines
+      - Comply with **regulatory requirements** (e.g. GDPR, FCA in financial services)
+      - Manage **personally identifiable information (PII)** and sensitive data access
+    reference: 01-enterprise-architecture.md
+
+  - topic: Enterprise Architecture
+    title: Regulatory obligations for a UK financial services data architecture
+    prompt: What regulatory requirements might a UK financial services organisation face regarding data governance?
+    answer: |
+      - **UK GDPR** (introduced by the ICO) — customers can request their data be deleted; data in the warehouse may need to be anonymised.
+      - **FCA (Financial Conduct Authority)** — requires sufficient audits, traceability, and historical archives; data backups may be retained for compliance even after a GDPR deletion request.
+
+      These potentially conflicting obligations must be managed jointly by the data governance team and legal department.
+    reference: 01-enterprise-architecture.md
+
+  - topic: Enterprise Architecture
+    title: Access control mechanism in data security
+    prompt: What is roles-based access control (RBAC) and how does it relate to the principle of least privilege?
+    answer: |
+      **RBAC (Roles-Based Access Control)** defines access levels per role and controls the assignment of those roles to individuals.
+
+      The **principle of least privilege** means each role is granted only the minimum access it needs:
+
+      - Widely-accessible data attributes can be available to all roles.
+      - Sensitive or PII attributes are restricted to elevated privileged roles only.
+
+      This limits the blast radius of any accidental or malicious data access.
+    reference: 01-enterprise-architecture.md
+
+  - topic: Hierarchical Data Validation
+    title: The risk of random splitting with grouped data
+    prompt: Why is a random train/test split problematic when data contains groups (e.g. journeys grouped by household)?
+    answer: |
+      Grouped data **violates the independence assumption**. If households are split randomly across train and test sets:
+
+      - The model can learn **group-specific patterns** during training (e.g. amount of green space per household).
+      - These same patterns appear in the test set, causing **data snooping** and **inflated performance metrics**.
+
+      The validation score no longer reflects true out-of-sample performance.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: sklearn utility for group-aware train/test splitting
+    prompt: Which sklearn utility ensures no group appears in both the training and validation sets when splitting data?
+    answer: |
+      `model_selection.GroupShuffleSplit()`
+
+      It performs a shuffle split while respecting group boundaries, so all samples from a given group end up in either the training set or the validation set — never both.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: sklearn utility for group-aware cross-validation
+    prompt: Which sklearn utility provides group-aware k-fold cross-validation, ensuring no group appears in more than one fold?
+    answer: |
+      `model_selection.GroupKFold()`
+
+      It partitions the data into $k$ folds such that **all samples from a group are assigned to exactly one fold**. This prevents group information from leaking between folds during hyperparameter tuning.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: How group leakage biases feature importance
+    prompt: How do the important features differ between a model trained with random splitting versus group-aware splitting on grouped data?
+    answer: |
+      - A model trained with a **random split** learns **group-specific features** (e.g. amount of green space per household) because those features appear in both train and test, making them spuriously predictive.
+      - A model trained with **group-aware cross-validation** does **not** rely on group-specific features, as those features provide no signal for unseen groups.
+
+      This demonstrates that random splitting can cause a model to learn group identity rather than the underlying relationship.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Modular sklearn Development
+    title: sklearn class for building modular ML pipelines
+    prompt: What sklearn class is used to construct modular, composable machine learning pipelines?
+    answer: |
+      `Pipeline` from `sklearn.pipeline`.
+
+      It chains multiple processing steps (e.g. preprocessing, feature engineering, model fitting) into a single estimator object, ensuring that transformations are applied consistently and preventing data leakage between train and test steps.
+    reference: practicals/advanced-sklearn-slides.ipynb
+
+  - topic: Model Selection
+    title: Goal and typical approach of model selection
+    prompt: What is model selection and how is it typically performed in machine learning?
+    answer: |
+      **Model selection** is the problem of picking one desirable model from a set of candidate models.
+
+      The typical approach is to select the model that performs best on **out-of-sample data**, commonly evaluated using:
+
+      - **k-fold cross-validation**
+      - **Nested cross-validation** (when enough data and compute are available)
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: What a parsimonious model is
+    prompt: What is a parsimonious model?
+    answer: |
+      A **parsimonious model** explains data effectively using the **fewest possible variables or assumptions**, balancing simplicity with explanatory power.
+
+      The goal is to avoid unnecessary complexity — if two models explain the data equally well, the simpler one is preferred.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Information criterion that penalises only by number of parameters
+    prompt: What does the Akaike Information Criterion (AIC) measure and what is its formula?
+    answer: |
+      AIC balances **predictive performance** (log-likelihood) against **model complexity** (number of parameters):
+
+      $$\text{AIC} = 2k - 2\ell$$
+
+      where $k$ is the number of model coefficients and $\ell$ is the log-likelihood on the training data.
+
+      AIC is **minimised** to select the best model. It does **not** account for sample size.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Information criterion that additionally penalises by sample size
+    prompt: How does the Bayesian Information Criterion (BIC) differ from AIC, and what is its formula?
+    answer: |
+      BIC also penalises model complexity, but **additionally accounts for training sample size $N$**:
+
+      $$\text{BIC} = k \ln(N) - 2\ell$$
+
+      The larger the dataset, the more severely each extra parameter is penalised, making BIC prefer simpler models than AIC when $N$ is large.
+
+      Like AIC, BIC is **minimised** on the training sample.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Three strategies for feature selection using information criteria
+    prompt: What are three strategies for selecting the optimal feature subset for a linear model using AIC or BIC?
+    answer: |
+      1. **Forward Selection** — start from the intercept only; add one feature at a time, recording AIC/BIC at each step.
+      2. **Backward Selection** — start from the full feature set; remove one feature at a time, recording AIC/BIC at each step.
+      3. **Random Selection** — randomly sample subsets of features and record the AIC/BIC for each configuration.
+
+      The subset with the **lowest AIC (or BIC)** is chosen as the optimal set.
+    reference: practicals/model-selection-practical-solution.ipynb
+
+  - topic: Model Selection
+    title: What bagging does and what the name stands for
+    prompt: What is bagging in ensemble learning and what does the name stand for?
+    answer: |
+      **Bagging** stands for **B**ootstrap **Agg**regation.
+
+      It creates multiple copies of the dataset by **resampling with replacement** and trains a separate model $f_d$ on each copy. Final predictions are made by averaging (regression) or majority vote (classification) across all models.
+
+      The goal is to reduce variance and improve generalisation.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Key difference between ExtraTrees and Random Forest
+    prompt: How does the ExtraTrees (Extremely Randomised Trees) algorithm differ from Random Forest?
+    answer: |
+      Both algorithms randomly select a subset of features at each split, but they differ in two ways:
+
+      | | Random Forest | ExtraTrees |
+      |---|---|---|
+      | **Bagging** | Yes | No |
+      | **Split value** | Optimal within random feature subset | Randomly chosen from a random set of values |
+
+      ExtraTrees introduces **more randomness** by using random split thresholds, which can further reduce variance at the cost of a slight increase in bias.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Three components required to specify a neural network
+    prompt: What are the three main components you must specify when training a neural network?
+    answer: |
+      1. **Model Architecture** — e.g. feedforward network, convolutional neural network, graph neural network.
+      2. **Loss Function** — e.g. L2 loss, cross-entropy loss, hinge loss; choice depends on the task type (regression, classification, ranking).
+      3. **Optimisation Strategy** — e.g. Gradient Descent, Stochastic Gradient Descent, ADAM, Momentum.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Optimisation strategy used by nearly all neural networks
+    prompt: What optimisation strategy do almost all neural networks use?
+    answer: |
+      Almost all neural networks use **back-propagation** as their optimisation strategy.
+
+      Back-propagation computes the gradient of the loss function with respect to each weight by applying the chain rule, allowing gradient-based optimisers (e.g. SGD, ADAM) to update the network's parameters.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Optimisation
+    title: What model optimisation is concerned with
+    prompt: What does model optimisation focus on in machine learning?
+    answer: |
+      Model optimisation is concerned with choosing the **best hyperparameters** for your model.
+
+      It also includes preprocessing steps such as **feature creation and feature selection**.
+
+      The **hyperparameter space** is the space covered by all possible values of the hyperparameters, analogous to how the *feature space* is the space covered by all possible values of each feature.
+    reference: 06-model-optimisation.md
+
+  - topic: Prudential Risk Prediction
+    title: Structure of the Prudential risk prediction assignment
+    prompt: What is the goal and evaluation approach for the Prudential risk prediction assignment?
+    answer: |
+      The goal is to **predict a customer's risk profile** (ordinal classes 1–8) from anonymised features.
+
+      - It is treated as a **classification problem** (not ordinal regression).
+      - Model performance is measured by **exact category accuracy**.
+      - The dataset is low-signal and has 8 classes, so accuracy can be quite low.
+
+      Predictions are saved in `y_pred` for evaluation against the ground truth on the test set.
+    reference: assignments/prudential.ipynb
+
+  - topic: Prudential Risk Prediction
+    title: Three feature types in the Prudential dataset
+    prompt: What are the three types of features in the Prudential dataset?
+    answer: |
+      1. **Categorical (nominal)** — e.g. `Product_Info_1-3`, `Employment_Info_2-3`, `InsuredInfo_1-7`, various `Insurance_History` and `Medical_History` columns.
+      2. **Continuous** — e.g. `Ins_Age`, `Ht`, `Wt`, `BMI`, `Employment_Info_1/4/6`, `Family_Hist_2-5`.
+      3. **Discrete** — e.g. `Medical_History_1/10/15/24/32`, plus 48 dummy variables `Medical_Keyword_1-48`.
+    reference: assignments/prudential.ipynb
+
+  - topic: Prudential Risk Prediction
+    title: Baseline pipeline pattern for the Prudential assignment
+    prompt: What is the structure of the baseline sklearn pipeline used in the Prudential assignment?
+    answer: |
+      ```python
+      preprocessor = make_column_transformer(
+          (OneHotEncoder(handle_unknown="ignore"), categories)
+      )
+      model = make_pipeline(preprocessor, DecisionTreeClassifier())
+      model.fit(X_train, y_train)
+      y_pred = model.predict(X_test)
+      ```
+
+      - A `ColumnTransformer` applies `OneHotEncoder` to the categorical columns.
+      - The preprocessor and classifier are chained via `make_pipeline`.
+    reference: assignments/prudential.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: Purpose of ColumnTransformer in a preprocessing pipeline
+    prompt: What does ColumnTransformer do and why is it useful?
+    answer: |
+      `ColumnTransformer` allows you to **apply different transformations in parallel to different columns** of the input data, then joins the results.
+
+      Benefits:
+      - Avoids creating a new dataset variant for each preprocessing step.
+      - Keeps the fit separate from the transform, preventing **data leakage** from the test set.
+      - Transformers fitted on training data can be reused on any new data.
+
+      Use `remainder='passthrough'` to retain columns not explicitly transformed.
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: How to reduce correlated features in a pipeline
+    prompt: What is a standard approach to handle a set of highly correlated features within a sklearn pipeline?
+    answer: |
+      Chain a **scaler** and **PCA** inside a `Pipeline` to sequentially scale the data and then reduce its dimensionality:
+
+      ```python
+      payment_transformer = Pipeline([
+          ("scaler", MinMaxScaler()),
+          ("pca", PCA(n_components=0.8))
+      ])
+      ```
+
+      Setting `n_components` as a float (e.g. `0.8`) retains the proportion of variance specified, rather than a fixed number of components.
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: How FeatureUnion combines multiple transformations
+    prompt: What does FeatureUnion do, and how does it differ from ColumnTransformer?
+    answer: |
+      `FeatureUnion` **applies multiple transformers to the same data in parallel and concatenates** their outputs into a single feature matrix.
+
+      - Use it to **add new features** (e.g. log transforms, polynomial interactions) to existing ones.
+      - Unlike `ColumnTransformer`, it applies each transformer to the **full** input (not specific columns).
+
+      Example:
+      ```python
+      numerical_transformer = FeatureUnion([
+          ('log', FunctionTransformer(np.log)),
+          ('polynomial', PolynomialFeatures(2, include_bias=False, interaction_only=True))
+      ])
+      ```
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: How to create a custom sklearn transformer
+    prompt: What are the steps to implement a custom transformer compatible with sklearn?
+    answer: |
+      1. Inherit from **`TransformerMixin`** and **`BaseEstimator`**.
+      2. Implement **`.fit(X, y=None)`** — compute and store any parameters needed from the training data; return `self`.
+      3. Implement **`.transform(X, y=None)`** — apply the transformation using the stored parameters and return the new data.
+
+      Example structure:
+      ```python
+      class MyTransformer(TransformerMixin, BaseEstimator):
+          def fit(self, X, y=None):
+              # memorise parameters from training data
+              return self
+          def transform(self, X, y=None):
+              # apply transformation
+              return X_new
+      ```
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: Advantage of using GridSearchCV with a Pipeline
+    prompt: Why is GridSearchCV more powerful when applied to a full Pipeline rather than just the model?
+    answer: |
+      When `GridSearchCV` wraps an entire `Pipeline`, it **jointly tunes both preprocessing parameters and model hyperparameters**.
+
+      Benefits:
+      - On every fold, both the transformations and the model are **refit on training data**, preventing data leakage.
+      - Parameters deep inside nested steps can be tuned using the `step_name__param_name` notation.
+      - Example: tune PCA components inside a nested pipeline via `columntransformer__payments__pca__n_components`.
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: Key concept behind data leakage in preprocessing
+    prompt: What is data leakage in the context of preprocessing, and how does sklearn prevent it?
+    answer: |
+      **Data leakage** occurs when information from outside the training dataset (e.g. from the test set) is used to create or fit the model.
+
+      sklearn prevents leakage by separating the **`.fit()`** and **`.transform()`** methods:
+
+      - `.fit()` is called **only** on training data to compute parameters (e.g. mean/variance for scaling, categories for encoding).
+      - `.transform()` applies those parameters to any new data (train, test, or unseen).
+
+      Using a `Pipeline` inside cross-validation ensures that `.fit()` is never called on test fold data.
+    reference: practicals/advanced-sklearn-slides.ipynb
+
+  - topic: Modular sklearn Pipelines
+    title: What PolynomialFeatures with interaction_only=True produces
+    prompt: What features does PolynomialFeatures(degree=2, include_bias=False, interaction_only=True) generate for two features a and b?
+    answer: |
+      It generates: **a**, **b**, and **a×b** (the pairwise interaction term).
+
+      Without `interaction_only=True`, it would also include **a²** and **b²**.
+
+      This is useful for adding interaction features without inflating the feature space with squared terms.
+    reference: practicals/advanced-sklearn-practical-solution.ipynb
+
+  - topic: Feature Selection and Engineering
+    title: Difference between feature selection and feature engineering
+    prompt: What is the distinction between feature selection and feature engineering in ML?
+    answer: |
+      - **Feature selection** — identifying which existing features from the dataset to use as inputs to the model (removing noise, constants, and irrelevant variables).
+      - **Feature engineering** — creating *new* features from the data, e.g. multiplying columns, applying PCA, applying arbitrary functions, or making sure all required variables are available.
+
+      Both contribute to **explainability**, **faster training**, and **reduced overfitting**, and are often applied iteratively throughout the ML pipeline.
+    reference: practicals/feature_selection_practical-solution.ipynb
+
+  - topic: Feature Selection and Engineering
+    title: Why models should not use all available features
+    prompt: Why is it generally a bad idea to feed all available features into an ML model without selection?
+    answer: |
+      - Some algorithms (e.g. linear regression) perform **poorly with correlated or noisy variables**.
+      - Models built on all features may be **over-complicated**, lack **generalisation**, and be **hard to interpret**.
+      - Including irrelevant features can cause the model to **overfit** (fit the noise).
+
+      ML models should be **parsimonious** — as simple as possible with low error.
+    reference: practicals/feature_selection_practical-solution.ipynb
+
+  - topic: Feature Selection and Engineering
+    title: Two strategies for removing uninformative variables
+    prompt: What are two ways to remove variables that add little value to a model?
+    answer: |
+      **A) Remove variables with low correlation to the target** — drop features whose absolute correlation with the dependent variable falls below a threshold.
+
+      **B) Remove one of a pair of highly correlated features** — when two features correlate strongly with *each other*, keeping both is redundant; remove one.
+
+      **PCA** is a robust alternative that handles both cases by rotating axes to information-rich directions and discarding low-variance components.
+    reference: practicals/feature_selection_practical-solution.ipynb
+
+  - topic: Feature Selection and Engineering
+    title: Why PCA requires normalisation beforehand
+    prompt: Why must features be normalised before applying PCA?
+    answer: |
+      PCA looks for directions of **maximum variance**. If features are on different scales, those with larger absolute values will **dominate** the variance calculation, biasing the components.
+
+      Normalising to **z-scores** (zero mean, unit variance) with `StandardScaler` before PCA ensures each feature contributes equally, regardless of its original scale.
+    reference: practicals/feature_selection_practical-solution.ipynb
+
+  - topic: Feature Selection and Engineering
+    title: What a scree plot is used for in PCA
+    prompt: What does a scree plot show, and how is it used to choose the number of PCA components?
+    answer: |
+      A **scree plot** shows the **proportion of variance explained** by each principal component in descending order.
+
+      It helps you choose how many components to retain — you look for an "elbow" where the explained variance drops off, or use a cumulative explained variance plot to find the number of components that capture a desired threshold (e.g. 80% or 90%) of total variance.
+    reference: practicals/feature_selection_practical-solution.ipynb
+
+  - topic: Hyperparameter Optimisation
+    title: What hyperparameter optimisation is and why it is needed
+    prompt: What is hyperparameter optimisation and why can't hyperparameters be optimised directly?
+    answer: |
+      **Hyperparameter optimisation** (or hyperparameter search) finds the set of model hyperparameters that maximise a chosen performance metric for a given dataset.
+
+      Hyperparameters **cannot be optimised directly** because evaluating them requires fitting the model (an inner optimisation loop). Therefore, a **search** must be performed — testing different values and selecting the best.
+
+      Examples of hyperparameters: `max_depth` in a decision tree, regularisation strength `C` in logistic regression, number of hidden layers in a neural network.
+    reference: practicals/model-optimisation.ipynb
+
+  - topic: Hyperparameter Optimisation
+    title: What grid search does and its trade-offs
+    prompt: How does grid search work, and what are its main advantages and disadvantages?
+    answer: |
+      **Grid search** predefines candidate values for each hyperparameter and **exhaustively tests every combination**, using cross-validation to score each.
+
+      **Advantages:**
+      - Simple and trivially easy to parallelise.
+      - Completely repeatable — sharing the grid definition gives identical results.
+
+      **Disadvantages:**
+      - Complexity scales **exponentially** with the number of hyperparameters.
+      - Only tests a small number of values per parameter.
+      - Does **not learn** from previous evaluations — wastes time on poor combinations.
+    reference: practicals/model-optimisation.ipynb
+
+  - topic: Hyperparameter Optimisation
+    title: What random search does and its trade-offs
+    prompt: How does random search differ from grid search, and what are its advantages and disadvantages?
+    answer: |
+      **Random search** samples a **fixed number** of hyperparameter combinations from **specified distributions** rather than testing all combinations.
+
+      **Advantages:**
+      - Very easy to parallelise; complexity scales **linearly** with the number of trials (not with the number of hyperparameters).
+      - Tests many values per parameter.
+
+      **Disadvantages:**
+      - Less repeatable than grid search (results differ unless the same seed is used).
+      - No guarantee of coverage.
+      - Still does **not learn** from previous evaluations.
+    reference: practicals/model-optimisation.ipynb
+
+  - topic: Hyperparameter Optimisation
+    title: How Bayesian hyperparameter search works and its trade-offs
+    prompt: What is Bayesian hyperparameter search and how does it compare to grid and random search?
+    answer: |
+      **Bayesian search** makes hyperparameter guesses **sequentially**, using a **surrogate model** (e.g. a Gaussian Process) that learns from previous evaluations to guide the next guess.
+
+      It balances **exploration** (trying new areas) with **exploitation** (refining promising areas).
+
+      **Advantages:**
+      - Learns from previous searches — quality of guesses improves over time.
+      - Efficient — fewer evaluations needed to find good hyperparameters.
+
+      **Disadvantages:**
+      - Conceptually more complex.
+      - **Sequential** — difficult to parallelise (though CV within each evaluation can be parallelised).
+      - Can get stuck in local optima; less repeatable than grid search.
+    reference: practicals/model-optimisation.ipynb
+
+  - topic: Hyperparameter Optimisation
+    title: What can be optimised beyond model hyperparameters using a Pipeline
+    prompt: What other stages of the ML pipeline can be tuned alongside model hyperparameters using sklearn's Pipeline?
+    answer: |
+      Using sklearn's `Pipeline` class, hyperparameter search can be extended beyond model hyperparameters to also optimise:
+
+      - **Data preprocessing** parameters (e.g. scaler choice)
+      - **Feature engineering** parameters (e.g. number of PCA components)
+      - **Feature selection** thresholds
+      - **Model ensembling** configurations
+
+      All of these can be searched jointly using `GridSearchCV`, `RandomizedSearchCV`, or Bayesian optimisation.
+    reference: practicals/model-optimisation.ipynb
+
+  - topic: Model Selection
+    title: How to implement randomised feature selection for a linear model
+    prompt: What is the general approach for implementing randomised feature selection using AIC or BIC?
+    answer: |
+      1. **Sample candidate feature subsets** — enumerate or randomly sample binary masks over the feature columns.
+      2. **Fit a linear model** on each candidate subset using only training data.
+      3. **Compute AIC or BIC** on the training data for each fitted model.
+      4. **Select the subset** with the lowest AIC (or BIC) as the optimal feature configuration.
+
+      AIC and BIC are calculated only on training data; MSE can additionally be evaluated on a held-out test set for reference.
+    reference: practicals/model-selection-practical-solution.ipynb
+
+  - topic: Model Selection
+    title: How to convert a regression neural network to a classification neural network in PyTorch
+    prompt: What changes are needed to convert a PyTorch regression neural network to a binary classification network?
+    answer: |
+      Two changes are required:
+
+      1. **Model architecture** — add a `Sigmoid` activation after the final linear layer to squash outputs to [0, 1]:
+         ```python
+         model = torch.nn.Sequential(
+             torch.nn.Linear(p, h1),
+             torch.nn.ReLU(),
+             torch.nn.Linear(h1, 1),
+             torch.nn.Sigmoid()
+         )
+         ```
+      2. **Loss function** — replace MSE loss with **Binary Cross-Entropy loss**:
+         ```python
+         loss_fn = torch.nn.BCELoss()
+         ```
+    reference: practicals/model-selection-practical-solution.ipynb
+
+  - topic: Model Selection
+    title: Advantages and limitations of linear models for ML
+    prompt: What are the key merits and limitations of linear models in machine learning?
+    answer: |
+      **Merits:**
+      - Coefficients directly show the **contribution of each feature** to the prediction.
+      - Easy to analyse, explain, and spot anomalies.
+      - Strong theoretical guarantees when the linearity assumption holds.
+
+      **Limitations:**
+      - **Linearity is too restrictive** in practice for many real-world relationships.
+      - Linearity is **not well-defined** for structured data such as images, videos, graphs, and text.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Advantages and limitations of tree-based ensemble methods
+    prompt: What are the main advantages and limitations of tree-based ensemble methods?
+    answer: |
+      **Advantages:**
+      - Flexible modelling tools that often achieve **high accuracy** on tabular data.
+
+      **Limitations:**
+      - Tuning can be **cumbersome** — model selection requires selecting hyperparameters for each component of the ensemble.
+      - Ensembles are **black-box models** that are hard to interpret.
+
+      When choosing off-the-shelf, **Gradient Boosting Trees** typically achieve the best performance. For further improvement, ensemble stacking or meta-ensembles (including NNs) can be explored.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Advantages and limitations of neural networks for ML
+    prompt: What are the main advantages and limitations of neural networks as a modelling choice?
+    answer: |
+      **Advantages:**
+      - Highly **flexible** — applicable to structured and unstructured data types: images, videos, text, graphs.
+
+      **Limitations:**
+      - **Easily overfit** and very difficult to tune in general.
+      - Often require **significantly more data** to achieve good performance compared with traditional ML models.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: PyTorch gradient descent parameter update rule
+    prompt: What is the gradient descent update rule used in PyTorch optimisers?
+    answer: |
+      $$\alpha^* = \alpha + \epsilon \frac{\partial L}{\partial \alpha}$$
+
+      Where:
+      - $\alpha$ — model parameter to be updated
+      - $\frac{\partial L}{\partial \alpha}$ — gradient indicating direction of improvement
+      - $\epsilon$ — **learning rate** controlling the step size
+
+      All PyTorch optimisers (SGD, Adam, etc.) are derived from this base gradient descent algorithm.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: When to prefer AIC versus BIC
+    prompt: In what situations should you prefer AIC over BIC, and vice versa?
+    answer: |
+      - Use **AIC** when you believe the **true data-generating model is more complex** than any of the models you are testing (AIC will tend to select larger models).
+      - Use **BIC** when you believe one of your **candidate models is close to the true model** (BIC penalises complexity more heavily, especially on large datasets, and favours simpler models).
+
+      **Note:** On complex problems with large data, minimising BIC is likely to result in **underfitting**.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Model Selection
+    title: Log-likelihood for linear regression in terms of MSE
+    prompt: How is the log-likelihood expressed for linear regression, enabling AIC and BIC to be computed?
+    answer: |
+      For linear regression (where MSE is minimised), the log-likelihood is:
+
+      $$\ell = -\frac{N}{2} \ln(\text{MSE}) + C$$
+
+      Since only **relative differences** matter for AIC/BIC, the constant $C$ is dropped, giving:
+
+      $$\text{AIC} = 2k + N \ln(\text{MSE})$$
+      $$\text{BIC} = k\ln(N) + N \ln(\text{MSE})$$
+
+      where $k$ is the number of coefficients and $N$ is the number of training samples.
+    reference: practicals/model-selection.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: Why a hold-out test set must be carved from whole groups, not rows
+    prompt: When data has a hierarchical structure, why should the hold-out test set be split by groups rather than individual rows?
+    answer: |
+      If individual rows from the same group (e.g. trips from the same household) appear in both the training and test sets, **household-specific signals leak from train to test**.
+
+      The model can memorise group-specific patterns rather than learning generalisable ones, producing **inflated performance metrics** that do not reflect real-world behaviour on unseen groups.
+
+      The correct approach is to set aside **whole groups** (e.g. entire households) for the hold-out set, ensuring no group appears in both sets.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: How random vs. grouped splitting affects measured accuracy
+    prompt: What happens to measured model accuracy when you switch from random row-level splitting to group-aware splitting on hierarchical data?
+    answer: |
+      On the travel survey dataset:
+
+      | Strategy | Accuracy |
+      |---|---|
+      | Random (row-level) split | ~82% |
+      | Grouped split (`GroupShuffleSplit`) | ~68% |
+
+      The ~14 percentage-point drop shows that a large share of the model's earlier apparent performance was due to **data leakage**, not genuine generalisation. The grouped metric is a more honest estimate of real-world performance.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: Combining RandomizedSearchCV with group-aware cross-validation
+    prompt: How do you combine RandomizedSearchCV with GroupKFold to tune hyperparameters on hierarchical data?
+    answer: |
+      Pass a **pre-split `GroupKFold` generator** directly as the `cv` argument to `RandomizedSearchCV`:
+
+      ```python
+      gcv = model_selection.GroupKFold(n_splits=3).split(
+          X_train, y_train, groups=household_id_train
+      )
+      rs = model_selection.RandomizedSearchCV(
+          clf,
+          param_distributions=params,
+          n_iter=5,
+          cv=gcv,
+          refit="neg_log_loss",
+      )
+      rs.fit(X_train, y_train)
+      ```
+
+      This ensures that **no household appears in more than one fold** during hyperparameter search, preventing leakage while still exploring the parameter space.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: How group-aware validation affects which features the model deems important
+    prompt: How do feature importances differ between a model trained with random splitting versus group-aware cross-validation on hierarchical data?
+    answer: |
+      - **Random sampling** model: relies heavily on **group-specific features** (e.g. `green_space`), which are constant within a household and leak from train to test.
+      - **Group K-Fold CV** model: shifts importance toward **features that generalise** across households, such as number of cars or licence status.
+
+      This shows that structure-aware validation not only produces better performance estimates — it also guides the model to learn more **robust and generalisable** representations.
+    reference: practicals/validation-on-hierarchical-data.ipynb
+
+  - topic: Hierarchical Data Validation
+    title: How consistent metrics across development and hold-out sets confirm valid evaluation
+    prompt: What does it mean if a model's metrics are similar on the development validation set and on a completely held-out set?
+    answer: |
+      Consistent performance between development validation and the held-out set indicates that the **validation strategy is providing a reliable estimate of generalisation**.
+
+      In the travel survey example:
+      - Models trained with **group-aware splits** showed similar scores on both the cross-validation folds and the held-out households, confirming the evaluation was sound.
+      - The **randomly split** model showed high scores during development but dropped on the hold-out, revealing that the earlier metrics were inflated by leakage.
+    reference: practicals/validation-on-hierarchical-data.ipynb
