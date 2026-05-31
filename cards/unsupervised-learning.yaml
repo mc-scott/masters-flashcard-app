@@ -1,0 +1,704 @@
+Unsupervised Learning:
+- topic: Introduction to Unsupervised Learning
+  title: Definition of unsupervised learning
+  prompt: What is unsupervised learning?
+  answer: |
+    An algorithm that learns patterns from data **without having access to pre-existing labels**.
+
+    All variables are treated symmetrically — the model tries to find how all the variables interact with each other.
+  reference: 01-intro-to-unsupervised-learning.md
+
+- topic: Introduction to Unsupervised Learning
+  title: Common unsupervised learning tasks
+  prompt: What are the main tasks unsupervised learning can be used for?
+  answer: |
+
+    - **Identifying outliers** in a dataset
+    - **Learning new representations** of data that provide new insights
+    - **Identifying latent groupings** (clusters) in data
+    - **Generating synthetic data** via generative models that learn $P(X)$
+
+    It can also support supervised pipelines via EDA, data processing, and feature engineering.
+  reference: 01-intro-to-unsupervised-learning.md
+
+- topic: Introduction to Unsupervised Learning
+  title: Evaluating unsupervised models
+  prompt: How do you evaluate the performance of an unsupervised learning model when ground-truth labels are unavailable?
+  answer: |
+    Evaluation is harder than in supervised learning. It is often done by assessing **how useful the added information is for a downstream process**.
+
+    For example, do the clusters identified in customer data tell us something interesting about customer behaviour?
+  reference: 01-intro-to-unsupervised-learning.md
+
+- topic: K-Means Clustering
+  title: Choosing a clustering algorithm by data shape
+  prompt: How does the shape of your data influence the choice of clustering algorithm?
+  answer: |
+
+    - **Spherical clusters** → K-Means works well
+    - **Elongated or irregular clusters** → Hierarchical clustering
+    - **Arbitrary, noisy, or dense clusters** → DBSCAN
+  reference: 02-k-means-clustering.md
+
+- topic: K-Means Clustering
+  title: Inertia metric for clustering
+  prompt: What is inertia in the context of K-Means clustering?
+  answer: |
+
+    Inertia is the **within-cluster sum of squares**:
+
+    $$\text{Inertia} = \sum_{i=1}^{k} \sum_{x \in C_i} \|x - \mu_i\|^2$$
+
+    It measures **compactness** — the sum of squared distances from each point to its cluster centroid.
+
+    - **Lower is better**, but inertia always decreases as $k$ increases
+    - Does not penalise for excessive clusters
+  reference: 02-k-means-clustering.md
+
+- topic: K-Means Clustering
+  title: Elbow method for choosing K
+  prompt: How does the elbow method help choose the number of clusters?
+  answer: |
+    Plot **inertia** (within-cluster sum of squares) against $k$.
+
+    The optimal $k$ is at the **"elbow"** — the point where adding more clusters yields diminishing reductions in inertia.
+
+    This requires a **subjective judgement** about where the curve bends.
+  reference: 02-k-means-clustering.md
+
+- topic: K-Means Clustering
+  title: Silhouette score formula
+  prompt: What is the silhouette score and how is it computed?
+  answer: |
+
+    $$s(i) = \frac{b(i) - a(i)}{\max(a(i),\ b(i))}$$
+
+    Where:
+
+    - $a(i)$ = mean distance from point $i$ to all other points in the **same** cluster (cohesion)
+    - $b(i)$ = mean distance from point $i$ to all points in the **nearest neighbouring** cluster (separation)
+
+    Scores range from $-1$ to $+1$:
+
+    - $+1$: well-matched to own cluster
+    - $0$: on the boundary between two clusters
+    - $-1$: likely assigned to wrong cluster
+  reference: 02-k-means-clustering.md
+
+- topic: K-Means Clustering
+  title: Silhouette vs elbow method
+  prompt: What advantage does the silhouette score have over the elbow method for choosing K?
+  answer: |
+    The silhouette score gives a **clear peak** at the optimal $k$, whereas the elbow method requires a **subjective judgement** about where the "elbow" is.
+
+    Plot the mean silhouette score against $k$ — **higher is better**.
+  reference: 02-k-means-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Agglomerative vs divisive clustering
+  prompt: What is the difference between agglomerative and divisive hierarchical clustering?
+  answer: |
+
+    - **Agglomerative (bottom-up)**: start by assuming every data point is a single cluster, then greedily merge the two closest clusters at each step until one cluster remains
+    - **Divisive (top-down)**: start by assuming all data points are in the same cluster, then recursively split
+  reference: 03-hierarchical-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Linkage methods
+  prompt: What are the common linkage methods in hierarchical clustering and how do they differ?
+  answer: |
+
+    Linkage controls how "closeness" between clusters is measured:
+
+    - **`average`** — distance between the average of each cluster's points. Can create one very large cluster with small outlier clusters.
+    - **`ward`** — minimises within-cluster variance. Tends to produce more **balanced, compact** clusters.
+  reference: 03-hierarchical-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Reading a dendrogram
+  prompt: What is a dendrogram and what does it show?
+  answer: |
+  
+    A **tree diagram** visualising the merge hierarchy in agglomerative clustering.
+
+    The **height** of each merge indicates the **distance** at which clusters were joined. Larger jumps in height suggest natural cluster boundaries.
+
+    ```python
+    from scipy.cluster.hierarchy import linkage, dendrogram
+    Z = linkage(X, method='ward', metric='euclidean')
+    dendrogram(Z, truncate_mode='lastp', p=20)
+    ```
+  reference: 03-hierarchical-clustering.md
+
+- topic: DBSCAN
+  title: Core idea of DBSCAN
+  prompt: What makes DBSCAN different from K-Means and hierarchical clustering?
+  answer: |
+
+    DBSCAN defines clusters as **regions of high point density separated by regions of low density**.
+
+    Unlike K-Means or hierarchical methods it:
+
+    - Does **not** require the number of clusters to be specified in advance
+    - Can find **arbitrarily shaped** clusters (crescents, rings, non-convex blobs)
+    - Explicitly identifies **noise/outliers** as points that don't belong to any cluster (label = $-1$)
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: DBSCAN point classification
+  prompt: How does DBSCAN classify points into core, border, and noise?
+  answer: |
+    Given parameters `eps` and `min_samples`:
+
+    | Type | Definition |
+    |------|-----------|
+    | **Core point** | Has ≥ `min_samples` points within radius `eps` (including itself) |
+    | **Border point** | Within `eps` of a core point but has < `min_samples` neighbours |
+    | **Noise point** | Neither core nor border; not reachable from any core point |
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: Choosing eps with the k-distance graph
+  prompt: How do you estimate a good value for the eps parameter in DBSCAN?
+  answer: |
+    Use the **k-distance graph** (canonical method):
+
+    1. For each point, compute the distance to its $k$-th nearest neighbour (where $k$ = `min_samples`)
+    2. Sort these distances in ascending order and plot them
+    3. Look for the **elbow/knee** — the transition from shallow slope (intra-cluster) to steep slope (noise)
+    4. Set `eps` at or near this elbow
+
+    ```python
+    from sklearn.neighbors import NearestNeighbors
+    nn = NearestNeighbors(n_neighbors=k)
+    nn.fit(scaled_data)
+    distances, _ = nn.kneighbors(scaled_data)
+    k_distances = np.sort(distances[:, k - 1])
+    plt.plot(k_distances)
+    ```
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: DBSCAN sensitivity analysis
+  prompt: Why is a grid sweep over eps and min_samples called a sensitivity analysis rather than training?
+  answer: |
+    DBSCAN has **no loss function to optimise** — it is not "trained" in the supervised sense.
+
+    The grid sweep checks **how stable the cluster count is** across parameter choices. Regions where the cluster count is stable (plateaux in a heatmap) suggest **robust parameter settings**.
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: When DBSCAN is inappropriate
+  prompt: In what situations is DBSCAN a poor choice of clustering algorithm?
+  answer: |
+    - Clusters with **highly varying densities** (single `eps` can't capture all)
+    - **Very high-dimensional data** (distance metrics become less meaningful — use PCA first)
+    - Need **soft/probabilistic** cluster membership
+    - Need fully **deterministic** results (border points can vary with processing order)
+
+    **HDBSCAN** addresses the varying-density limitation by building a cluster hierarchy over all density levels.
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: Importance of scaling for DBSCAN
+  prompt: Why is feature scaling essential before applying DBSCAN?
+  answer: |
+    DBSCAN uses **distance** to define density. Unscaled features with large ranges will **dominate** the distance calculation, leading to misleading clusters.
+
+    Always use `StandardScaler` (or similar) before fitting DBSCAN.
+
+    This also applies to PCA — without scaling, explained variance ratios are misleading (e.g. 99% in PC1 reflecting scale, not genuine dimensionality).
+  reference: 04-db-scan.md
+
+- topic: DBSCAN
+  title: Evaluating DBSCAN with silhouette score
+  prompt: What must you be careful about when computing silhouette scores for DBSCAN results?
+  answer: |
+    **Exclude noise points** (label = $-1$) before computing the silhouette score — they are not cluster members and will distort the result.
+
+    ```python
+    mask = cluster_assignment != -1
+    if len(set(cluster_assignment[mask])) > 1:
+        score = silhouette_score(X[mask], cluster_assignment[mask])
+    ```
+
+    Also note that Davies-Bouldin uses centroids and assumes convex clusters, so it can be **misleading** for DBSCAN's non-convex clusters.
+  reference: 04-db-scan.md
+
+- topic: t-SNE
+  title: What t-SNE preserves
+  prompt: What does t-SNE prioritise preserving compared to PCA?
+  answer: |
+    t-SNE prioritises preserving **pairwise local distances** between points, whereas PCA preserves information over the whole dimensions (global distances).
+
+    Local distance = distance between a point and its nearest neighbours.
+    Global distance = distance between a point and all other points.
+  reference: 05-tsne.md
+
+- topic: t-SNE
+  title: The t-SNE algorithm steps
+  prompt: What are the three main steps of the t-SNE algorithm?
+  answer: |
+    1. **Compute distance probabilities** between all pairs of neighbouring points in the original high-dimensional space (controlled by the **perplexity** parameter)
+    2. **Follow the same procedure** in the low-dimensional space
+    3. **Minimise the KL divergence** between the high-dimensional and low-dimensional distributions:
+
+    $$KL(P \| Q) = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}$$
+  reference: 05-tsne.md
+
+- topic: t-SNE
+  title: Role of the perplexity parameter
+  prompt: What does the perplexity parameter control in t-SNE?
+  answer: |
+    Perplexity determines the **number of neighbour datapoints considered as local**. It is a measure of the effective number of neighbours.
+
+    - Typically set between **5 and 50**
+    - Too low → overfitting (focuses too much on local structure)
+    - Too high → underfitting (loses local detail)
+  reference: 05-tsne.md
+
+- topic: t-SNE
+  title: Why t-SNE uses a Student's t-distribution
+  prompt: Why does t-SNE use a Student's t-distribution in the low-dimensional space rather than a Gaussian?
+  answer: |
+    The Student's t-distribution has **heavier tails** than a Gaussian, which allows for better handling of the **"crowding problem"** that arises when mapping high-dimensional data to lower dimensions.
+
+    This gives nearby points room to spread out while keeping distant points separated.
+  reference: 05-tsne.md
+
+- topic: t-SNE
+  title: Pitfalls of t-SNE
+  prompt: What are the main pitfalls and limitations of t-SNE?
+  answer: |
+    1. **Computationally intensive** — especially for large datasets (pairwise distances + optimisation)
+    2. **Non-deterministic** — results vary between runs due to random initialisation; set a random seed for reproducibility
+    3. **Parameter sensitivity** — results are sensitive to perplexity and learning rate
+    4. **Not suitable for clustering** — primarily a visualisation tool; may not preserve global structure
+    5. **Overinterpretation** — the low-dimensional representation may not accurately reflect true high-dimensional relationships
+  reference: 05-tsne.md
+
+- topic: PCA (Applied)
+  title: Transposing data for PCA in domain science
+  prompt: Why might you transpose a dataset before performing PCA, such as in archaeological science?
+  answer: |
+    In some domains (e.g. archaeological science), it is common to transpose so that **elements become rows and samples become columns**.
+
+    This allows PCA to reveal which **variables (e.g. chemical elements)** are most responsible for variation, rather than which samples differ most.
+
+    The elements with the **maximum absolute PC values** indicate the variables driving the most variance.
+  reference: assignments/chemical_composition_analysis.md
+
+- topic: PCA (Applied)
+  title: Reusable PCA transformation function
+  prompt: What steps should a reusable PCA transformation function include?
+  answer: |
+    1. **Scale** the dataset (e.g. `preprocessing.scale()`)
+    2. **Instantiate** a PCA model
+    3. **Fit and transform** the scaled data
+    4. Convert to a **DataFrame** using the original index
+    5. **Rename columns** from 0, 1, 2... to PC1, PC2, PC3...
+    6. **Return** the processed DataFrame
+
+    ```python
+    def PCA_transformed_table(data):
+        scaled = preprocessing.scale(data)
+        pca = PCA()
+        result = pca.fit_transform(scaled)
+        df = pd.DataFrame(result, index=data.index)
+        df.columns = [f"PC{i+1}" for i in range(df.shape[1])]
+        return df
+    ```
+  reference: assignments/chemical_composition_analysis.md
+
+- topic: K-Means (Applied)
+  title: Interpreting K-Means clusters with histograms and boxplots
+  prompt: How can you interpret what K-Means clusters represent after fitting?
+  answer: |
+    1. **Assign cluster labels** to the original scaled DataFrame
+    2. **Split** the data by cluster label into separate DataFrames
+    3. **Plot histograms** of all features for each cluster to visually compare distributions
+    4. **Use boxplots** grouped by cluster label for features that show the most difference
+
+    This reveals which features have distinct distributions across clusters, helping interpret what each cluster represents.
+  reference: assignments/travel_review_analysis.md
+
+- topic: K-Means (Applied)
+  title: Effect of changing K on cluster distributions
+  prompt: What should you check when increasing the number of K-Means clusters?
+  answer: |
+    - Compare **feature distributions** (histograms/boxplots) across the new clusters
+    - Check if the distinguishing features from fewer clusters (e.g. $k=2$) **remain different** with more clusters (e.g. $k=4$)
+    - Use `value_counts()` on the cluster labels to check **cluster balance** — very uneven clusters may indicate a poor choice of $k$
+  reference: assignments/travel_review_analysis.md
+
+- topic: DBSCAN (Applied)
+  title: Starting parameter values for DBSCAN
+  prompt: How do you choose initial values for eps and min_samples when applying DBSCAN?
+  answer: |
+    - **`min_samples`**: Rule of thumb is $2 \times D$ where $D$ is the number of features (e.g. 17 features → start with 34)
+    - **`eps`**: Plot the distribution of nearest-neighbour distances (histogram) and choose a value toward the **right tail** of the distribution as a starting point, then revise downward
+
+    These are initial guesses — use sensitivity analysis to refine.
+  reference: practicals/dbscan-practical-solution.md
+
+- topic: DBSCAN (Applied)
+  title: DBSCAN on original vs PCA space
+  prompt: Why might DBSCAN produce different results when applied to PCA-reduced data vs the original feature space?
+  answer: |
+    The PCA space is **denser** than the original high-dimensional space because dimensionality reduction compresses points into fewer dimensions.
+
+    With the same `eps` and `min_samples`, DBSCAN in PCA space may assign **nearly all points to one cluster** (fewer outliers), because the density threshold is more easily met.
+
+    You should **reduce `eps`** and potentially adjust `min_samples` when clustering in a reduced-dimension space.
+  reference: practicals/dbscan-practical-solution.md
+
+- topic: DBSCAN (Applied)
+  title: Handling skewed data before clustering
+  prompt: How can you handle columns with large outliers before applying DBSCAN?
+  answer: |
+    One approach is to **bin extreme values into categories** and replace each category with the **median** of the original values in that bin.
+
+    This preserves approximate information while removing skew. Steps:
+
+    1. Assign each value to a range-based category (e.g. 0–500, 500–1000, etc.)
+    2. Replace the category label with the median of the original values in that bin
+    3. Drop the original columns and scale the transformed data
+
+    Alternative approaches include **log-transforming** the data before scaling.
+  reference: practicals/dbscan-practical-solution.md
+
+- topic: DBSCAN (Applied)
+  title: DBSCAN vs K-Means on non-convex data
+  prompt: How does DBSCAN compare to K-Means when clustering non-convex shapes (e.g. crescents or a smiley face)?
+  answer: |
+    DBSCAN **dramatically outperforms** K-Means on non-convex data.
+
+    K-Means assigns points to the **nearest centroid**, so it splits curved shapes (e.g. a crescent) across multiple clusters based on centroid proximity rather than density.
+
+    DBSCAN groups points by **density connectivity**, correctly identifying arbitrarily shaped clusters and labelling isolated points as noise.
+  reference: practicals/dbscan-slides.md
+
+- topic: DBSCAN (Applied)
+  title: Sensitivity analysis with a heatmap
+  prompt: How can you use a heatmap to choose DBSCAN parameters?
+  answer: |
+    Sweep a grid of `eps` × `min_samples` values and record the **number of clusters** found at each combination.
+
+    Visualise the results with a heatmap (e.g. `sns.heatmap`). Look for **plateaux** — stable regions where the cluster count doesn't change — rather than optimising a single number.
+
+    ```python
+    eps = np.linspace(0.005, 0.1, 20)
+    mins = list(range(4, 65, 6))
+    Z = np.zeros((len(eps), len(mins)))
+    for i, e in enumerate(eps):
+        for j, m in enumerate(mins):
+            db = DBSCAN(eps=e, min_samples=m)
+            pred = db.fit_predict(X)
+            Z[i, j] = len(np.unique(pred))
+    sns.heatmap(Z, annot=True)
+    ```
+  reference: practicals/dbscan-slides.md
+
+- topic: DBSCAN (Applied)
+  title: Per-cluster silhouette analysis
+  prompt: Why might you compute silhouette scores per cluster rather than just the overall mean?
+  answer: |
+    The overall mean silhouette score can mask problems in individual clusters. Using `silhouette_samples`, you can compute the **mean score for each cluster separately**.
+
+    This reveals whether specific clusters are well-defined or poorly separated, even when the overall score looks acceptable.
+
+    ```python
+    from sklearn.metrics import silhouette_samples
+    per_sample = silhouette_samples(X, labels)
+    for c in np.unique(labels):
+        print(f"Cluster {c}: {per_sample[labels == c].mean():.3f}")
+    ```
+  reference: practicals/dbscan-slides.md
+
+- topic: DBSCAN
+  title: HDBSCAN and varying density
+  prompt: What limitation of DBSCAN does HDBSCAN address?
+  answer: |
+    DBSCAN uses a **single `eps`** value, making it unsuitable for datasets with clusters of **varying density**.
+
+    **HDBSCAN** (hierarchical DBSCAN) addresses this by building a cluster hierarchy over all density levels and extracting the most stable clusters — effectively removing `eps` as a parameter.
+  reference: practicals/dbscan-slides.md
+
+- topic: Hierarchical Clustering (Applied)
+  title: Average vs Ward linkage in practice
+  prompt: What practical difference does switching from average to Ward linkage make?
+  answer: |
+    - **Average linkage** can produce one huge cluster with a few small outlier clusters — most data ends up in one group
+    - **Ward linkage** minimises within-cluster variance, producing more **balanced super-clusters**
+
+    The choice of linkage can **dramatically** change the resulting clusters, so it's worth trying multiple methods.
+  reference: practicals/hierarchical-clustering-practical-solution.md
+
+- topic: Hierarchical Clustering (Applied)
+  title: Truncating a dendrogram
+  prompt: How do you improve the readability of a dendrogram for large datasets?
+  answer: |
+    Use the `truncate_mode` parameter in `dendrogram()`:
+
+    ```python
+    dendrogram(Z, truncate_mode='lastp', p=20, color_threshold=70)
+    ```
+
+    - `truncate_mode='lastp'` shows only the last `p` merged clusters as non-leaf nodes
+    - `color_threshold` colours distinct clusters below that merge height the same colour
+    - Numbers in **(brackets)** on the x-axis show the **cluster size** at each leaf
+  reference: practicals/hierarchical-clustering-practical-solution.md
+
+- topic: Hierarchical Clustering (Applied)
+  title: The elbow method for hierarchical clustering
+  prompt: How does the elbow method work for choosing the number of hierarchical clusters?
+  answer: |
+    Compute the **average within-cluster variance** for $k = 1, ..., K$ clusters:
+
+    $$\text{Var} = \frac{1}{N^2} \sum_{i} \sum_{j} \frac{1}{2} \|x_i - x_j\|^2$$
+
+    Plot variance vs $k$. The **"elbow"** — where the gradient transitions from steep to shallow — indicates diminishing returns from adding more clusters.
+
+    After the elbow, additional clusters explain little extra variance.
+  reference: practicals/hierarchical-clustering-practical-solution.md
+
+- topic: Hierarchical Clustering
+  title: Flat vs hierarchical clustering
+  prompt: What is the difference between flat and hierarchical clustering?
+  answer: |
+    - **Flat clustering**: each point is assigned to a **single cluster** (e.g. K-Means). Requires specifying the number of clusters in advance.
+    - **Hierarchical clustering**: builds a **nested hierarchy** of clusters. Each point can belong to multiple clusters at different levels of the hierarchy.
+
+    Hierarchical clustering is useful when data is naturally hierarchical (e.g. species taxonomy, geographic locations, word semantics).
+  reference: practicals/hierarchical-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Agglomerative vs divisive approach
+  prompt: How do agglomerative and divisive hierarchical clustering differ algorithmically?
+  answer: |
+    - **Agglomerative (bottom-up)**: start with every point as its own cluster. At each step, merge the two closest clusters. Repeat until one cluster remains.
+    - **Divisive (top-down)**: start with all points in one cluster. At each step, split a cluster into two. Repeat until each point is its own cluster.
+
+    Agglomerative is more common because defining an **automatic divisive metric** is harder — it requires considering all possible ways to split a cluster.
+  reference: practicals/hierarchical-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Linkage methods compared
+  prompt: What are single, complete, and average linkage, and how do they differ?
+  answer: |
+    Linkage determines how distance between clusters is measured:
+
+    - **Single linkage**: distance between the **two closest** points in each cluster. Can lead to chaining effects.
+    - **Complete linkage**: distance between the **two furthest** points. Favours merging smaller clusters first but can be influenced by outliers.
+    - **Average linkage**: distance between the **centres of mass** of each cluster. Captures overall cluster position but different weighting schemes exist.
+
+    Each choice encodes different assumptions about what constitutes similarity.
+  reference: practicals/hierarchical-clustering.md
+
+- topic: Hierarchical Clustering
+  title: Dendrogram truncation for flat clusters
+  prompt: How can truncation of a dendrogram yield flat clusters?
+  answer: |
+    Select a specific **height** on the dendrogram as a cut point. Each point is assigned to the cluster it belongs to at that level — all sub-structure below is ignored.
+
+    This converts a hierarchy into a **flat clustering**, analogous to choosing $k$ in K-Means. The choice of where to truncate depends on the user's goals and often involves trial and error.
+  reference: practicals/hierarchical-clustering.md
+
+- topic: K-Means (Applied)
+  title: K-Means on a feature subset vs all features
+  prompt: Why might K-Means clusters look different when using all features vs a 2-feature subset?
+  answer: |
+    When clustering on **all features**, the algorithm considers distances in the full high-dimensional space. The resulting clusters may not be linearly separable when projected onto just two features.
+
+    When clustering on only **two features**, the clusters are defined purely in that 2D subspace and will appear cleanly separable in a scatter plot of those features.
+  reference: practicals/k-means-practical-solution.md
+
+- topic: K-Means (Applied)
+  title: Using silhouette and Davies-Bouldin together
+  prompt: Why might silhouette score and Davies-Bouldin index suggest different optimal values of K?
+  answer: |
+    They use the same mindset (**compactness and separation**) but different mathematics:
+
+    - **Silhouette**: per-point measure comparing intra-cluster distance to nearest-cluster distance. Closer to **1** is better.
+    - **Davies-Bouldin**: ratio of within-cluster scatter to between-cluster separation. Closer to **0** is better.
+
+    They can disagree because they weight cluster size, shape, and separation differently. Consider both alongside **domain knowledge** and **PCA visualisation**.
+  reference: practicals/k-means-practical-solution.md
+
+- topic: K-Means (Applied)
+  title: Normalisation before K-Means
+  prompt: Why is normalisation important before running K-Means?
+  answer: |
+    K-Means relies on **distance metrics** (Euclidean distance). Features with larger scales will **dominate** the distance calculation.
+
+    Use `StandardScaler` to normalise features to zero mean and unit variance before fitting, so all features contribute equally to cluster assignments.
+  reference: practicals/k-means-practical-solution.md
+
+- topic: K-Means (Applied)
+  title: Using PCA to validate clustering
+  prompt: How can PCA help validate K-Means clustering results?
+  answer: |
+    Reduce the data to **2 or 3 dimensions** with PCA and plot points coloured by cluster label. This lets you visually assess:
+
+    - Whether clusters are **well-separated** or overlapping
+    - Whether the cluster shape is **spherical** (appropriate for K-Means) or irregular
+    - Whether the number of clusters looks reasonable
+
+    Poor visual separation after PCA confirms that the silhouette/Davies-Bouldin scores indicate suboptimal clustering, and suggests trying a different algorithm.
+  reference: practicals/k-means-practical-solution.md
+
+- topic: K-Means Clustering
+  title: K-Means algorithm steps
+  prompt: What are the two alternating steps of the K-Means algorithm?
+  answer: |
+    Starting from randomly initialised cluster centres, repeat until convergence:
+
+    1. **Assign points to clusters**: each point is assigned to the cluster whose centre is nearest (e.g. by Euclidean distance)
+    2. **Re-calculate cluster centres**: set each centre to the **mean** of all points assigned to that cluster
+
+    Convergence occurs when cluster assignments stop changing.
+  reference: practicals/k-means-slides.md
+
+- topic: K-Means Clustering
+  title: K-Means convergence to local optima
+  prompt: Why does K-Means converge to a local optimum, and how can you mitigate this?
+  answer: |
+    K-Means is sensitive to **random initialisation** — different starting centres can yield different solutions (local optima).
+
+    Solution: run K-Means with **multiple random initialisations** and choose the clustering with the **lowest inertia**.
+
+    In sklearn, this is controlled by the `n_init` parameter (default = 10).
+  reference: practicals/k-means-slides.md
+
+- topic: K-Means Clustering
+  title: Benefits and limitations of K-Means
+  prompt: What are the main benefits and limitations of K-Means clustering?
+  answer: |
+    **Benefits:**
+
+    - Fast to run in practice
+    - Easy to interpret
+    - Assigning a new point is straightforward
+
+    **Limitations:**
+
+    - Must select the number of clusters $k$ in advance
+    - Converges to a **local optimum**
+    - Assumes **globular (spherical)** cluster shapes
+    - Sensitive to **noise**
+  reference: practicals/k-means-slides.md
+
+- topic: K-Means Clustering
+  title: Inertia limitations
+  prompt: What are the limitations of using inertia to evaluate K-Means clustering?
+  answer: |
+    Inertia (within-cluster sum of squares) has two key limitations:
+
+    1. It assumes **globular (circular) cluster shapes** — does not work well for elongated clusters
+    2. It is **not normalised** — zero is optimal and lower is better, but there is no upper bound, so a single value is hard to interpret
+
+    Inertia always decreases as $k$ increases, which is why the **elbow method** is needed to find the point of diminishing returns.
+  reference: practicals/k-means-slides.md
+
+- topic: t-SNE (Applied)
+  title: Using PCA before t-SNE
+  prompt: Why is it recommended to apply PCA before t-SNE on high-dimensional data?
+  answer: |
+    t-SNE is **computationally intensive** and scales quadratically with sample size. High dimensionality (e.g. 784 pixels) makes it slow.
+
+    Applying PCA first to reduce to ~50 dimensions can retain >80% of variance while dramatically speeding up t-SNE. The recommended dimensionality for t-SNE input is around **50**.
+
+    ```python
+    pca = PCA(n_components=50)
+    reduced = pca.fit_transform(X)
+    tsne_result = TSNE(n_components=2).fit_transform(reduced)
+    ```
+  reference: practicals/tsne-digits-solution.md
+
+- topic: t-SNE (Applied)
+  title: t-SNE on handwritten digits
+  prompt: What does t-SNE reveal when applied to the MNIST handwritten digits dataset?
+  answer: |
+    Even without using labels, t-SNE separates the 10 digit classes into **clearly distinct, tightly grouped clusters** in 2D.
+
+    This makes it easy to discern 8–9 clusters visually, closely matching the true digit labels. This demonstrates why t-SNE is widely used as a dimensionality reduction method to generate inputs for clustering algorithms.
+
+    PCA alone (2 components, ~17% variance) shows some clustering but with significant overlap.
+  reference: practicals/tsne-digits-solution.md
+
+- topic: t-SNE (Applied)
+  title: t-SNE scalability limitation
+  prompt: What is the main scalability limitation of t-SNE?
+  answer: |
+    t-SNE scales **quadratically** with sample size ($O(n^2)$), making it impractical for datasets beyond a few thousand points.
+
+    For larger datasets, subsample the data first (e.g. to 5,000 points) before applying t-SNE. Tree-based implementations improve scaling but the method remains best suited for smaller datasets.
+  reference: practicals/tsne-digits-solution.md
+
+- topic: t-SNE (Applied)
+  title: t-SNE for single-cell RNA-seq
+  prompt: How is t-SNE used to visualise single-cell RNA-seq data?
+  answer: |
+    Gene expression data is typically very high-dimensional (hundreds of thousands of genes). It is first reduced using **PCA** (e.g. to 50 components), then t-SNE maps these to **2D for visualisation**.
+
+    The resulting clusters should ideally correspond to different **cell types**. This workflow is standard in bioinformatics:
+
+    1. PCA on gene expression data
+    2. t-SNE on PCA components
+    3. Colour by cell type labels to validate
+  reference: practicals/tsne-single-cell-solution.md
+
+- topic: t-SNE (Applied)
+  title: Effect of perplexity on t-SNE results
+  prompt: What happens when perplexity is set too low or too high in t-SNE?
+  answer: |
+    - **Too low perplexity**: finds local structure that **doesn't exist** in the original data; can create spurious "clumping" of samples
+    - **Too high perplexity**: misses original structure; may induce **mixing of clusters**
+
+    Typical range is **5–50** (default = 30). It is recommended to compare embeddings across multiple perplexity values.
+  reference: practicals/tsne-slides.md
+
+- topic: t-SNE (Applied)
+  title: t-SNE does not preserve cluster sizes or distances
+  prompt: Why can't you infer relative cluster sizes or inter-cluster distances from a t-SNE plot?
+  answer: |
+    t-SNE focuses on **local topology** — it preserves neighbourhood relationships but not global distances.
+
+    Consequences:
+
+    - Clusters with **different densities** in the original space may appear the **same size** in t-SNE output
+    - **Distances between clusters** in the t-SNE plot do not necessarily reflect true distances in the original space
+
+    This is one of the key reasons t-SNE should be used for **visualisation only**, not for drawing quantitative conclusions about cluster relationships.
+  reference: practicals/tsne-slides.md
+
+- topic: t-SNE
+  title: Crowding problem and Student's t-distribution
+  prompt: What is the crowding problem in dimensionality reduction and how does t-SNE address it?
+  answer: |
+    The **crowding problem** occurs when mapping high-dimensional data to low dimensions — there isn't enough room to faithfully represent all pairwise distances, causing points to crowd together.
+
+    t-SNE addresses this by using the **Student's t-distribution** (heavy-tailed) in the low-dimensional space instead of a Gaussian. The heavier tails allow **dissimilar objects to be modelled far apart**, giving nearby points room to spread out.
+  reference: practicals/tsne-slides.md
+
+- topic: t-SNE
+  title: t-SNE cost function properties
+  prompt: Why can t-SNE produce different results each time it is run?
+  answer: |
+    The t-SNE cost function (KL divergence) is **non-convex**, meaning it has a complex landscape with potentially **multiple local minima**.
+
+    The algorithm uses **gradient descent** with random initialisation, so different runs may converge to different solutions. Always set `random_state` for reproducibility.
+  reference: practicals/tsne-slides.md
+
+- topic: t-SNE (Applied)
+  title: Spurious structure from noise
+  prompt: How can t-SNE create misleading structure from random data?
+  answer: |
+    When applied to **noisy or completely random data**, t-SNE may converge to solutions showing apparent clusters that are **meaningless**.
+
+    At low perplexity values, local effects can generate **spurious "clumping"** of samples. This is why it's important to:
+
+    - Compare multiple perplexity values
+    - Validate clusters with domain knowledge
+    - Not use t-SNE as a clustering algorithm
+  reference: practicals/tsne-slides.md
