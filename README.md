@@ -84,11 +84,35 @@ Topic Name:
     reference: source-notebook.ipynb
 ```
 
-## Deployment (Posit Cloud)
+## Deployment (PythonAnywhere)
 
-1. Upload the project files to Posit Cloud.
-2. Set the `SECRET_KEY` environment variable.
-3. Posit Cloud will serve `app.py` as the entry point. The app binds to `host="0.0.0.0"` and reads `PORT` from the environment automatically.
+1. **Connect to your private GitHub repo** — generate a personal access token on GitHub (Settings → Developer settings → Personal access tokens), then clone using:
+   ```bash
+   git clone https://<your-token>@github.com/<your-username>/<your-repo>.git
+   ```
+2. Upload the project files to PythonAnywhere (via Git clone or the Files tab).
+2. In the **Web** tab, create a new web app and select **Manual configuration** with the appropriate Python version.
+3. Set the **Source code** directory and **Working directory** to your project folder.
+4. In the **WSGI configuration file**, replace the default content with:
+   ```python
+   import sys
+   sys.path.insert(0, '/home/<your-username>/<your-project-folder>')
+   from app import app as application
+   ```
+5. In the **Web** tab under **Environment variables**, set `SECRET_KEY` to a strong secret value.
+6. Open a **Bash console** and install dependencies:
+   ```bash
+   pip install --user flask pyyaml markdown python-dotenv
+   ```
+7. Click **Reload** in the Web tab to apply changes.
+
+### Updating the app
+
+1. Log in: PythonAnywhere.com/user/...
+2. Open the built-in bash terminal
+3. `ls` to refresh on folder structure then `cd` into correct folder
+4. `git status` to check git configured correctly then `git pull origin master`
+5. Click **Reload** in the Web tab to apply changes.
 
 ## Dependencies
 
@@ -101,8 +125,9 @@ Topic Name:
 
 ## Using a github skill to create flashcards
 
-1. Run notebooks_to_markdown.py in the root. E.g. `python notebooks_to_markdown.py "c:\Users\ScottM\code_dev\L7 Apprenticeship\05-ensemble-learning"`
-  - This converts all .ipynb files to markdown and saves them to a folder under your specified folder called notes
+1. Run ipynb_to_md.py in the root. E.g. `python ipynb_to_md.py "05-ensemble-learning"`
+  - This converts all .ipynb files to markdown and saves them to a sub-folder under your specified folder called notes
   - This ensures easier reading by the copilot skills
+  - Clesanse large images from md files to avoid burning tokens
 1. In chat, call the create-flashcards skill using `/create-flashcards 05-ensemble-learning`
-  - This will append small, self-contained learnings to cards.yaml, adding them to the app.
+  - This will append small, self-contained learnings to the modules yaml file in `cards/`, adding them to the app.
