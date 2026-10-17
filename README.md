@@ -96,7 +96,8 @@ Topic Name:
 4. In the **WSGI configuration file**, replace the default content with:
    ```python
    import sys
-   sys.path.insert(0, '/home/<your-username>/<your-project-folder>')
+
+   sys.path.insert(0, "/home/<your-username>/<your-project-folder>")
    from app import app as application
    ```
 5. In the **Web** tab under **Environment variables**, set `SECRET_KEY` to a strong secret value.
