@@ -165,6 +165,24 @@
       font-weight: 600;
       flex-shrink: 0;
     }
+    .topic-form {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .topic-btn {
+      background: rgba(74, 108, 247, 0.08);
+      color: #4a6cf7;
+      border: 1px solid rgba(74, 108, 247, 0.4);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .topic-btn:hover { background: rgba(74, 108, 247, 0.18); }
+    .topic-btn.active { background: #4a6cf7; color: #fff; }
     .btn-row {
       display: flex;
       gap: 0.5rem;
@@ -218,11 +236,22 @@
       </div>
     </div>
     <p class="flip-hint">Tap the card to reveal the answer</p>
+    {% if focused %}
+    <form action="/unfocus" method="post" class="topic-form">
+      <button type="submit" class="topic-btn active" title="Return to your original module selection">Studying only: {{ card.topic }} · Show all</button>
+    </form>
+    {% elif topic_count > 0 %}
+    <form action="/focus" method="post" class="topic-form">
+      <input type="hidden" name="topic" value="{{ card.topic }}">
+      <button type="submit" class="topic-btn" title="Study only this topic across all modules">⧉ Topic: {{ card.topic }} ({{ topic_count }})</button>
+    </form>
+    {% else %}
     <p class="topic-indicator">Topic: {{ card.topic }}</p>
+    {% endif %}
     <div class="btn-row">
       <a href="/" class="home-btn">Home</a>
       <form action="/next" method="post" style="flex:2;display:flex;">
-        <input type="hidden" name="card_id" value="{{ card.topic }}::{{ card.title }}">
+        <input type="hidden" name="card_id" value="{{ card.module }}::{{ card.topic }}::{{ card.title }}">
         <button type="submit" class="next-btn">Next Card</button>
       </form>
     </div>

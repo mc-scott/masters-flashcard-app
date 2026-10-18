@@ -1,5 +1,5 @@
 Ensemble Learning:
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Core principle behind ensemble methods
   prompt: What is the fundamental idea behind ensemble learning?
   answer: 'Taking the **''wisdom of the crowd''** from a selection of weak models
@@ -15,7 +15,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/introduction-to-ensemble-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Three components of an ensemble system
   prompt: What are the three essential components of an ensemble model?
   answer: '1. **A base model** - typically the same model type used multiple times
@@ -165,7 +165,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/introduction-to-ensemble-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Ensemble best practices
   prompt: What are the key best practices when implementing ensemble methods?
   answer: '- Use **100-200 base models** for maximal benefits (though returns plateau)
@@ -182,7 +182,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/introduction-to-ensemble-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest feature subsetting
   prompt: How do Random Forests differ from standard bagging in their use of features?
   answer: 'Random Forests use **two types of subsetting**:
@@ -205,7 +205,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Base model instability in ensembles
   prompt: Why should base models in ensemble methods be unstable or brittle?
   answer: 'Unstable/brittle base models (like decision trees or nearest neighbours)
@@ -246,7 +246,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Optimal number of trees in Random Forest
   prompt: What is the typical range for the number of trees in a Random Forest and
     what are the considerations?
@@ -266,7 +266,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest hyperparameters
   prompt: What are the key hyperparameters to tune in a Random Forest?
   answer: "- **Number of trees**: How many estimators in the ensemble\n- **Max depth**:\
@@ -276,7 +276,7 @@ Ensemble Learning:
     \ encoded data\n\nTypically use the same hyperparameters for all trees in the\
     \ forest.\n"
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Extremely Randomised Trees mechanism
   prompt: How do Extremely Randomised Trees (Extra-Trees) differ from Random Forests?
   answer: "Extra-Trees generate randomness **at node splitting**:\n\n**At each node\
@@ -287,7 +287,7 @@ Ensemble Learning:
     \ subsample **data rows** and **columns**, Extra-Trees only subsample **columns**\
     \ (no bootstrapping needed).\n"
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Extra-Trees advantages
   prompt: What are the advantages of Extremely Randomised Trees over Random Forests?
   answer: '- **Computationally more efficient** than normal decision trees
@@ -304,7 +304,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest efficacy
   prompt: What makes Random Forests and their variations highly effective in practice?
   answer: '- One of the **most robust and effective** prediction models
@@ -622,7 +622,7 @@ Ensemble Learning:
 
     '
   reference: 05-gradient-boosting.md
-- topic: Fundamentals
+- topic: Boosting
   title: Gradient descent in function space
   prompt: How can Gradient Boosting be viewed as gradient descent in function space?
   answer: '**Visualization**: Instead of optimizing parameters, we''re optimizing
@@ -891,7 +891,7 @@ Ensemble Learning:
     \ = 1000 total predictions for meta-learner\n- Then Level 1 models retrained on\
     \ full 1000 rows\n"
   reference: notebooks/stacking-slides.ipynb
-- topic: Fundamentals
+- topic: Stacking
   title: Two-level K-fold cross-validation
   prompt: How does 2-level K-fold cross-validation differ from single-level and when
     is it used?
@@ -1072,7 +1072,7 @@ Ensemble Learning:
     \ not required\n\n**Simpler alternatives**: Bagging or boosting may provide 80-90%\
     \ of the benefit at 10% of the cost.\n"
   reference: notebooks/stacking-slides.ipynb
-- topic: Fundamentals
+- topic: Model Evaluation
   title: ROC AUC vs accuracy for imbalanced datasets
   prompt: Why is ROC AUC a better metric than accuracy for imbalanced classification
     problems?
@@ -1093,7 +1093,7 @@ Ensemble Learning:
 
     '
   reference: assignments/ensembles_customer_satisfaction.ipynb
-- topic: Fundamentals
+- topic: Cross-Validation
   title: Stratified train-test split for imbalanced data
   prompt: Why should you use stratification when splitting imbalanced datasets?
   answer: "**Purpose**: Maintain the same class proportion in both train and test\
@@ -1115,7 +1115,7 @@ Ensemble Learning:
     \ \n                          for model in self.base_models])\n    return all_probs.mean(axis=0)\n\
     ```\n\nBootstrap sampling creates diverse models; averaging reduces variance.\n"
   reference: assignments/ensembles_customer_satisfaction.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest max_features rule of thumb
   prompt: What is the typical rule of thumb for setting max_features in Random Forests?
   answer: '**Rule of thumb**: Use the square root of the number of features.
@@ -1144,7 +1144,7 @@ Ensemble Learning:
 
     '
   reference: assignments/ensembles_customer_satisfaction.ipynb
-- topic: Random Forest
+- topic: Boosting
   title: Gradient boosting with regression trees
   prompt: Why does Gradient Boosting require regression models as base learners?
   answer: '**Reason**: Gradient Boosting needs continuous gradients, not discrete
@@ -1277,7 +1277,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest feature importance calculation
   prompt: How does Random Forest calculate feature importance using out-of-bag samples?
   answer: "**Process for each tree**:\n\n1. Evaluate tree using **out-of-bag (OOB)**\
@@ -1288,7 +1288,7 @@ Ensemble Learning:
     \ If shuffling a feature hurts performance significantly, that feature is important\
     \ for prediction.\n\nAccess with: `model.feature_importances_`\n"
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest pros and cons
   prompt: What are the main advantages and disadvantages of Random Forests?
   answer: '**Pros** ✓:
@@ -1318,7 +1318,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Diminishing returns with number of trees
   prompt: What is the relationship between the number of trees and Random Forest performance?
   answer: '**Pattern**: Performance improves with more trees, then plateaus.
@@ -1342,7 +1342,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/bagging-random-forest-slides.ipynb
-- topic: Random Forest
+- topic: Decision Trees
   title: Brittleness of decision trees visualization
   prompt: How can you visualize the brittleness of decision trees in an ensemble?
   answer: "**Method**: Plot multiple trees from the same ensemble, trained on different\
@@ -1388,7 +1388,7 @@ Ensemble Learning:
     \ (e.g., at 70 trees instead of 200)\n- Detect overfitting (train continues improving\
     \ while val degrades)\n- Optimize `n_estimators` for computational efficiency\n"
   reference: notebooks/boosting-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Interpretability tools for black-box ensembles
   prompt: What tools can help interpret gradient boosting and other black-box ensemble
     models?
@@ -1451,7 +1451,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/boosting-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Wisdom of crowds analogy
   prompt: How does the "wisdom of crowds" principle apply to ensemble learning?
   answer: '**Analogy**: Guessing the weight of a cow
@@ -1511,7 +1511,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/introduction-to-ensemble-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Ideal base model characteristics for ensembles
   prompt: What characteristics make a good base model for bagging and boosting?
   answer: '**Required properties**:
@@ -1541,7 +1541,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/introduction-to-ensemble-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Ensemble model tradeoff summary
   prompt: What is the fundamental tradeoff when using ensemble methods?
   answer: '**Gains** ✓:
@@ -1630,7 +1630,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/stacking-slides.ipynb
-- topic: Fundamentals
+- topic: Stacking
   title: Two-level K-fold cross-validation rationale
   prompt: When and why would you use two-level K-fold cross-validation for stacking?
   answer: '**Purpose**: Apply K-fold CV to the entire ensemble, not just Level 2.
@@ -1661,7 +1661,7 @@ Ensemble Learning:
 
     '
   reference: notebooks/stacking-slides.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Netflix Prize ensemble strategy
   prompt: How did the Netflix Prize winners use ensemble methods to win $1 million?
   answer: '**Strategy (BellKor''s Pragmatic Chaos)**:
@@ -1773,7 +1773,7 @@ Ensemble Learning:
     ```\n\n`evals` stores metrics at each iteration; `log_evaluation(10)` prints every\
     \ 10 iterations.\n"
   reference: practicals/boosting-practical-solution.ipynb
-- topic: Random Forest
+- topic: Boosting
   title: LightGBM feature importance types
   prompt: What are the two types of feature importance in LightGBM and what do they
     measure?
@@ -1842,7 +1842,7 @@ Ensemble Learning:
     \ model to replicate\n- `n_estimators`: Number of models in ensemble (default\
     \ 10)\n- Automatically handles bootstrap sampling and aggregation\n"
   reference: practicals/introduction-to-ensembles-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Cross-Validation
   title: Train-test split best practices
   prompt: What are the best practices when splitting data for ensemble training and
     evaluation?
@@ -1854,7 +1854,7 @@ Ensemble Learning:
     \ only on unseen test set\n- Never evaluate on data used for training (inflated\
     \ performance)\n"
   reference: practicals/introduction-to-ensembles-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Model Evaluation
   title: Baseline model importance
   prompt: Why establish baseline single-model performance before using ensembles?
   answer: '**Purpose**: Determine if ensemble actually improved performance.
@@ -1893,7 +1893,7 @@ Ensemble Learning:
 
     '
   reference: practicals/introduction-to-ensembles-practical-solution.ipynb
-- topic: Random Forest
+- topic: Feature Engineering
   title: One-hot encoding for tree models
   prompt: How do you prepare categorical data for tree-based models and why is it
     necessary?
@@ -1926,7 +1926,7 @@ Ensemble Learning:
 
     '
   reference: practicals/random-forest-practical-solution.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Random Forest GridSearchCV strategy
   prompt: What hyperparameters should you tune when optimizing Random Forests with
     GridSearchCV?
@@ -1939,7 +1939,7 @@ Ensemble Learning:
     \ `min_samples_split`, `min_samples_leaf`\n- Sampling: `max_samples` (bootstrap\
     \ proportion)\n- Class imbalance: `class_weight`\n- Ensemble size: `n_estimators`\n"
   reference: practicals/random-forest-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Model Evaluation
   title: Classification report for imbalanced classes
   prompt: Why use classification_report instead of just accuracy for multi-class problems?
   answer: '**Problem with accuracy**: Single score hides per-class performance, especially
@@ -1974,7 +1974,7 @@ Ensemble Learning:
 
     '
   reference: practicals/random-forest-practical-solution.ipynb
-- topic: Random Forest
+- topic: Random Forests
   title: Feature importance extraction from best model
   prompt: How do you extract and analyze feature importances from a GridSearchCV Random
     Forest?
@@ -1986,7 +1986,7 @@ Ensemble Learning:
     \ (e.g., \"backers count\" predicts Kickstarter success)\n\n**Access**: `model.feature_importances_`\
     \ (array aligned with `X_train.columns`)\n"
   reference: practicals/random-forest-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Hyperparameter Tuning
   title: Hyperparameter tuning diminishing returns
   prompt: What pattern often emerges when comparing default vs optimized Random Forest
     hyperparameters?
@@ -2066,7 +2066,7 @@ Ensemble Learning:
 
     '
   reference: practicals/stacking-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Cross-Validation
   title: cross_val_score for quick model evaluation
   prompt: How does cross_val_score simplify model evaluation compared to manual loops?
   answer: "**Manual approach**:\n\n```python\nscores = []\nfor train_idx, test_idx\
@@ -2078,7 +2078,7 @@ Ensemble Learning:
     Handles split iteration, training, and scoring automatically. Use `scoring='neg_mean_squared_error'`\
     \ for regression tasks (negative because sklearn minimizes).\n"
   reference: practicals/stacking-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Cross-Validation
   title: KFold shuffle importance
   prompt: Why is shuffling important when creating KFold splits for ordered data?
   answer: '```python
@@ -2126,7 +2126,7 @@ Ensemble Learning:
     \n# Train meta-learner on full OOF predictions\nmeta_learner.fit(oof_predictions,\
     \ y)\n```\n\nBlending: faster, one split. Stacking: better, uses all data.\n"
   reference: practicals/stacking-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Stacking
   title: Stacked predictions array construction
   prompt: How do you construct the stacked predictions array for meta-learner training?
   answer: "```python\n# Get predictions from each base model\npred_linreg = model_linreg.predict(X_val)\n\
@@ -2205,7 +2205,7 @@ Ensemble Learning:
     \ Base models retrained on full data after OOF collection. Meta-learner already\
     \ trained on OOF predictions.\n"
   reference: practicals/stacking-practical-solution.ipynb
-- topic: Fundamentals
+- topic: Ensemble Methods
   title: Visualizing ensemble performance comparison
   prompt: How do you visualize and compare the performance of multiple ensemble approaches?
   answer: "```python\nfrom scipy.stats import sem\n\nscores = np.array([\n    scores_linreg,\

@@ -1058,7 +1058,7 @@ Data Science Toolbox:
     ```\nA company satisfying both conditions would otherwise appear twice; `set()`\
     \ removes the duplicate.\n"
   reference: notebooks/assignments/ftse.ipynb
-- topic: Numpy
+- topic: NumPy
   title: What is a NumPy array?
   prompt: What are the key properties that distinguish a NumPy array from a Python
     list?
@@ -1080,7 +1080,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: NumPy array shape, size, and ndim
   prompt: What do the `.shape`, `.size`, and `.ndim` attributes of a NumPy array represent?
   answer: '| Attribute | Meaning |
@@ -1111,7 +1111,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Reshaping a NumPy array
   prompt: How do you change the shape of a NumPy array without changing its data?
   answer: 'Use `.reshape()`, providing the new dimensions as arguments. The total
@@ -1131,7 +1131,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Indexing a multi-dimensional NumPy array
   prompt: How do you access individual elements and full rows/columns of a 2D NumPy
     array?
@@ -1155,7 +1155,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Boolean (mask) indexing in NumPy
   prompt: How do you select elements from a NumPy array that satisfy a condition?
   answer: 'Apply a boolean comparison to the array to create a mask, then use the
@@ -1176,7 +1176,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Slicing a NumPy array
   prompt: How do you extract a contiguous sub-array (slice) from a NumPy array, including
     with negative indices?
@@ -1228,7 +1228,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: NumPy broadcasting rules
   prompt: What rules determine whether two NumPy arrays can be broadcast together,
     and what shape results?
@@ -1261,7 +1261,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Deterministic array generation in NumPy
   prompt: What NumPy functions create arrays with predictable (non-random) values?
   answer: '| Function | Output |
@@ -1291,7 +1291,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Stacking NumPy arrays with `np.stack`, `np.vstack`, and `np.hstack`
   prompt: How do you combine multiple NumPy arrays along a new or existing axis?
   answer: '- **`np.stack((a, b))`** — joins along a **new** axis (default `axis=0`,
@@ -1321,7 +1321,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Useful NumPy array methods
   prompt: What array methods can be called directly on a NumPy ndarray (without the
     `np.` prefix)?
@@ -1347,7 +1347,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-lesson.ipynb
-- topic: Numpy
+- topic: NumPy
   title: NumPy infers array dtype from input
   prompt: How does NumPy decide the data type (`dtype`) of an array created from a
     Python list?
@@ -1370,7 +1370,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-practical1-solution.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Vector vs row matrix vs column matrix in NumPy
   prompt: How does a 1D NumPy vector differ from a 2D row or column matrix, and how
     do you convert between them?
@@ -1406,7 +1406,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-practical1-solution.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Fancy (list) indexing in NumPy
   prompt: How do you select multiple non-contiguous elements from a NumPy array by
     specifying their indices explicitly?
@@ -1427,7 +1427,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-practical2-solution.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Slicing with a step in NumPy
   prompt: How do you select every nth element from a NumPy array using slice notation?
   answer: 'Use the `start:stop:step` slice syntax. Omitting `start` or `stop` defaults
@@ -1456,7 +1456,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-practical2-solution.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Modifying array elements in place
   prompt: How do you update elements of a NumPy array using indexing, slicing, and
     broadcasting?
@@ -1506,7 +1506,7 @@ Data Science Toolbox:
 
     '
   reference: notebooks/numpy/numpy-practical3-solution.ipynb
-- topic: Numpy
+- topic: NumPy
   title: Generating linearly spaced arrays with `np.linspace` vs `np.arange`
   prompt: What is the difference between `np.linspace` and `np.arange` for generating
     sequences of numbers?

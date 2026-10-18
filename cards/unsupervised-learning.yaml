@@ -1,5 +1,5 @@
 Unsupervised Learning:
-- topic: Introduction to Unsupervised Learning
+- topic: Unsupervised Learning
   title: Definition of unsupervised learning
   prompt: What is unsupervised learning?
   answer: |
@@ -8,7 +8,7 @@ Unsupervised Learning:
     All variables are treated symmetrically — the model tries to find how all the variables interact with each other.
   reference: 01-intro-to-unsupervised-learning.md
 
-- topic: Introduction to Unsupervised Learning
+- topic: Unsupervised Learning
   title: Common unsupervised learning tasks
   prompt: What are the main tasks unsupervised learning can be used for?
   answer: |
@@ -21,7 +21,7 @@ Unsupervised Learning:
     It can also support supervised pipelines via EDA, data processing, and feature engineering.
   reference: 01-intro-to-unsupervised-learning.md
 
-- topic: Introduction to Unsupervised Learning
+- topic: Unsupervised Learning
   title: Evaluating unsupervised models
   prompt: How do you evaluate the performance of an unsupervised learning model when ground-truth labels are unavailable?
   answer: |
@@ -30,7 +30,7 @@ Unsupervised Learning:
     For example, do the clusters identified in customer data tell us something interesting about customer behaviour?
   reference: 01-intro-to-unsupervised-learning.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Choosing a clustering algorithm by data shape
   prompt: How does the shape of your data influence the choice of clustering algorithm?
   answer: |
@@ -40,7 +40,7 @@ Unsupervised Learning:
     - **Arbitrary, noisy, or dense clusters** → DBSCAN
   reference: 02-k-means-clustering.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Inertia metric for clustering
   prompt: What is inertia in the context of K-Means clustering?
   answer: |
@@ -55,7 +55,7 @@ Unsupervised Learning:
     - Does not penalise for excessive clusters
   reference: 02-k-means-clustering.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Elbow method for choosing K
   prompt: How does the elbow method help choose the number of clusters?
   answer: |
@@ -66,7 +66,7 @@ Unsupervised Learning:
     This requires a **subjective judgement** about where the curve bends.
   reference: 02-k-means-clustering.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Silhouette score formula
   prompt: What is the silhouette score and how is it computed?
   answer: |
@@ -85,7 +85,7 @@ Unsupervised Learning:
     - $-1$: likely assigned to wrong cluster
   reference: 02-k-means-clustering.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Silhouette vs elbow method
   prompt: What advantage does the silhouette score have over the elbow method for choosing K?
   answer: |
@@ -225,7 +225,7 @@ Unsupervised Learning:
     Also note that Davies-Bouldin uses centroids and assumes convex clusters, so it can be **misleading** for DBSCAN's non-convex clusters.
   reference: 04-db-scan.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: What t-SNE preserves
   prompt: What does t-SNE prioritise preserving compared to PCA?
   answer: |
@@ -235,7 +235,7 @@ Unsupervised Learning:
     Global distance = distance between a point and all other points.
   reference: 05-tsne.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: The t-SNE algorithm steps
   prompt: What are the three main steps of the t-SNE algorithm?
   answer: |
@@ -246,7 +246,7 @@ Unsupervised Learning:
     $$KL(P \| Q) = \sum_{i \neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}$$
   reference: 05-tsne.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: Role of the perplexity parameter
   prompt: What does the perplexity parameter control in t-SNE?
   answer: |
@@ -257,7 +257,7 @@ Unsupervised Learning:
     - Too high → underfitting (loses local detail)
   reference: 05-tsne.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: Why t-SNE uses a Student's t-distribution
   prompt: Why does t-SNE use a Student's t-distribution in the low-dimensional space rather than a Gaussian?
   answer: |
@@ -266,7 +266,7 @@ Unsupervised Learning:
     This gives nearby points room to spread out while keeping distant points separated.
   reference: 05-tsne.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: Pitfalls of t-SNE
   prompt: What are the main pitfalls and limitations of t-SNE?
   answer: |
@@ -277,7 +277,7 @@ Unsupervised Learning:
     5. **Overinterpretation** — the low-dimensional representation may not accurately reflect true high-dimensional relationships
   reference: 05-tsne.md
 
-- topic: PCA (Applied)
+- topic: Dimensionality Reduction
   title: Transposing data for PCA in domain science
   prompt: Why might you transpose a dataset before performing PCA, such as in archaeological science?
   answer: |
@@ -288,7 +288,7 @@ Unsupervised Learning:
     The elements with the **maximum absolute PC values** indicate the variables driving the most variance.
   reference: assignments/chemical_composition_analysis.md
 
-- topic: PCA (Applied)
+- topic: Dimensionality Reduction
   title: Reusable PCA transformation function
   prompt: What steps should a reusable PCA transformation function include?
   answer: |
@@ -310,7 +310,7 @@ Unsupervised Learning:
     ```
   reference: assignments/chemical_composition_analysis.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: Interpreting K-Means clusters with histograms and boxplots
   prompt: How can you interpret what K-Means clusters represent after fitting?
   answer: |
@@ -322,7 +322,7 @@ Unsupervised Learning:
     This reveals which features have distinct distributions across clusters, helping interpret what each cluster represents.
   reference: assignments/travel_review_analysis.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: Effect of changing K on cluster distributions
   prompt: What should you check when increasing the number of K-Means clusters?
   answer: |
@@ -331,7 +331,7 @@ Unsupervised Learning:
     - Use `value_counts()` on the cluster labels to check **cluster balance** — very uneven clusters may indicate a poor choice of $k$
   reference: assignments/travel_review_analysis.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: Starting parameter values for DBSCAN
   prompt: How do you choose initial values for eps and min_samples when applying DBSCAN?
   answer: |
@@ -341,7 +341,7 @@ Unsupervised Learning:
     These are initial guesses — use sensitivity analysis to refine.
   reference: practicals/dbscan-practical-solution.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: DBSCAN on original vs PCA space
   prompt: Why might DBSCAN produce different results when applied to PCA-reduced data vs the original feature space?
   answer: |
@@ -352,7 +352,7 @@ Unsupervised Learning:
     You should **reduce `eps`** and potentially adjust `min_samples` when clustering in a reduced-dimension space.
   reference: practicals/dbscan-practical-solution.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: Handling skewed data before clustering
   prompt: How can you handle columns with large outliers before applying DBSCAN?
   answer: |
@@ -367,7 +367,7 @@ Unsupervised Learning:
     Alternative approaches include **log-transforming** the data before scaling.
   reference: practicals/dbscan-practical-solution.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: DBSCAN vs K-Means on non-convex data
   prompt: How does DBSCAN compare to K-Means when clustering non-convex shapes (e.g. crescents or a smiley face)?
   answer: |
@@ -378,7 +378,7 @@ Unsupervised Learning:
     DBSCAN groups points by **density connectivity**, correctly identifying arbitrarily shaped clusters and labelling isolated points as noise.
   reference: practicals/dbscan-slides.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: Sensitivity analysis with a heatmap
   prompt: How can you use a heatmap to choose DBSCAN parameters?
   answer: |
@@ -399,7 +399,7 @@ Unsupervised Learning:
     ```
   reference: practicals/dbscan-slides.md
 
-- topic: DBSCAN (Applied)
+- topic: DBSCAN
   title: Per-cluster silhouette analysis
   prompt: Why might you compute silhouette scores per cluster rather than just the overall mean?
   answer: |
@@ -424,7 +424,7 @@ Unsupervised Learning:
     **HDBSCAN** (hierarchical DBSCAN) addresses this by building a cluster hierarchy over all density levels and extracting the most stable clusters — effectively removing `eps` as a parameter.
   reference: practicals/dbscan-slides.md
 
-- topic: Hierarchical Clustering (Applied)
+- topic: Hierarchical Clustering
   title: Average vs Ward linkage in practice
   prompt: What practical difference does switching from average to Ward linkage make?
   answer: |
@@ -434,7 +434,7 @@ Unsupervised Learning:
     The choice of linkage can **dramatically** change the resulting clusters, so it's worth trying multiple methods.
   reference: practicals/hierarchical-clustering-practical-solution.md
 
-- topic: Hierarchical Clustering (Applied)
+- topic: Hierarchical Clustering
   title: Truncating a dendrogram
   prompt: How do you improve the readability of a dendrogram for large datasets?
   answer: |
@@ -449,7 +449,7 @@ Unsupervised Learning:
     - Numbers in **(brackets)** on the x-axis show the **cluster size** at each leaf
   reference: practicals/hierarchical-clustering-practical-solution.md
 
-- topic: Hierarchical Clustering (Applied)
+- topic: Hierarchical Clustering
   title: The elbow method for hierarchical clustering
   prompt: How does the elbow method work for choosing the number of hierarchical clusters?
   answer: |
@@ -504,7 +504,7 @@ Unsupervised Learning:
     This converts a hierarchy into a **flat clustering**, analogous to choosing $k$ in K-Means. The choice of where to truncate depends on the user's goals and often involves trial and error.
   reference: practicals/hierarchical-clustering.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: K-Means on a feature subset vs all features
   prompt: Why might K-Means clusters look different when using all features vs a 2-feature subset?
   answer: |
@@ -513,7 +513,7 @@ Unsupervised Learning:
     When clustering on only **two features**, the clusters are defined purely in that 2D subspace and will appear cleanly separable in a scatter plot of those features.
   reference: practicals/k-means-practical-solution.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: Using silhouette and Davies-Bouldin together
   prompt: Why might silhouette score and Davies-Bouldin index suggest different optimal values of K?
   answer: |
@@ -525,7 +525,7 @@ Unsupervised Learning:
     They can disagree because they weight cluster size, shape, and separation differently. Consider both alongside **domain knowledge** and **PCA visualisation**.
   reference: practicals/k-means-practical-solution.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: Normalisation before K-Means
   prompt: Why is normalisation important before running K-Means?
   answer: |
@@ -534,7 +534,7 @@ Unsupervised Learning:
     Use `StandardScaler` to normalise features to zero mean and unit variance before fitting, so all features contribute equally to cluster assignments.
   reference: practicals/k-means-practical-solution.md
 
-- topic: K-Means (Applied)
+- topic: K-Means
   title: Using PCA to validate clustering
   prompt: How can PCA help validate K-Means clustering results?
   answer: |
@@ -547,7 +547,7 @@ Unsupervised Learning:
     Poor visual separation after PCA confirms that the silhouette/Davies-Bouldin scores indicate suboptimal clustering, and suggests trying a different algorithm.
   reference: practicals/k-means-practical-solution.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: K-Means algorithm steps
   prompt: What are the two alternating steps of the K-Means algorithm?
   answer: |
@@ -559,7 +559,7 @@ Unsupervised Learning:
     Convergence occurs when cluster assignments stop changing.
   reference: practicals/k-means-slides.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: K-Means convergence to local optima
   prompt: Why does K-Means converge to a local optimum, and how can you mitigate this?
   answer: |
@@ -570,7 +570,7 @@ Unsupervised Learning:
     In sklearn, this is controlled by the `n_init` parameter (default = 10).
   reference: practicals/k-means-slides.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Benefits and limitations of K-Means
   prompt: What are the main benefits and limitations of K-Means clustering?
   answer: |
@@ -588,7 +588,7 @@ Unsupervised Learning:
     - Sensitive to **noise**
   reference: practicals/k-means-slides.md
 
-- topic: K-Means Clustering
+- topic: K-Means
   title: Inertia limitations
   prompt: What are the limitations of using inertia to evaluate K-Means clustering?
   answer: |
@@ -600,7 +600,7 @@ Unsupervised Learning:
     Inertia always decreases as $k$ increases, which is why the **elbow method** is needed to find the point of diminishing returns.
   reference: practicals/k-means-slides.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: Using PCA before t-SNE
   prompt: Why is it recommended to apply PCA before t-SNE on high-dimensional data?
   answer: |
@@ -615,7 +615,7 @@ Unsupervised Learning:
     ```
   reference: practicals/tsne-digits-solution.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: t-SNE on handwritten digits
   prompt: What does t-SNE reveal when applied to the MNIST handwritten digits dataset?
   answer: |
@@ -626,7 +626,7 @@ Unsupervised Learning:
     PCA alone (2 components, ~17% variance) shows some clustering but with significant overlap.
   reference: practicals/tsne-digits-solution.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: t-SNE scalability limitation
   prompt: What is the main scalability limitation of t-SNE?
   answer: |
@@ -635,7 +635,7 @@ Unsupervised Learning:
     For larger datasets, subsample the data first (e.g. to 5,000 points) before applying t-SNE. Tree-based implementations improve scaling but the method remains best suited for smaller datasets.
   reference: practicals/tsne-digits-solution.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: t-SNE for single-cell RNA-seq
   prompt: How is t-SNE used to visualise single-cell RNA-seq data?
   answer: |
@@ -648,7 +648,7 @@ Unsupervised Learning:
     3. Colour by cell type labels to validate
   reference: practicals/tsne-single-cell-solution.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: Effect of perplexity on t-SNE results
   prompt: What happens when perplexity is set too low or too high in t-SNE?
   answer: |
@@ -658,7 +658,7 @@ Unsupervised Learning:
     Typical range is **5–50** (default = 30). It is recommended to compare embeddings across multiple perplexity values.
   reference: practicals/tsne-slides.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: t-SNE does not preserve cluster sizes or distances
   prompt: Why can't you infer relative cluster sizes or inter-cluster distances from a t-SNE plot?
   answer: |
@@ -672,7 +672,7 @@ Unsupervised Learning:
     This is one of the key reasons t-SNE should be used for **visualisation only**, not for drawing quantitative conclusions about cluster relationships.
   reference: practicals/tsne-slides.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: Crowding problem and Student's t-distribution
   prompt: What is the crowding problem in dimensionality reduction and how does t-SNE address it?
   answer: |
@@ -681,7 +681,7 @@ Unsupervised Learning:
     t-SNE addresses this by using the **Student's t-distribution** (heavy-tailed) in the low-dimensional space instead of a Gaussian. The heavier tails allow **dissimilar objects to be modelled far apart**, giving nearby points room to spread out.
   reference: practicals/tsne-slides.md
 
-- topic: t-SNE
+- topic: Dimensionality Reduction
   title: t-SNE cost function properties
   prompt: Why can t-SNE produce different results each time it is run?
   answer: |
@@ -690,7 +690,7 @@ Unsupervised Learning:
     The algorithm uses **gradient descent** with random initialisation, so different runs may converge to different solutions. Always set `random_state` for reproducibility.
   reference: practicals/tsne-slides.md
 
-- topic: t-SNE (Applied)
+- topic: Dimensionality Reduction
   title: Spurious structure from noise
   prompt: How can t-SNE create misleading structure from random data?
   answer: |

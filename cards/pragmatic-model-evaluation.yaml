@@ -57,7 +57,7 @@ Pragmatic Model Evaluation:
       This limits the blast radius of any accidental or malicious data access.
     reference: 01-enterprise-architecture.md
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: The risk of random splitting with grouped data
     prompt: Why is a random train/test split problematic when data contains groups (e.g. journeys grouped by household)?
     answer: |
@@ -69,7 +69,7 @@ Pragmatic Model Evaluation:
       The validation score no longer reflects true out-of-sample performance.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: sklearn utility for group-aware train/test splitting
     prompt: Which sklearn utility ensures no group appears in both the training and validation sets when splitting data?
     answer: |
@@ -78,7 +78,7 @@ Pragmatic Model Evaluation:
       It performs a shuffle split while respecting group boundaries, so all samples from a given group end up in either the training set or the validation set — never both.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: sklearn utility for group-aware cross-validation
     prompt: Which sklearn utility provides group-aware k-fold cross-validation, ensuring no group appears in more than one fold?
     answer: |
@@ -87,7 +87,7 @@ Pragmatic Model Evaluation:
       It partitions the data into $k$ folds such that **all samples from a group are assigned to exactly one fold**. This prevents group information from leaking between folds during hyperparameter tuning.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: How group leakage biases feature importance
     prompt: How do the important features differ between a model trained with random splitting versus group-aware splitting on grouped data?
     answer: |
@@ -97,7 +97,7 @@ Pragmatic Model Evaluation:
       This demonstrates that random splitting can cause a model to learn group identity rather than the underlying relationship.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Modular sklearn Development
+  - topic: Pipelines
     title: sklearn class for building modular ML pipelines
     prompt: What sklearn class is used to construct modular, composable machine learning pipelines?
     answer: |
@@ -164,7 +164,7 @@ Pragmatic Model Evaluation:
       The subset with the **lowest AIC (or BIC)** is chosen as the optimal set.
     reference: practicals/model-selection-practical-solution.ipynb
 
-  - topic: Model Selection
+  - topic: Bagging
     title: What bagging does and what the name stands for
     prompt: What is bagging in ensemble learning and what does the name stand for?
     answer: |
@@ -175,7 +175,7 @@ Pragmatic Model Evaluation:
       The goal is to reduce variance and improve generalisation.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Selection
+  - topic: Random Forests
     title: Key difference between ExtraTrees and Random Forest
     prompt: How does the ExtraTrees (Extremely Randomised Trees) algorithm differ from Random Forest?
     answer: |
@@ -189,7 +189,7 @@ Pragmatic Model Evaluation:
       ExtraTrees introduces **more randomness** by using random split thresholds, which can further reduce variance at the cost of a slight increase in bias.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Selection
+  - topic: Neural Networks
     title: Three components required to specify a neural network
     prompt: What are the three main components you must specify when training a neural network?
     answer: |
@@ -198,7 +198,7 @@ Pragmatic Model Evaluation:
       3. **Optimisation Strategy** — e.g. Gradient Descent, Stochastic Gradient Descent, ADAM, Momentum.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Selection
+  - topic: Neural Networks
     title: Optimisation strategy used by nearly all neural networks
     prompt: What optimisation strategy do almost all neural networks use?
     answer: |
@@ -207,7 +207,7 @@ Pragmatic Model Evaluation:
       Back-propagation computes the gradient of the loss function with respect to each weight by applying the chain rule, allowing gradient-based optimisers (e.g. SGD, ADAM) to update the network's parameters.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Optimisation
+  - topic: Optimisation
     title: What model optimisation is concerned with
     prompt: What does model optimisation focus on in machine learning?
     answer: |
@@ -257,7 +257,7 @@ Pragmatic Model Evaluation:
       - The preprocessor and classifier are chained via `make_pipeline`.
     reference: assignments/prudential.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Pipelines
     title: Purpose of ColumnTransformer in a preprocessing pipeline
     prompt: What does ColumnTransformer do and why is it useful?
     answer: |
@@ -271,7 +271,7 @@ Pragmatic Model Evaluation:
       Use `remainder='passthrough'` to retain columns not explicitly transformed.
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Feature Engineering
     title: How to reduce correlated features in a pipeline
     prompt: What is a standard approach to handle a set of highly correlated features within a sklearn pipeline?
     answer: |
@@ -287,7 +287,7 @@ Pragmatic Model Evaluation:
       Setting `n_components` as a float (e.g. `0.8`) retains the proportion of variance specified, rather than a fixed number of components.
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Pipelines
     title: How FeatureUnion combines multiple transformations
     prompt: What does FeatureUnion do, and how does it differ from ColumnTransformer?
     answer: |
@@ -305,7 +305,7 @@ Pragmatic Model Evaluation:
       ```
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Pipelines
     title: How to create a custom sklearn transformer
     prompt: What are the steps to implement a custom transformer compatible with sklearn?
     answer: |
@@ -325,7 +325,7 @@ Pragmatic Model Evaluation:
       ```
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Hyperparameter Tuning
     title: Advantage of using GridSearchCV with a Pipeline
     prompt: Why is GridSearchCV more powerful when applied to a full Pipeline rather than just the model?
     answer: |
@@ -337,7 +337,7 @@ Pragmatic Model Evaluation:
       - Example: tune PCA components inside a nested pipeline via `columntransformer__payments__pca__n_components`.
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Data Preprocessing
     title: Key concept behind data leakage in preprocessing
     prompt: What is data leakage in the context of preprocessing, and how does sklearn prevent it?
     answer: |
@@ -351,7 +351,7 @@ Pragmatic Model Evaluation:
       Using a `Pipeline` inside cross-validation ensures that `.fit()` is never called on test fold data.
     reference: practicals/advanced-sklearn-slides.ipynb
 
-  - topic: Modular sklearn Pipelines
+  - topic: Feature Engineering
     title: What PolynomialFeatures with interaction_only=True produces
     prompt: What features does PolynomialFeatures(degree=2, include_bias=False, interaction_only=True) generate for two features a and b?
     answer: |
@@ -362,7 +362,7 @@ Pragmatic Model Evaluation:
       This is useful for adding interaction features without inflating the feature space with squared terms.
     reference: practicals/advanced-sklearn-practical-solution.ipynb
 
-  - topic: Feature Selection and Engineering
+  - topic: Feature Engineering
     title: Difference between feature selection and feature engineering
     prompt: What is the distinction between feature selection and feature engineering in ML?
     answer: |
@@ -372,7 +372,7 @@ Pragmatic Model Evaluation:
       Both contribute to **explainability**, **faster training**, and **reduced overfitting**, and are often applied iteratively throughout the ML pipeline.
     reference: practicals/feature_selection_practical-solution.ipynb
 
-  - topic: Feature Selection and Engineering
+  - topic: Feature Engineering
     title: Why models should not use all available features
     prompt: Why is it generally a bad idea to feed all available features into an ML model without selection?
     answer: |
@@ -383,7 +383,7 @@ Pragmatic Model Evaluation:
       ML models should be **parsimonious** — as simple as possible with low error.
     reference: practicals/feature_selection_practical-solution.ipynb
 
-  - topic: Feature Selection and Engineering
+  - topic: Feature Engineering
     title: Two strategies for removing uninformative variables
     prompt: What are two ways to remove variables that add little value to a model?
     answer: |
@@ -394,7 +394,7 @@ Pragmatic Model Evaluation:
       **PCA** is a robust alternative that handles both cases by rotating axes to information-rich directions and discarding low-variance components.
     reference: practicals/feature_selection_practical-solution.ipynb
 
-  - topic: Feature Selection and Engineering
+  - topic: Dimensionality Reduction
     title: Why PCA requires normalisation beforehand
     prompt: Why must features be normalised before applying PCA?
     answer: |
@@ -403,7 +403,7 @@ Pragmatic Model Evaluation:
       Normalising to **z-scores** (zero mean, unit variance) with `StandardScaler` before PCA ensures each feature contributes equally, regardless of its original scale.
     reference: practicals/feature_selection_practical-solution.ipynb
 
-  - topic: Feature Selection and Engineering
+  - topic: Dimensionality Reduction
     title: What a scree plot is used for in PCA
     prompt: What does a scree plot show, and how is it used to choose the number of PCA components?
     answer: |
@@ -412,7 +412,7 @@ Pragmatic Model Evaluation:
       It helps you choose how many components to retain — you look for an "elbow" where the explained variance drops off, or use a cumulative explained variance plot to find the number of components that capture a desired threshold (e.g. 80% or 90%) of total variance.
     reference: practicals/feature_selection_practical-solution.ipynb
 
-  - topic: Hyperparameter Optimisation
+  - topic: Hyperparameter Tuning
     title: What hyperparameter optimisation is and why it is needed
     prompt: What is hyperparameter optimisation and why can't hyperparameters be optimised directly?
     answer: |
@@ -423,7 +423,7 @@ Pragmatic Model Evaluation:
       Examples of hyperparameters: `max_depth` in a decision tree, regularisation strength `C` in logistic regression, number of hidden layers in a neural network.
     reference: practicals/model-optimisation.ipynb
 
-  - topic: Hyperparameter Optimisation
+  - topic: Hyperparameter Tuning
     title: What grid search does and its trade-offs
     prompt: How does grid search work, and what are its main advantages and disadvantages?
     answer: |
@@ -439,7 +439,7 @@ Pragmatic Model Evaluation:
       - Does **not learn** from previous evaluations — wastes time on poor combinations.
     reference: practicals/model-optimisation.ipynb
 
-  - topic: Hyperparameter Optimisation
+  - topic: Hyperparameter Tuning
     title: What random search does and its trade-offs
     prompt: How does random search differ from grid search, and what are its advantages and disadvantages?
     answer: |
@@ -455,7 +455,7 @@ Pragmatic Model Evaluation:
       - Still does **not learn** from previous evaluations.
     reference: practicals/model-optimisation.ipynb
 
-  - topic: Hyperparameter Optimisation
+  - topic: Hyperparameter Tuning
     title: How Bayesian hyperparameter search works and its trade-offs
     prompt: What is Bayesian hyperparameter search and how does it compare to grid and random search?
     answer: |
@@ -473,7 +473,7 @@ Pragmatic Model Evaluation:
       - Can get stuck in local optima; less repeatable than grid search.
     reference: practicals/model-optimisation.ipynb
 
-  - topic: Hyperparameter Optimisation
+  - topic: Hyperparameter Tuning
     title: What can be optimised beyond model hyperparameters using a Pipeline
     prompt: What other stages of the ML pipeline can be tuned alongside model hyperparameters using sklearn's Pipeline?
     answer: |
@@ -499,7 +499,7 @@ Pragmatic Model Evaluation:
       AIC and BIC are calculated only on training data; MSE can additionally be evaluated on a held-out test set for reference.
     reference: practicals/model-selection-practical-solution.ipynb
 
-  - topic: Model Selection
+  - topic: Neural Networks
     title: How to convert a regression neural network to a classification neural network in PyTorch
     prompt: What changes are needed to convert a PyTorch regression neural network to a binary classification network?
     answer: |
@@ -560,7 +560,7 @@ Pragmatic Model Evaluation:
       - Often require **significantly more data** to achieve good performance compared with traditional ML models.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Selection
+  - topic: Neural Networks
     title: PyTorch gradient descent parameter update rule
     prompt: What is the gradient descent update rule used in PyTorch optimisers?
     answer: |
@@ -584,7 +584,7 @@ Pragmatic Model Evaluation:
       **Note:** On complex problems with large data, minimising BIC is likely to result in **underfitting**.
     reference: practicals/model-selection.ipynb
 
-  - topic: Model Selection
+  - topic: Linear Regression
     title: Log-likelihood for linear regression in terms of MSE
     prompt: How is the log-likelihood expressed for linear regression, enabling AIC and BIC to be computed?
     answer: |
@@ -600,7 +600,7 @@ Pragmatic Model Evaluation:
       where $k$ is the number of coefficients and $N$ is the number of training samples.
     reference: practicals/model-selection.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: Why a hold-out test set must be carved from whole groups, not rows
     prompt: When data has a hierarchical structure, why should the hold-out test set be split by groups rather than individual rows?
     answer: |
@@ -611,7 +611,7 @@ Pragmatic Model Evaluation:
       The correct approach is to set aside **whole groups** (e.g. entire households) for the hold-out set, ensuring no group appears in both sets.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: How random vs. grouped splitting affects measured accuracy
     prompt: What happens to measured model accuracy when you switch from random row-level splitting to group-aware splitting on hierarchical data?
     answer: |
@@ -625,7 +625,7 @@ Pragmatic Model Evaluation:
       The ~14 percentage-point drop shows that a large share of the model's earlier apparent performance was due to **data leakage**, not genuine generalisation. The grouped metric is a more honest estimate of real-world performance.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: Combining RandomizedSearchCV with group-aware cross-validation
     prompt: How do you combine RandomizedSearchCV with GroupKFold to tune hyperparameters on hierarchical data?
     answer: |
@@ -648,7 +648,7 @@ Pragmatic Model Evaluation:
       This ensures that **no household appears in more than one fold** during hyperparameter search, preventing leakage while still exploring the parameter space.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: How group-aware validation affects which features the model deems important
     prompt: How do feature importances differ between a model trained with random splitting versus group-aware cross-validation on hierarchical data?
     answer: |
@@ -658,7 +658,7 @@ Pragmatic Model Evaluation:
       This shows that structure-aware validation not only produces better performance estimates — it also guides the model to learn more **robust and generalisable** representations.
     reference: practicals/validation-on-hierarchical-data.ipynb
 
-  - topic: Hierarchical Data Validation
+  - topic: Cross-Validation
     title: How consistent metrics across development and hold-out sets confirm valid evaluation
     prompt: What does it mean if a model's metrics are similar on the development validation set and on a completely held-out set?
     answer: |

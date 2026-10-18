@@ -1,5 +1,5 @@
 Product Management for AI:
-- topic: Big Data
+- topic: Data Science Fundamentals
   title: Four hardware trends behind data science growth
   prompt: What four hardware/infrastructure trends have contributed to the advancement
     of data science?
@@ -16,7 +16,7 @@ Product Management for AI:
 
     '
   reference: 03-product-management-for-ai/1-big-data.md
-- topic: Big Data
+- topic: Data Science Fundamentals
   title: The 5 V's of big data
   prompt: What are the 5 V's used to characterise big data?
   answer: '1. **Volume** — the size of the data
@@ -336,7 +336,7 @@ Product Management for AI:
 
     '
   reference: 03-product-management-for-ai/4-intro-to-product-management.md
-- topic: User Journey
+- topic: Product Management
   title: Dave McClure's Pirate Metrics (AARRR)
   prompt: What are the five stages of Dave McClure's Pirate Metrics framework and
     what does each measure?
@@ -358,7 +358,7 @@ Product Management for AI:
 
     '
   reference: 03-product-management-for-ai/5-user-journey-mapping.md
-- topic: User Journey
+- topic: Product Management
   title: The retention "leaky bucket" analogy
   prompt: What does the "leaky bucket" analogy describe in the context of product
     retention?
@@ -385,7 +385,7 @@ Product Management for AI:
 
     '
   reference: 03-product-management-for-ai/5-user-journey-mapping.md
-- topic: User Journey
+- topic: Product Management
   title: What is an MVP?
   prompt: What is the purpose of a Minimum Viable Product and what should it contain?
   answer: 'An **MVP** contains enough features to:
@@ -428,7 +428,7 @@ Product Management for AI:
 
     '
   reference: 03-product-management-for-ai/7-product-management-in-ai.md
-- topic: AI Product Management
+- topic: Product Management
   title: Deterministic vs probabilistic thinking in AI PM
   prompt: What is the key mindset shift required when moving from traditional to AI
     product management?

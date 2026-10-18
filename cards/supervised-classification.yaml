@@ -1,5 +1,5 @@
 Supervised Classification:
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Supervised learning prediction formula
   prompt: In supervised learning, how do we express the relationship between inputs
     and outputs?
@@ -16,7 +16,7 @@ Supervised Classification:
 
     '
   reference: 01-classification-intro.md
-- topic: Fundamentals
+- topic: Loss Functions
   title: Cost function definition
   prompt: What is a cost function $L$ and what is its primary objective?
   answer: 'A **cost function** $L$ evaluates the effectiveness of predictions by comparing
@@ -30,7 +30,7 @@ Supervised Classification:
 
     '
   reference: 01-classification-intro.md
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Binary classification output space
   prompt: How does the output space differ between regression and binary classification?
   answer: '**Regression**: output can be any continuous value
@@ -45,7 +45,7 @@ Supervised Classification:
 
     '
   reference: 01-classification-intro.md
-- topic: Fundamentals
+- topic: Naive Bayes
   title: Conditional probability formula
   prompt: What is the formula for conditional probability $P(A \mid B)$?
   answer: '$$P(A \mid B) = \frac{P(A, B)}{P(B)}$$
@@ -55,7 +55,7 @@ Supervised Classification:
 
     '
   reference: 01-classification-intro.md
-- topic: Fundamentals
+- topic: Naive Bayes
   title: Product rule of probability
   prompt: What is the product rule for joint probability?
   answer: '$$P(A, B) = P(A \mid B) P(B) = P(B \mid A) P(A)$$
@@ -83,7 +83,7 @@ Supervised Classification:
 
     '
   reference: 02-discriminative-generative-classification.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: K-Nearest Neighbour (KNN) algorithm
   prompt: How does the K-Nearest Neighbour (KNN) classifier make predictions?
   answer: 'For a new data point:
@@ -99,7 +99,7 @@ Supervised Classification:
 
     '
   reference: 02-discriminative-generative-classification.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Distance metrics in KNN
   prompt: What are the three main distance metrics used in KNN, and when is each preferred?
   answer: '**Euclidean**: $\sqrt{\sum_{d=1}^n {(x_i^d-x_j^d)^2}}$
@@ -123,7 +123,7 @@ Supervised Classification:
 
     '
   reference: 02-discriminative-generative-classification.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Choosing k in KNN
   prompt: How does the choice of k affect the bias-variance trade-off in KNN?
   answer: '**Small k**:
@@ -150,7 +150,7 @@ Supervised Classification:
 
     '
   reference: 02-discriminative-generative-classification.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: KNN considerations and limitations
   prompt: What are the main strengths and weaknesses of KNN classifiers?
   answer: '**Strengths**:
@@ -213,7 +213,7 @@ Supervised Classification:
 
     '
   reference: 02-discriminative-generative-classification.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Types of prediction error
   prompt: What are the three types of error in machine learning models?
   answer: '1. **Bias** — expected (mean) difference between predictions and true values
@@ -227,7 +227,7 @@ Supervised Classification:
 
     '
   reference: 03-model-generalisation.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Bias characteristics
   prompt: What does bias represent in machine learning and what are examples of high
     vs low bias models?
@@ -253,7 +253,7 @@ Supervised Classification:
 
     '
   reference: 03-model-generalisation.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Variance in models
   prompt: What does variance represent in machine learning?
   answer: '**Variance** represents how much model predictions would change if we estimated
@@ -268,7 +268,7 @@ Supervised Classification:
 
     '
   reference: 03-model-generalisation.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Model generalisation
   prompt: What is generalisation and what makes a 'good' model?
   answer: '**Generalisation** is the ability of a model to perform well on new, unseen
@@ -288,7 +288,7 @@ Supervised Classification:
 
     '
   reference: 03-model-generalisation.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Underfitting vs overfitting
   prompt: What are underfitting and overfitting in terms of bias and variance?
   answer: '**Underfitting**:
@@ -312,7 +312,7 @@ Supervised Classification:
 
     '
   reference: 03-model-generalisation.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Data partitioning splits
   prompt: What are the common splits for training, validation, and test sets and what
     is each used for?
@@ -331,7 +331,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: ROC Curves
+- topic: Data Preprocessing
   title: Pre-processing and data leakage
   prompt: When should pre-processing techniques (scaling, encoding) be applied to
     avoid data leakage?
@@ -354,7 +354,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Time series data partitioning
   prompt: How should time series data be partitioned differently from non-time series
     data?
@@ -378,7 +378,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: IID assumptions in partitioning
   prompt: What are the IID assumptions and why are they important when partitioning
     data?
@@ -401,7 +401,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: K-fold cross-validation
   prompt: How does k-fold cross-validation work?
   answer: '1. Split training data into k equally sized folds
@@ -420,7 +420,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Stratified k-fold cross-validation
   prompt: What is stratified k-fold cross-validation and when should it be used?
   answer: 'A variation of k-fold that **ensures each fold has similar distribution
@@ -449,7 +449,7 @@ Supervised Classification:
 
     '
   reference: 04-model-partitioning.md
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Cross-validation reporting
   prompt: What should be reported when presenting cross-validation results?
   answer: 'Report both:
@@ -515,7 +515,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Classification vs regression metrics
   prompt: What are common metrics for classification vs regression problems?
   answer: '**Classification metrics**:
@@ -538,7 +538,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Cross-validation with custom metrics
   prompt: How can you use custom scoring metrics with scikit-learn's cross-validation?
   answer: 'Use `make_scorer` to create custom scorers:
@@ -572,7 +572,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Time series cross-validation
   prompt: How should cross-validation be performed on time series data?
   answer: 'Use `TimeSeriesSplit` to respect temporal order:
@@ -595,7 +595,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Hyperparameter Tuning
   title: Parameters vs hyperparameters
   prompt: What is the difference between parameters and hyperparameters in machine
     learning?
@@ -622,7 +622,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: ROC Curves
+- topic: Hyperparameter Tuning
   title: Hyperparameter tuning process
   prompt: What is the general process for hyperparameter tuning?
   answer: '1. Set hyperparameter value
@@ -641,7 +641,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Hyperparameter Tuning
   title: Grid search for hyperparameters
   prompt: How does GridSearchCV work in scikit-learn?
   answer: 'GridSearchCV exhaustively tests all combinations of hyperparameter values:
@@ -674,7 +674,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Naive Bayes
+- topic: Hyperparameter Tuning
   title: Bayesian optimization strategy
   prompt: How does Bayesian optimization differ from grid search for hyperparameter
     tuning?
@@ -828,7 +828,7 @@ Supervised Classification:
 
     '
   reference: notebooks/decision_tree_slides.ipynb
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Bias-variance in tree depth
   prompt: How does tree depth affect the bias-variance trade-off in decision trees?
   answer: '- **Low Depth Trees**: High bias, low variance — oversimplify the data
@@ -864,7 +864,7 @@ Supervised Classification:
 
     '
   reference: notebooks/decision_tree_slides.ipynb
-- topic: Fundamentals
+- topic: Decision Trees
   title: Feature importance in trees
   prompt: How is feature importance calculated in decision trees?
   answer: 'Feature importance quantifies the contribution of each feature:
@@ -887,7 +887,7 @@ Supervised Classification:
 
     '
   reference: notebooks/decision_tree_slides.ipynb
-- topic: Fundamentals
+- topic: Decision Trees
   title: Handling missing values in trees
   prompt: What are three approaches for handling missing values in decision trees?
   answer: "1. **Imputation**: Fill with typical values (median, mode) either within\
@@ -897,7 +897,7 @@ Supervised Classification:
     \ \n   - Exclude missing values when calculating separation gain\n   - At test\
     \ time, assign randomly proportional to training split distribution\n"
   reference: notebooks/decision_tree_slides.ipynb
-- topic: Fundamentals
+- topic: Random Forests
   title: Random forests construction
   prompt: How are random forests constructed and how do they make predictions?
   answer: 'An ensemble method to address decision tree instability:
@@ -959,7 +959,7 @@ Supervised Classification:
 
     '
   reference: notebooks/decision_tree_slides.ipynb
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Model capacity and complexity
   prompt: What is model capacity and how does it relate to underfitting and overfitting?
   answer: '**Model capacity** (or complexity) is the ability of a model to fit various
@@ -978,7 +978,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: VC dimension definition
   prompt: What is VC dimension and what does it measure?
   answer: '**VC dimension** measures the capacity of a binary classifier.
@@ -994,7 +994,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Test error bound
   prompt: What did Vapnik & Chervonenkis show about the upper bound on test error?
   answer: '$$Test\ error \leq Training\ error + Model\ complexity$$
@@ -1014,7 +1014,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Linear separability concept
   prompt: What does linear separability mean in binary classification?
   answer: 'In binary classification, classes are **linearly separable** when we can
@@ -1030,7 +1030,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Optimal separating hyperplane
   prompt: How is the optimal separating hyperplane determined in SVMs?
   answer: 'The optimal separating hyperplane is **maximally distant from both classes**.
@@ -1047,7 +1047,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Distance to hyperplane formula
   prompt: What is the formula for distance between a point and a hyperplane in SVMs?
   answer: 'For a point $\boldsymbol{x}$ and hyperplane $\boldsymbol{w}^T \boldsymbol{x}
@@ -1069,7 +1069,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: SVM margin calculation
   prompt: How is the margin calculated in SVMs?
   answer: 'The margin $m$ is the distance from the support vectors to the hyperplane:
@@ -1092,7 +1092,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Maximum margin and capacity
   prompt: How does maximizing the margin relate to minimizing model capacity in SVMs?
   answer: '- The margin is $\frac{2}{||\boldsymbol{w}||}$
@@ -1108,7 +1108,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: SVM optimization problem
   prompt: What is the formal optimization problem for SVMs?
   answer: '$$\min_{\boldsymbol{w}} ||\boldsymbol{w}||^2$$
@@ -1131,7 +1131,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: SVM predictions
   prompt: How are predictions made with a trained SVM?
   answer: 'For a new data point $\boldsymbol{x}_i$, check the sign:
@@ -1146,7 +1146,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Soft margin motivation
   prompt: Why are soft margins needed in SVMs?
   answer: 'Data often exhibit "fuzziness" and overlap, making perfect linear separation
@@ -1167,7 +1167,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Slack variables in SVMs
   prompt: What are slack variables and how do they enable soft margins?
   answer: 'Introduce a "slack" variable $\xi_i \geq 0$ for each training example.
@@ -1193,7 +1193,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Regularization parameter C in SVMs
   prompt: How does the regularization hyperparameter C control SVM behavior?
   answer: '**Small C**: Softer margin
@@ -1220,7 +1220,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Non-linear SVM approach
   prompt: How do SVMs handle non-linearly separable data?
   answer: 'Three-step approach using kernels:
@@ -1241,7 +1241,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Kernel function definition
   prompt: What is a kernel function and what is the kernel trick?
   answer: '**Kernel function**: Gives the inner product between two points in a transformed
@@ -1263,7 +1263,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: Polynomial kernel
   prompt: What is the polynomial kernel and how does the kernel trick apply to it?
   answer: '**Polynomial kernel of order $d$**:
@@ -1293,7 +1293,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: RBF kernel
   prompt: What is the Radial Basis Function (RBF) kernel and what are its properties?
   answer: '$$k(\boldsymbol{x}, \boldsymbol{x}'') = \exp\left(-\gamma ||\boldsymbol{x}
@@ -1318,7 +1318,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: SVM strengths
   prompt: What are the main strengths of Support Vector Machines?
   answer: '1. **Good for high dimensional spaces**: Applicable to complex problem
@@ -1336,7 +1336,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: SVM
+- topic: Support Vector Machines
   title: SVM weaknesses
   prompt: What are the main limitations of Support Vector Machines?
   answer: '1. **Quadratic optimization can be expensive**: Especially with large datasets
@@ -1354,7 +1354,7 @@ Supervised Classification:
 
     '
   reference: 07-svm.md
-- topic: ROC Curves
+- topic: Model Evaluation
   title: ROC curve definition
   prompt: What is a Receiver Operating Characteristic (ROC) curve and what does it
     plot?
@@ -1378,7 +1378,7 @@ Supervised Classification:
 
     '
   reference: 09-roc-curves.md
-- topic: ROC Curves
+- topic: Model Evaluation
   title: ROC curve purpose
   prompt: What is the goal when analyzing a ROC curve?
   answer: 'The goal is to find the classification threshold that **best maximizes
@@ -1397,7 +1397,7 @@ Supervised Classification:
 
     '
   reference: 09-roc-curves.md
-- topic: ROC Curves
+- topic: Model Evaluation
   title: Interpreting ROC curves
   prompt: What makes a good ROC curve and what does a diagonal line indicate?
   answer: '**Perfect classifier**: Hugs along the outer-left and top of the chart
@@ -1419,7 +1419,7 @@ Supervised Classification:
 
     '
   reference: 09-roc-curves.md
-- topic: ROC Curves
+- topic: Model Evaluation
   title: Training vs validation ROC curves
   prompt: What does the gap between training and validation ROC curves indicate?
   answer: 'A large gap between training and validation AUC signals **overfitting**.
@@ -1446,7 +1446,7 @@ Supervised Classification:
 
     '
   reference: 09-roc-curves.md
-- topic: ROC Curves
+- topic: Model Evaluation
   title: AUC interpretation
   prompt: What does the Area Under the ROC Curve (AUC) represent?
   answer: 'AUC quantifies the overall predictive power of a classifier:
@@ -1464,7 +1464,7 @@ Supervised Classification:
 
     '
   reference: 09-roc-curves.md
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Class imbalance handling
   prompt: Why is class_weight="balanced" useful in decision tree classifiers for imbalanced
     datasets?
@@ -1487,7 +1487,7 @@ Supervised Classification:
 
     '
   reference: assignments/asteroids.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Stratified splitting importance
   prompt: Why should stratify=y be used in train_test_split for classification problems?
   answer: '**Stratified splitting** ensures each split has similar distribution of
@@ -1514,7 +1514,7 @@ Supervised Classification:
 
     '
   reference: assignments/asteroids.ipynb
-- topic: Fundamentals
+- topic: Data Preprocessing
   title: Min-Max feature scaling
   prompt: What is Min-Max feature scaling and why is it important in machine learning?
   answer: '**Min-Max scaling** brings all features to a pre-defined range (typically
@@ -1549,7 +1549,7 @@ Supervised Classification:
 
     '
   reference: assignments/banknote_counterfeit_classification.ipynb
-- topic: Fundamentals
+- topic: Data Preprocessing
   title: Feature scaling workflow
   prompt: What is the correct workflow for applying feature scaling to train and test
     sets?
@@ -1579,7 +1579,7 @@ Supervised Classification:
 
     '
   reference: assignments/banknote_counterfeit_classification.ipynb
-- topic: Fundamentals
+- topic: Feature Engineering
   title: Wavelet transformation features
   prompt: What types of features can be extracted from images using Wavelet Transformation?
   answer: '**Wavelet Transformation (WT)** extracts frequency-based features from
@@ -1601,7 +1601,7 @@ Supervised Classification:
 
     '
   reference: assignments/banknote_counterfeit_classification.ipynb
-- topic: ROC Curves
+- topic: Model Evaluation
   title: ROC vs Precision-Recall curves
   prompt: When should ROC curves vs Precision-Recall curves be used?
   answer: '**ROC Curves**: Appropriate when observations are **balanced** between
@@ -1652,7 +1652,7 @@ Supervised Classification:
 
     '
   reference: assignments/logistic-regression-blood-predictions.ipynb
-- topic: Fundamentals
+- topic: Data Preprocessing
   title: Z-score normalization
   prompt: What is z-score normalization and why is it used in logistic regression?
   answer: '**Z-score normalization** (standardization) transforms features to have
@@ -1682,7 +1682,7 @@ Supervised Classification:
 
     '
   reference: assignments/logistic-regression-blood-predictions.ipynb
-- topic: Fundamentals
+- topic: Supervised Learning
   title: False positive and false negative rates
   prompt: How are false positive rate (FPR) and false negative rate (FNR) calculated
     from a confusion matrix?
@@ -1760,7 +1760,7 @@ Supervised Classification:
 
     '
   reference: assignments/logistic-regression-blood-predictions.ipynb
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Decision threshold selection factors
   prompt: What factors should influence the choice of decision threshold in classification?
   answer: "The optimal decision threshold depends on:\n\n1. **Cost of errors**: Which\
@@ -1805,7 +1805,7 @@ Supervised Classification:
 
     '
   reference: notebooks/advanced-logistic-regression.ipynb
-- topic: Fundamentals
+- topic: Logistic Regression
   title: Likelihood calculation for binary classification
   prompt: How is the likelihood calculated for a single observation in binary logistic
     regression?
@@ -1860,7 +1860,7 @@ Supervised Classification:
 
     '
   reference: notebooks/advanced-logistic-regression.ipynb
-- topic: Decision Trees
+- topic: Loss Functions
   title: Cross-entropy loss derivation
   prompt: How is cross-entropy loss derived from log-likelihood?
   answer: '**Cross-entropy loss** is the negative, normalized log-likelihood:
@@ -1883,7 +1883,7 @@ Supervised Classification:
 
     '
   reference: notebooks/advanced-logistic-regression.ipynb
-- topic: Fundamentals
+- topic: Loss Functions
   title: Logarithmic penalty intuition
   prompt: Why does cross-entropy loss use logarithms to penalize predictions?
   answer: '**Logarithms create non-linear penalties**:
@@ -2200,7 +2200,7 @@ Supervised Classification:
     ] = df[\"category\"].apply(get_key, key=\"name\")\n```\n\nSafely handles both\
     \ dict and string representations of JSON.\n"
   reference: notebooks/classification_model_selection_practicle.ipynb
-- topic: Fundamentals
+- topic: Data Preprocessing
   title: Handling missing values in classification
   prompt: What are different strategies for handling missing values in classification
     models?
@@ -2277,7 +2277,7 @@ Supervised Classification:
 
     '
   reference: notebooks/into-logistic-regression-slides.ipynb
-- topic: Fundamentals
+- topic: Supervised Learning
   title: Why not use linear regression for classification
   prompt: Why is linear regression unsuitable for classification tasks?
   answer: "**Problems with linear regression for classification**:\n\n1. **Unbounded\
@@ -2288,7 +2288,7 @@ Supervised Classification:
     \ as probabilities\n\n**Solution**: Transform output using sigmoid function to\
     \ bound predictions between 0 and 1.\n"
   reference: notebooks/into-logistic-regression-slides.ipynb
-- topic: Fundamentals
+- topic: Logistic Regression
   title: Probability predictions in sklearn
   prompt: How do you get probability predictions from a sklearn logistic regression
     model?
@@ -2320,7 +2320,7 @@ Supervised Classification:
 
     '
   reference: notebooks/into-logistic-regression-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Stratified sampling importance
   prompt: Why is stratified sampling important when splitting classification data?
   answer: '**Stratified sampling** preserves the class distribution in train/test
@@ -2354,7 +2354,7 @@ Supervised Classification:
 
     '
   reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Why scale features for KNN
   prompt: Why is feature scaling critical for KNN performance?
   answer: 'KNN uses **distance** between points to determine similarity.
@@ -2390,7 +2390,7 @@ Supervised Classification:
 
     '
   reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
-- topic: Fundamentals
+- topic: Model Evaluation
   title: Data snooping problem
   prompt: What is data snooping and why is it a concern in model evaluation?
   answer: '**Data snooping** occurs when repeatedly testing models on the same test
@@ -2455,7 +2455,7 @@ Supervised Classification:
 
     '
   reference: practicals/discriminative_classifiers_diagnosing_breast_cancer.ipynb
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Implementing Euclidean distance
   prompt: What is the formula for Euclidean distance between two points?
   answer: "For points $(x_1, y_1)$ and $(x_2, y_2)$:\n\n$$d = \\sqrt{(x_2 - x_1)^2\
@@ -2464,7 +2464,7 @@ Supervised Classification:
     \ + (point2[1] - point1[1])**2)\n```\n\n**Interpretation**: Most direct line between\
     \ points (as the crow flies).\n"
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Implementing Manhattan distance
   prompt: What is the formula for Manhattan distance between two points?
   answer: "For points $(x_1, y_1)$ and $(x_2, y_2)$:\n\n$$d = |x_1 - x_2| + |y_1 -\
@@ -2473,7 +2473,7 @@ Supervised Classification:
     \ Grid-based distance (like traveling city blocks).\n\n**When to use**: More robust\
     \ for high-dimensional data than Euclidean.\n"
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: KNN classification workflow
   prompt: What are the steps to classify a new point using KNN?
   answer: '**Workflow**:
@@ -2503,7 +2503,7 @@ Supervised Classification:
 
     '
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-- topic: Fundamentals
+- topic: K-Nearest Neighbours
   title: Using collections.Counter for classification
   prompt: How can collections.Counter be used to find the most common class in KNN?
   answer: '`Counter` creates a dictionary of item:count pairs from a list:
@@ -2539,7 +2539,7 @@ Supervised Classification:
 
     '
   reference: practicals/discriminative_classifiers_implementing_KNN.ipynb
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Bias-variance decomposition formula
   prompt: How can mean squared error be decomposed into bias, variance, and irreducible
     error?
@@ -2570,7 +2570,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Underfitting vs overfitting characteristics
   prompt: What are the characteristics of underfitting and overfitting models?
   answer: '**Underfitting** (high bias, low variance):
@@ -2597,7 +2597,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Data partitioning best practices
   prompt: What are best practices for partitioning data to avoid leakage?
   answer: '**Pre-processing rules**:
@@ -2629,7 +2629,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Time series data partitioning
   prompt: How should time series data be partitioned differently from non-time series
     data?
@@ -2665,7 +2665,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: ROC Curves
+- topic: Cross-Validation
   title: K-fold cross-validation process
   prompt: How does k-fold cross-validation work?
   answer: "**Process**:\n\n1. Split data into k equal-sized folds\n2. For each fold:\n\
@@ -2676,7 +2676,7 @@ Supervised Classification:
     \ kf.split(X, y):\n    # Train and evaluate\n```\n\n**Typical values**: k=5 or\
     \ k=10\n\n**Benefit**: Uses all data for both training and validation.\n"
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Stratified k-fold advantage
   prompt: When and why should you use StratifiedKFold instead of regular KFold?
   answer: "**Use StratifiedKFold when**:\n\n- Classes are imbalanced\n- Want to preserve\
@@ -2687,7 +2687,7 @@ Supervised Classification:
     \ especially important when one class has few samples.\n\n**Regular KFold risk**:\
     \ Some folds might have very few (or zero) samples of minority class.\n"
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Cross-validation reporting standards
   prompt: What should be reported when using cross-validation?
   answer: '**Report both**:
@@ -2724,7 +2724,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Time series cross-validation approach
   prompt: How should cross-validation be performed on time series data?
   answer: "**Do not use regular k-fold** (would shuffle temporal order)\n\n**Use sequential\
@@ -2735,7 +2735,7 @@ Supervised Classification:
     \ later points\n```\n\n**Each fold**: Training set grows (or slides), test set\
     \ always follows training chronologically.\n"
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Hyperparameter Tuning
   title: GridSearchCV workflow
   prompt: How does GridSearchCV work in sklearn?
   answer: "GridSearchCV tries every combination of hyperparameters with cross-validation:\n\
@@ -2747,7 +2747,7 @@ Supervised Classification:
     ```\n\n**Combinations**: 3 × 2 = 6 parameter combinations × 5 CV folds = 30 models\
     \ trained.\n"
   reference: practicals/model-validation-slides.ipynb
-- topic: Fundamentals
+- topic: Bias-Variance Tradeoff
   title: True risk vs empirical risk
   prompt: What is the difference between true risk and empirical risk in machine learning?
   answer: '**True risk** (what we want): Expected loss over all possible data
@@ -2778,7 +2778,7 @@ Supervised Classification:
 
     '
   reference: practicals/model-validation-slides.ipynb
-- topic: Cross Validation
+- topic: Cross-Validation
   title: Leave-One-Out Cross-Validation
   prompt: What is Leave-One-Out Cross-Validation (LOOCV) and when is it used?
   answer: '**LOOCV** is a special case of k-fold cross-validation where k equals the
@@ -2813,7 +2813,7 @@ Supervised Classification:
 
     '
   reference: practicals/session-one.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Fuzzy distance metrics concept
   prompt: What are fuzzy distance metrics and why are they useful?
   answer: '**Fuzzy distance metrics** allow for more nuanced similarity measures between
@@ -2837,7 +2837,7 @@ Supervised Classification:
 
     '
   reference: practicals/session-one.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Detecting overfitting from training scores
   prompt: How can you detect overfitting by examining training set performance?
   answer: '**Overfitting indicators**:
@@ -2877,7 +2877,7 @@ Supervised Classification:
 
     '
   reference: practicals/session-one.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Detecting underfitting from training scores
   prompt: How can you detect underfitting by examining training set performance?
   answer: '**Underfitting indicators**:
@@ -2917,7 +2917,7 @@ Supervised Classification:
 
     '
   reference: practicals/session-one.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Benefits of implementing KNN from scratch
   prompt: Why is it useful to implement KNN from first principles rather than just
     using sklearn?
@@ -2949,7 +2949,7 @@ Supervised Classification:
 
     '
   reference: practicals/session-one.md
-- topic: KNN
+- topic: K-Nearest Neighbours
   title: Custom vs sklearn KNN implementations
   prompt: What are the key differences between custom and sklearn KNN implementations?
   answer: '**Custom implementation**:

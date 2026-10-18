@@ -13,7 +13,7 @@ from markupsafe import Markup
 # Configuration
 # ---------------------------------------------------------------------------
 SESSION_TIMEOUT_HOURS = 4
-SECRET_KEY = os.environ.get("SECRET_KEY", "")
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev_secret_key")
 
 # ---------------------------------------------------------------------------
 # App factory
@@ -137,6 +137,30 @@ def halve_card_weight(cid: str) -> None:
     session["weights"] = weights
 
 
+def _norm_topic(name: str) -> str:
+    return str(name).strip().casefold()
+
+
+def topic_pairs(topic_name: str) -> list:
+    """Return every 'Module::Topic' key (across all modules) matching topic_name."""
+    target = _norm_topic(topic_name)
+    return [
+        f"{module}::{topic}"
+        for module, topics in CARDS.items()
+        for topic in topics
+        if _norm_topic(topic) == target
+    ]
+
+
+def topic_card_count(topic_name: str) -> int:
+    """Total number of cards across all modules sharing topic_name."""
+    total = 0
+    for key in topic_pairs(topic_name):
+        module, topic = key.split("::", 1)
+        total += len(CARDS[module][topic])
+    return total
+
+
 def find_card_by_id(cid: str) -> dict | None:
     """Look up a card dict by its card_id string ('{module}::{topic}::{title}')."""
     try:
@@ -172,6 +196,33 @@ def start():
         return render_template("home.html", modules=CARDS), 400
 
     session["selected_topics"] = valid_selections
+    session.pop("prior_selected_topics", None)
+    return redirect(url_for("card"))
+
+
+@app.route("/focus", methods=["POST"])
+def focus():
+    """Restrict study to the given topic across all modules."""
+    selected_topics = session.get("selected_topics")
+    if not selected_topics:
+        return redirect(url_for("index"))
+
+    pairs = topic_pairs(request.form.get("topic", ""))
+    if not pairs:
+        return redirect(url_for("card"))
+
+    if session.get("prior_selected_topics") is None:
+        session["prior_selected_topics"] = selected_topics
+    session["selected_topics"] = pairs
+    return redirect(url_for("card"))
+
+
+@app.route("/unfocus", methods=["POST"])
+def unfocus():
+    """Restore the module selection made before focusing on a topic."""
+    prior = session.pop("prior_selected_topics", None)
+    if prior:
+        session["selected_topics"] = prior
     return redirect(url_for("card"))
 
 
@@ -192,7 +243,13 @@ def card():
     answer_html = Markup(
         md.markdown(current["answer"], extensions=["fenced_code", "tables"])
     )
-    return render_template("card.html", card=current, answer_html=answer_html)
+    return render_template(
+        "card.html",
+        card=current,
+        answer_html=answer_html,
+        topic_count=topic_card_count(current["topic"]) - 1,
+        focused=session.get("prior_selected_topics") is not None,
+    )
 
 
 @app.route("/next", methods=["POST"])

@@ -77,7 +77,7 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Linear Regression
+- topic: Optimisation
   title: Gradient descent — overview
   prompt: What is gradient descent and how does it find optimal model parameters?
   answer: '**Gradient descent** is an iterative optimisation algorithm that minimises
@@ -91,7 +91,7 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Linear Regression
+- topic: Optimisation
   title: Gradient descent — four key components
   prompt: What four things must be defined to run gradient descent?
   answer: '1. **Gradient function** — derivative of the loss w.r.t. each parameter;
@@ -152,7 +152,7 @@ Intro to ML:
 
     '
   reference: 1-linear-regression.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: One-hot encoding for nominal data
   prompt: Why is one-hot encoding used for nominal categorical data instead of integer
     labels?
@@ -165,7 +165,7 @@ Intro to ML:
 
     '
   reference: 2-data-processing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Feature scaling — StandardScaler, MinMaxScaler, RobustScaler
   prompt: What are the three common feature scalers in scikit-learn and their key
     differences?
@@ -183,7 +183,7 @@ Intro to ML:
 
     '
   reference: 2-data-processing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Outlier detection with z-score
   prompt: How can the z-score be used to detect and remove outliers?
   answer: 'The z-score measures how many standard deviations a data point is from
@@ -197,7 +197,7 @@ Intro to ML:
 
     '
   reference: 2-data-processing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Look-ahead bias
   prompt: What is look-ahead bias and why must it be avoided in ML pipelines?
   answer: '**Look-ahead bias** occurs when a model uses data that was not available
@@ -213,7 +213,7 @@ Intro to ML:
 
     '
   reference: 2-data-processing.md
-- topic: Model Evaluation
+- topic: Bias-Variance Tradeoff
   title: Bias-variance trade-off
   prompt: What is the bias-variance trade-off in machine learning?
   answer: '| Error | Cause | Remedy |
@@ -258,7 +258,7 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Loss Functions
+- topic: Regularisation
   title: Ridge regression — L2 cost function
   prompt: What is the Ridge regression cost function and what does the penalty term
     do?
@@ -298,7 +298,7 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Loss Functions
+- topic: Regularisation
   title: Lasso regression — L1 cost function
   prompt: What is the Lasso regression cost function and how does it differ from Ridge?
   answer: '
@@ -360,7 +360,7 @@ Intro to ML:
 
     '
   reference: 4-regularisation.md
-- topic: Assumptions
+- topic: Linear Regression
   title: LR error term (residual)
   prompt: What does the error term ε represent in a linear regression model?
   answer: 'The error term $\varepsilon$ captures everything **not explained** by the
@@ -400,7 +400,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: Linearity assumption — testing and addressing
   prompt: How do you test the linearity assumption in linear regression, and how can
     you address violations?
@@ -418,7 +418,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: Homoscedasticity vs heteroscedasticity
   prompt: What is homoscedasticity, and how is heteroscedasticity addressed in linear
     regression?
@@ -439,7 +439,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: i.i.d. error terms
   prompt: What does i.i.d. mean in the context of linear regression error terms?
   answer: '**i.i.d.** stands for **Independent and Identically Distributed**.
@@ -464,7 +464,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: Normality assumption and the Shapiro-Wilk test
   prompt: What is the normality assumption in linear regression, and how can it be
     tested?
@@ -490,7 +490,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: Multicollinearity — detection and remedies
   prompt: What is multicollinearity in linear regression, why does it matter, and
     how is it addressed?
@@ -549,7 +549,7 @@ Intro to ML:
 
     '
   reference: 5-assumptions-of-lr.md
-- topic: Assumptions
+- topic: Linear Regression
   title: Diagnosing assumption violations with residual plots
   prompt: How can residual plots be used to detect violations of linear regression
     assumptions?
@@ -643,7 +643,7 @@ Intro to ML:
     \ grows from $(n,)$ to $(n, d)$ where $d$ is the number of sinusoidal features\
     \ added.\n"
   reference: 6-feature-engineering.md
-- topic: Linear Regression
+- topic: Feature Engineering
   title: Bump (bounded) functions as features
   prompt: What are bump functions in feature engineering, and when are they useful?
   answer: '**Bump functions** (e.g. squared-exponential $e^{-x^2/4}$) are **active
@@ -662,7 +662,7 @@ Intro to ML:
 
     '
   reference: 6-feature-engineering.md
-- topic: Dimensionality Reduction
+- topic: Unsupervised Learning
   title: Unsupervised learning vs supervised learning
   prompt: How does unsupervised learning differ from supervised learning in terms
     of what it tries to discover?
@@ -784,7 +784,7 @@ Intro to ML:
 
     '
   reference: 7-dimensionality-reduction.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Feature standardisation (z-score normalisation)
   prompt: What is feature standardisation, why is it needed, and how is it applied
     in scikit-learn?
@@ -821,7 +821,7 @@ Intro to ML:
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Min-max normalisation
   prompt: How does min-max normalisation differ from standardisation, and when is
     it preferred?
@@ -855,7 +855,7 @@ Intro to ML:
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: One-hot encoding challenges
   prompt: What are the challenges of one-hot encoding, and how can they be mitigated?
   answer: '**One-hot encoding** converts a categorical variable into binary columns
@@ -880,7 +880,7 @@ Intro to ML:
 
     '
   reference: notebooks/data-preprocessing.md
-- topic: Data Processing
+- topic: Data Preprocessing
   title: Z-score and outlier detection
   prompt: How is the z-score used to detect outliers in a dataset?
   answer: 'The **z-score** measures how many standard deviations a value is from the
@@ -953,7 +953,7 @@ Intro to ML:
 
     '
   reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Loss Functions
+- topic: Linear Regression
   title: OLS SSE in matrix notation
   prompt: How is the Sum of Squared Errors (SSE) expressed in matrix notation, and
     why is that form useful?
@@ -994,7 +994,7 @@ Intro to ML:
 
     '
   reference: notebooks/intro-linear-regression/intro_linear_regression_OLS.md
-- topic: Dimensionality Reduction
+- topic: Unsupervised Learning
   title: Supervised vs unsupervised learning
   prompt: What distinguishes supervised learning from unsupervised learning?
   answer: '**Supervised Learning (SL)** — predicts a *target* from one or more *features*.
@@ -1043,7 +1043,7 @@ Intro to ML:
 
     '
   reference: notebooks/Introduction_to_Scikit_Learn.md
-- topic: Model Evaluation
+- topic: Cross-Validation
   title: Train-test split — purpose and typical ratio
   prompt: What is a train-test split, why is it used, and what ratio is typical?
   answer: 'A **train-test split** divides the dataset into two subsets:
@@ -1216,7 +1216,7 @@ Intro to ML:
 
     '
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Regularisation
+- topic: Linear Algebra
   title: Vector norms — L1, L2, and L∞
   prompt: What are the L1, L2, and L∞ vector norms, and what do they measure?
   answer: 'All three norms quantify "how big" a vector is, but by different criteria.
@@ -1308,7 +1308,7 @@ Intro to ML:
     mathbf{w}$$\n\nTogether they form a **linear combination**:\n$$\\mathbf{u} = a\\\
     mathbf{v} + b\\mathbf{w}$$\n"
   reference: notebooks/supporting-math/linear-algebra.md
-- topic: Linear Regression
+- topic: Linear Algebra
   title: Linear independence
   prompt: What does it mean for a set of vectors to be linearly independent?
   answer: 'A set of vectors is **linearly independent** if **none** of them can be
